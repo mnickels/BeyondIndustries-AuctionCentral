@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Ian Richards
  * @version Nov.9.2016
  */
-public class Account implements Serializable, Comparable<Account>{
+public class Account implements Serializable{
 	
 	/**
 	 * Default serial ID
@@ -107,9 +107,8 @@ public class Account implements Serializable, Comparable<Account>{
 		myPhoneNumber = thePhoneNumber;
 	}
 
-	@Override
-	public int compareTo(final Account theAccount) {
-		return myUsername.compareTo(theAccount.getUsername());
+	public boolean equals(final Account theAccount) {
+		return myUsername.equals(theAccount.getUsername());
 	}
 	
 
