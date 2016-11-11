@@ -52,5 +52,19 @@ public class Bidder extends Account {
 	public void setAddress(String theAddress){
 		myAddress = theAddress;
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getEmail());
+		sb.append('\n');
+		sb.append(getName());
+		sb.append('\n');
+		sb.append(getPhoneNumber());
+		sb.append('\n');
+		sb.append(getUsername());
+		sb.append('\n');
+		sb.append(getAddress());
+		return sb.toString();
+	}
 
 }
