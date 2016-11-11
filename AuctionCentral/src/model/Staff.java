@@ -27,5 +27,17 @@ public class Staff extends Account {
 	public Staff(String theName, String theUsername, String theEmail, String thePhoneNumber) {
 		super(theName, theUsername, theEmail, thePhoneNumber);
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getEmail());
+		sb.append('\n');
+		sb.append(getName());
+		sb.append('\n');
+		sb.append(getPhoneNumber());
+		sb.append('\n');
+		sb.append(getUsername());		
+		return sb.toString();
+	}
 
 }
