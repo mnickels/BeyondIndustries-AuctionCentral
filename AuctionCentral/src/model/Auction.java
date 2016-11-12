@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.users.Nonprofit;
+
 /**
  * The Auction class stores all the information of an auction, which includes
  * the nonprofit info., date of auction, name of auction, description, and list
@@ -60,7 +62,7 @@ public class Auction implements Serializable{
 	 * @param theName name of the auction
 	 * @param theDescription aution's description
 	 */
-	Auction(Nonprofit theNonprofit, LocalDateTime theDate, String theName, String theDescription) {
+	public Auction(Nonprofit theNonprofit, LocalDateTime theDate, String theName, String theDescription) {
 		myNonprofit = theNonprofit;
 		myDate = theDate;
 		myName = theName;

@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.users.Bidder;
+
 /**
  * The Item class stores all of the items information, such as name, donor, starting bid, and 
  * other things. It also is responsible for adding bids to itself, and searching for bidders who

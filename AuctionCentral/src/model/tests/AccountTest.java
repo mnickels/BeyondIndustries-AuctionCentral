@@ -1,7 +1,9 @@
-package model;
+package model.tests;
 
 
 import org.junit.Test;
+
+import model.users.Account;
 
 /**
  * Tests constructor for account

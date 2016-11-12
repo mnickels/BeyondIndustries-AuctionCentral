@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.users.Account;
+
 /**
  * The Data class is used as a data placeholder. It has a list of all Auctions in the system, and also 
  * a set of all users in the system. This class can be instantiated only once which means

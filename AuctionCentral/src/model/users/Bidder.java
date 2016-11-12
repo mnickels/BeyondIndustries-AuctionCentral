@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package model.users;
 
 /**
  * Bidder subclass that creates an account for a bidder

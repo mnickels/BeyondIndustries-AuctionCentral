@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package model.users;
 
 /**
  * Staff subclass that creates an account for a staff member

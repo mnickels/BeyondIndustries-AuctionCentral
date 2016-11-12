@@ -1,10 +1,15 @@
-package model;
+package model.tests;
 
 import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
+
+import model.Auction;
+import model.Data;
+import model.users.Nonprofit;
+
 import org.junit.After;
 
 public class DataTest {
