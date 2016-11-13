@@ -3,6 +3,7 @@
  */
 package model.users;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -69,6 +70,23 @@ public class Nonprofit extends Account {
 	 */
 	public LocalDateTime getLastAuctionDate(){
 		return myLastAuctionDate;
+	}
+	
+	/**
+	 * Checks if this nonprofit's last auction is within a year of the current date. To determine if a 
+	 * new auction can be made for this nonprofit
+	 * 
+	 * @return true if auction is within a year, false otherwise.
+	 */
+	public boolean isAuctionWithinYear(){
+		LocalDateTime myCurrentDate;
+		myCurrentDate = LocalDateTime.now();
+		myCurrentDate.minusYears(1);
+		if (myLastAuctionDate.isBefore(myCurrentDate)){
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	public String toString() {
