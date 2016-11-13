@@ -3,7 +3,6 @@
  */
 package model.users;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -91,15 +90,7 @@ public class Nonprofit extends Account {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getEmail());
-		sb.append('\n');
-		sb.append(getName());
-		sb.append('\n');
-		sb.append(getPhoneNumber());
-		sb.append('\n');
-		sb.append(getUsername());
-		sb.append('\n');
-		sb.append(myLastAuctionDate);
+		sb.append("Contact person of" + getOrganizationName());
 		return sb.toString();
 	}
 
