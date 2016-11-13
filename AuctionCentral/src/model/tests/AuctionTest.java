@@ -124,4 +124,10 @@ public class AuctionTest {
 				+ "\nNumber of items: 0\nDescription: This is a boring auction that only sell onion rings.";
 		assertEquals(testOutput, myAuction.toString());
 	}
+	
+	@Test
+	public void testIsAuctionAvailable() {
+		LocalDateTime testDate = LocalDateTime.of(2016, 11, 9, 11, 00);
+		assertFalse(myAuction.isAuctionAvailable(testDate));
+	}
 }
