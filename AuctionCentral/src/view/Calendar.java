@@ -17,6 +17,7 @@ public class Calendar implements UIComponent {
 
 	public Calendar(LocalDateTime theDate) {
 		StringBuilder sb = new StringBuilder();
+		theDate = theDate.plusDays(1);
 		LocalDateTime endDate = theDate.plusMonths(1);
 		int dayOfYear = endDate.getDayOfYear();
 		boolean datePassed = true;
