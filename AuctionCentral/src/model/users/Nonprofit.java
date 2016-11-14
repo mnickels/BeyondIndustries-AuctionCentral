@@ -36,8 +36,11 @@ public class Nonprofit extends Account {
 	 * @param theEmail A string
 	 * @param thePhoneNumber A string
 	 */
-	public Nonprofit(String theName, String theUsername, String theEmail, String thePhoneNumber) {
+	public Nonprofit(String theName, String theUsername, String theEmail, String thePhoneNumber, LocalDateTime theLastAuctionDate
+			, String theOrganizationName) {
 		super(theName, theUsername, theEmail, thePhoneNumber);
+		myLastAuctionDate = theLastAuctionDate;
+		myOrganizationName = theOrganizationName;
 	}
 	
 	/**
@@ -49,8 +52,8 @@ public class Nonprofit extends Account {
 		myOrganizationName = theOrganizationName;
 	}
 	
-	public void setLocalDateTime(){
-		
+	public void setLocalDateTime(LocalDateTime theLastAuctionDate){
+		myLastAuctionDate = theLastAuctionDate;
 	}
 	
 	/**
