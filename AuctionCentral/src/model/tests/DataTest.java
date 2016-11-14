@@ -21,7 +21,7 @@ public class DataTest {
 	@Before
 	public void setUp() {
 		myLocalDateTime = LocalDateTime.now();
-		np = new Nonprofit("John Smith", "jsmith", "jsmith@email.com", "2535550000", myLocalDateTime);
+		np = new Nonprofit("John Smith", "jsmith", "jsmith@email.com", "2535550000", myLocalDateTime, "FreePuppies");
 		auc = new Auction(np, LocalDateTime.of(2016, 11, 11, 9, 0), "SimpleAuction", "auction description");
 		
 	}

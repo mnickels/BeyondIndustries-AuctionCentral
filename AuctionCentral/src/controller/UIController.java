@@ -21,7 +21,7 @@ public final class UIController implements Runnable {
 		MenuBuilder.buildMenus();
 		myLocalDateTime = LocalDateTime.now();
 		myScreen = new Screen(new Nonprofit("Mike Nickels", 
-				"mnickels", "mnickels@uw.edu", "(253)123-4567", myLocalDateTime),
+				"mnickels", "mnickels@uw.edu", "(253)123-4567", myLocalDateTime, "FreeAnimals"),
 				MenuBuilder.NONPROFIT_MAIN_MENU);
 	}
 

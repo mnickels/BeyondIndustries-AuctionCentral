@@ -36,9 +36,11 @@ public class Nonprofit extends Account {
 	 * @param theEmail A string
 	 * @param thePhoneNumber A string
 	 */
-	public Nonprofit(String theName, String theUsername, String theEmail, String thePhoneNumber, LocalDateTime theLastAuctionDate) {
+	public Nonprofit(String theName, String theUsername, String theEmail, String thePhoneNumber, LocalDateTime theLastAuctionDate
+			, String theOrganizationName) {
 		super(theName, theUsername, theEmail, thePhoneNumber);
 		myLastAuctionDate = theLastAuctionDate;
+		myOrganizationName = theOrganizationName;
 	}
 	
 	/**
