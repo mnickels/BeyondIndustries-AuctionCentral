@@ -29,6 +29,7 @@ public class Input implements UIComponent {
 	 */
 	public Input(String thePrompt) {
 		myPrompt = thePrompt;
+		myResult = "";
 	}
 	
 	@Override

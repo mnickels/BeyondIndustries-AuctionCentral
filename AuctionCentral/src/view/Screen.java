@@ -16,22 +16,42 @@ public class Screen implements UIComponent {
 	private Account myUser;
 	/** The menu being displayed. */
 	private Menu myMenu;
+	private UIComponent[] myComponents;
 	
-	public Screen(Account theUser, Menu theStartingMenu) {
+	public Screen(Account theUser, Menu theStartingMenu, UIComponent... theComponents) {
 		myUser = theUser;
 		myMenu = theStartingMenu;
+		myComponents = theComponents;
 	}
 	
-	public void setUser(Account theUser) {
-		myUser = theUser;
+	public Account getUser() {
+		return myUser;
+	}
+	
+	public Menu getMenu() {
+		return myMenu;
+	}
+	
+	public void setMenu(Menu theMenu) {
+		myMenu = theMenu;
 	}
 
 	@Override
 	public void display() {
 		Separator.getInstance().display();
-		System.out.printf("%s\n%s logged in as %s\n\n", SLOGAN, myUser.getName(), myUser.toString());
-		myMenu.display();
-		myMenu = myMenu.nextMenu();
+		System.out.printf("%s\n", SLOGAN);
+		if (myUser != null) {
+			System.out.printf("%s logged in as %s\n\n", myUser.getName(), myUser.toString());
+		}
+		if (myComponents != null) {
+			for (UIComponent c : myComponents) {
+				c.display();
+				System.out.println();
+			}
+		}
+		if (myMenu != null) {
+			myMenu.display();
+		}
 	}
 
 }

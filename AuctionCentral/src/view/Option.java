@@ -11,8 +11,6 @@ public class Option implements UIComponent {
 	private final int myNumber;
 	/** The text representation of this option. */
 	private final String myText;
-	/** The next menu to display if this choice is selected by the user. */
-	private final Menu myNextMenu;
 	
 	/**
 	 * Creates an option for user selection in a menu UI element.
@@ -20,22 +18,13 @@ public class Option implements UIComponent {
 	 * @param theText the text representation of this option.
 	 * @param theNextMenu the next menu to be displayed if this option is selected.
 	 */
-	public Option(int theNumber, String theText, Menu theNextMenu) {
+	public Option(int theNumber, String theText) {
 		myNumber = theNumber;
 		myText = theText;
-		myNextMenu = theNextMenu;
 	}
 	
 	public int getNumber() {
 		return myNumber;
-	}
-	
-	/**
-	 * Gets the next menu to be displayed after this one.
-	 * @return The menu that should follow if this option is selected.
-	 */
-	public Menu getNextMenu() {
-		return myNextMenu;
 	}
 
 	@Override
