@@ -23,7 +23,6 @@ public class DataTest {
 		myLocalDateTime = LocalDateTime.now();
 		np = new Nonprofit("John Smith", "jsmith", "jsmith@email.com", "2535550000", myLocalDateTime, "FreePuppies");
 		auc = new Auction(np, LocalDateTime.of(2016, 11, 11, 9, 0), "SimpleAuction", "auction description");
-
 		
 	}
 	
@@ -40,7 +39,7 @@ public class DataTest {
 		
 		//Add 25 different auctions with different nonprofit names and different auction dates
 		for(int i = 0; i < 24; i++) {
-			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber");
+			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime, "FreePuppies");
 			Auction auc = new Auction(np, d.getCurrentDateTime().plusDays(i), "AuctionName", "AuctionDescr");
 			d.addAuction(auc);
 		}
