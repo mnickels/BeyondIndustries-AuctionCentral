@@ -126,9 +126,12 @@ public class Item implements Serializable {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("Name: ");
 		sb.append(myName);
-		sb.append(" from ");
-		sb.append(myDonor);
+		if (myDonor != null && !myDonor.equals("")) {
+			sb.append("\nDonor: ");
+			sb.append(myDonor);
+		}
 		sb.append("\nQuantity: ");
 		sb.append(myQuantity);
 		sb.append("\nCondition: ");
@@ -139,8 +142,10 @@ public class Item implements Serializable {
 		sb.append(myLocation);
 		sb.append("\nStarting Bid: ");
 		sb.append(getStartingBid().toString());
-		sb.append('\n');
-		sb.append(myDescription);
+		if (myDescription != null && !myDescription.equals("")) {
+			sb.append('\n');
+			sb.append(myDescription);
+		}
 		return sb.toString();
 	}
 }
