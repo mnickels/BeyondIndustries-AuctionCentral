@@ -47,7 +47,7 @@ public final class Data implements Serializable {
 	private Data() {
 		myAuctions = new ArrayList<Auction>();
 		myUsers = new HashMap<String, Account>();
-		currentDateTime = LocalDateTime.of(2016, 11, 13, 13, 0);
+		currentDateTime = LocalDateTime.now();
 		itemID = 0;
 	}
 	
