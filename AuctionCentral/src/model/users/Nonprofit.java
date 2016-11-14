@@ -83,12 +83,19 @@ public class Nonprofit extends Account {
 	public boolean isAuctionWithinYear(){
 		LocalDateTime myCurrentDate;
 		myCurrentDate = LocalDateTime.now();
-		myCurrentDate.minusYears(1);
-		if (myLastAuctionDate.isBefore(myCurrentDate)){
-			return false;
-		} else {
-			return true;
-		}
+		//myCurrentDate.minusYears(1); Object is immutable, this line does not change myCurrentDate's year
+		
+		/* If last auction for this nonprofit is within the range of current date 
+		 * minus 364 days or is above the current date which means there is no past 
+		 * auctions for this nonprofit, then this nonprofit has no past auctions
+		 * within the last year minus one day ago (364 days ago). Here we are also checking
+		 * if last auction is above the current date for case if nonprofit has no past auctions.
+		 * When a new nonprofit object is contructed, myLastAuctionDate field should be assigned to
+		 * the same date as the date of his auction to be.
+		 */
+		
+		return !(myLastAuctionDate.isBefore(myCurrentDate.minusYears(1).plusDays(1)) 
+				|| (myLastAuctionDate.isAfter(myCurrentDate)));
 	}
 	
 	public String toString() {

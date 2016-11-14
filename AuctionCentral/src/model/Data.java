@@ -47,7 +47,7 @@ public final class Data implements Serializable {
 	private Data() {
 		myAuctions = new ArrayList<Auction>();
 		myUsers = new HashMap<String, Account>();
-		currentDateTime = LocalDateTime.of(2016, 11, 13, 13, 0);
+		currentDateTime = LocalDateTime.now();
 		itemID = 0;
 	}
 	
@@ -70,6 +70,7 @@ public final class Data implements Serializable {
 				&& theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))) {
 				
 			myAuctions.add(theAuction);
+			
 			r = true;
 		} 
 		
@@ -202,7 +203,7 @@ public final class Data implements Serializable {
 		int counter = 0;
 		for(Auction a : myAuctions) {
 			if (a.getDate().isAfter(currentDateTime) || 
-					a.getDate().isEqual(currentDateTime)) {
+					a.getDate().toLocalDate().isEqual(currentDateTime.toLocalDate())) {
 				counter++;
 			}
 		}
@@ -242,6 +243,10 @@ public final class Data implements Serializable {
 			instance = new Data();
 		}
 		return instance;
+	}
+	
+	public static void setInstance(Data theData) { 
+		instance = theData; 
 	}
 	
 	/**
