@@ -31,7 +31,8 @@ public class Calendar implements UIComponent {
 				datePassed = (datePassed && dayOfYear != theDate.getDayOfYear());
 				if (x == theDate.getDayOfWeek().getValue() && 
 						theDate.getMonth() == holder && datePassed) {
-					sb.append(String.format(" %1$2d:0 |", theDate.getDayOfMonth())); //TODO
+					sb.append(String.format(" %1$2d:%d |", theDate.getDayOfMonth(), 
+							myData.getAuctionsForThisDay(theDate.toLocalDate()).size()));
 					theDate = theDate.plusDays(1);
 				} else {
 					sb.append("      |");
@@ -40,6 +41,7 @@ public class Calendar implements UIComponent {
 			sb.append('\n');
 			if (theDate.getMonth() != holder) {
 				sb = month(sb, theDate.getMonth());
+				holder = theDate.getMonth();
 			}
 		}
 		myCalendar = sb.toString();
@@ -54,7 +56,7 @@ public class Calendar implements UIComponent {
 	
 	@Override
 	public void display() {
-		myCalendar.toString();
+		System.out.println(myCalendar);
 	}
 
 }

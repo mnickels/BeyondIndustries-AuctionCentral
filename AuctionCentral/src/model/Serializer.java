@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
+ * Reads and Writes Serializable Objects to and from files.
+ * 
  * @author Matthew Subido
  * @version November 13 2016
  */
@@ -26,9 +28,9 @@ public final class Serializer {
 			OutputStream buffer = new BufferedOutputStream(file);
 			ObjectOutput output = new ObjectOutputStream(buffer);
 		){
-			output.writeObject(Data.getInstance());
+			output.writeObject(theObject);
 		}  
-		catch(IOException ex) {
+		catch(final IOException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -42,10 +44,10 @@ public final class Serializer {
 		){
 			obj = input.readObject();
 		}
-	    catch(ClassNotFoundException ex){
+	    catch(final ClassNotFoundException ex){
 	    	ex.printStackTrace();
 	    }
-		catch(IOException ex){
+		catch(final IOException ex){
 			ex.printStackTrace();
 		}
 		return obj;

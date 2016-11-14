@@ -27,6 +27,7 @@ public class Item implements Serializable {
 	private BigDecimal myStartingBid;
 	private String myDescription;
 	private Map<Bidder, BigDecimal> myBids;
+	private int myItemID;
 	
 	public Item(final String theName, final String theDonor, final int theQuantity,
 			final String theCondition, final String theSize, final String theLocation,
@@ -40,6 +41,7 @@ public class Item implements Serializable {
 		myStartingBid = BigDecimal.ZERO.max(theStartingBid); // Starting bid cannot be negative.
 		myDescription = theDescription;
 		myBids = new HashMap<Bidder, BigDecimal>();
+		myItemID = Data.getItemID();
 	}
 	/**
 	 * @return true if the bidder has bid upon this item already, false if not.
@@ -122,6 +124,17 @@ public class Item implements Serializable {
 	
 	public Map<Bidder, BigDecimal> getBids() {
 		return myBids;
+	}
+	
+	public int getItemID() {
+		return myItemID;
+	}
+	
+	public boolean equals(Item theItem) {
+		if (theItem == null) {
+			return false;
+		}
+		return myItemID == theItem.getItemID();
 	}
 	
 	public String toString() {
