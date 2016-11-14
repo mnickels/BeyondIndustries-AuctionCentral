@@ -49,8 +49,8 @@ public class Nonprofit extends Account {
 		myOrganizationName = theOrganizationName;
 	}
 	
-	public void setLocalDateTime(){
-		
+	public void setLocalDateTime(LocalDateTime theLastAuctionDate){
+		myLastAuctionDate = theLastAuctionDate;
 	}
 	
 	/**
