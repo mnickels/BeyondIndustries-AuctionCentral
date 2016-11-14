@@ -11,13 +11,13 @@ import java.util.Collection;
 public class Menu implements UIComponent {
 	
 	/** The question being asked by this menu element. */
-	private final String myQuery;
+	protected final String myQuery;
 	
-	private final UIComponent[] myComponents;
+	protected final UIComponent[] myComponents;
 	/** The options to display to the user as choices. */
-	private final Collection<Option> myOptions;
+	protected final Collection<Option> myOptions;
 	/** The input element that retrieves input from the user. */
-	private final Input myInput;
+	protected final Input myInput;
 	
 	/**
 	 * Creates a new menu ui element.
@@ -35,8 +35,8 @@ public class Menu implements UIComponent {
 		myOptions.add(theOption);
 	}
 	
-	protected Input getInput() {
-		return myInput;
+	public String getInput() {
+		return myInput.getInput();
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Menu implements UIComponent {
 		Menu next = null;
 		while (next == null) {
 			try {
-				int selected = Integer.parseInt(myInput.getInput());
+				int selected = Integer.parseInt(getInput());
 				for (Option o : myOptions) {
 					if (o.getNumber() == selected) {
 						next = o.getNextMenu();

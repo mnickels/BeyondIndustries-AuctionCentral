@@ -21,11 +21,15 @@ public class Screen implements UIComponent {
 		myUser = theUser;
 		myMenu = theStartingMenu;
 	}
+	
+	public void setUser(Account theUser) {
+		myUser = theUser;
+	}
 
 	@Override
 	public void display() {
 		Separator.getInstance().display();
-		System.out.printf("%s\n%s logged in as %s\n\n", SLOGAN, myUser.getName(), /* myUser.toString() */ "***PLACEHOLDER***");
+		System.out.printf("%s\n%s logged in as %s\n\n", SLOGAN, myUser.getName(), myUser.toString());
 		myMenu.display();
 		myMenu = myMenu.nextMenu();
 	}
