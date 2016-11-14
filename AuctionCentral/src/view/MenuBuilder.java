@@ -1,11 +1,17 @@
 package view;
 
+import model.Data;
+
 /**
  * Constructs all the menus needed for the program.
  * @author Mike Nickels | mnickels@uw.edu
  * @version November 11 2016
  */
 public class MenuBuilder {
+	
+	public static Menu MAIN_MENU;
+	public static Menu BIDDER_MAIN_MENU;
+	public static Menu STAFF_MAIN_MENU;
 	
 	// user story 4
 	public static Menu NONPROFIT_MAIN_MENU;
@@ -16,20 +22,19 @@ public class MenuBuilder {
 	
 	public static void buildMenus() {
 		// set up the menus
+		
+		MAIN_MENU = new OptionlessMenu(
+				"Login",
+				new Input("Enter username: "));
+		
 		NONPROFIT_MAIN_MENU = new Menu(
 				"What would you like to do?",
 				new Input());
 		
-		NONPROFIT_CALENDAR_VIEW = new Menu(
-				null,
-				new Input("Specify a day to view (enter the two digit date), or -1 to go back\n\n -> ")){
-			@Override
-			public void display() {
-				System.out.println("***CALENDAR***");
-				System.out.println();
-				getInput().display();
-			}
-		};
+		NONPROFIT_CALENDAR_VIEW = new OptionlessMenu(
+				"Specify a day to view (enter the two digit date), or -1 to go back",
+				new Input(" -> "),
+				new Calendar(Data.getInstance().currentDateTime));
 		
 //		BIDDER_AUCTION_MENU = new Menu(
 //				);
