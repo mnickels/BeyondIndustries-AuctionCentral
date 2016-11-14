@@ -70,7 +70,7 @@ public final class Data implements Serializable {
 				&& theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))) {
 				
 			myAuctions.add(theAuction);
-			addUser(theAuction.getNonprofit().getName(), theAuction.getNonprofit());
+			
 			r = true;
 		} 
 		
@@ -243,6 +243,10 @@ public final class Data implements Serializable {
 			instance = new Data();
 		}
 		return instance;
+	}
+	
+	public static void setInstance(Data theData) { 
+		instance = theData; 
 	}
 	
 	/**
