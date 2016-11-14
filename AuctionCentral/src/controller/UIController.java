@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDateTime;
+
 import model.users.Nonprofit;
 import view.MenuBuilder;
 import view.Screen;
@@ -13,10 +15,13 @@ public final class UIController implements Runnable {
 	
 	private Screen myScreen;
 	
+	private LocalDateTime myLocalDateTime;
+	
 	UIController() {
 		MenuBuilder.buildMenus();
+		myLocalDateTime = LocalDateTime.now();
 		myScreen = new Screen(new Nonprofit("Mike Nickels", 
-				"mnickels", "mnickels@uw.edu", "(253)123-4567"),
+				"mnickels", "mnickels@uw.edu", "(253)123-4567", myLocalDateTime),
 				MenuBuilder.NONPROFIT_MAIN_MENU);
 	}
 

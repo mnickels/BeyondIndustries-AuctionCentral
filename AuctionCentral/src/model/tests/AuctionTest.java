@@ -25,11 +25,14 @@ public class AuctionTest {
 	
 	Item myItem;
 	
+	LocalDateTime myLocalDateTime;
+	
 	@Before
 	public void setUp() {
+		myLocalDateTime = LocalDateTime.now();
 		myItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
 				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		myNonprofit = new Nonprofit("Santa Claus", "sclaus", "scalus@email", "2533522525");
+		myNonprofit = new Nonprofit("Santa Claus", "sclaus", "scalus@email", "2532532532", myLocalDateTime);
 
 		LocalDateTime date = LocalDateTime.of(2016, 11, 9, 11, 00);
 		myAuction = new Auction(myNonprofit, date, "Onion Auction", "This is a boring auction that only sell onion rings.");
@@ -42,7 +45,7 @@ public class AuctionTest {
 
 	@Test
 	public void testSetNonprofit() {
-		Nonprofit  testNonprofit = new Nonprofit("Harry Potter", "hpotter", "hpotter@email", "2532532532");
+		Nonprofit  testNonprofit = new Nonprofit("Harry Potter", "hpotter", "hpotter@email", "2532532532", myLocalDateTime);
 		myAuction.setNonprofit(testNonprofit);
 		assertEquals(testNonprofit, myAuction.getNonprofit());
 	}
