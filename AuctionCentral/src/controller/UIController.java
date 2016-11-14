@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDateTime;
+
 import model.Data;
 import model.users.Account;
 import model.users.Bidder;
@@ -35,7 +37,8 @@ public final class UIController implements Runnable {
 	}
 	
 	private void login() {
-		Data.getInstance().addUser("mnickels", new Nonprofit("Mike Nickels", "mnickels", "mnickels@uw.edu", "(253)555-5555"));
+		Data.getInstance().addUser("mnickels", new Nonprofit("Mike Nickels", "mnickels", "mnickels@uw.edu", "(253)555-5555",
+				LocalDateTime.MIN, "Marxism for Moms"));
 		
 		MenuBuilder.MAIN_MENU.display();
 		Account user = Data.getInstance().getUser(MenuBuilder.MAIN_MENU.getInput());

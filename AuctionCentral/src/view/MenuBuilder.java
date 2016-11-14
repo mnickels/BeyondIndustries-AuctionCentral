@@ -1,5 +1,7 @@
 package view;
 
+import model.Data;
+
 /**
  * Constructs all the menus needed for the program.
  * @author Mike Nickels | mnickels@uw.edu
@@ -32,7 +34,7 @@ public class MenuBuilder {
 		NONPROFIT_CALENDAR_VIEW = new OptionlessMenu(
 				"Specify a day to view (enter the two digit date), or -1 to go back",
 				new Input(" -> "),
-				new Text("***CALENDAR***"));
+				new Calendar(Data.getInstance().currentDateTime));
 		
 //		BIDDER_AUCTION_MENU = new Menu(
 //				);
