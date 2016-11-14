@@ -90,7 +90,7 @@ public class Nonprofit extends Account {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Contact person of" + getOrganizationName());
+		sb.append("Contact person of " + getOrganizationName());
 		return sb.toString();
 	}
 
