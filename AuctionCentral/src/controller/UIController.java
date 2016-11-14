@@ -17,6 +17,8 @@ public final class UIController implements Runnable {
 	
 	private Screen myScreen;
 	
+	private LocalDateTime myLocalDateTime;
+	
 	UIController() {
 		MenuBuilder.buildMenus();
 		myScreen = new Screen(null, MenuBuilder.MAIN_MENU);
