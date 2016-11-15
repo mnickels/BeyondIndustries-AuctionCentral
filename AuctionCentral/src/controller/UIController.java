@@ -2,10 +2,12 @@ package controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import model.Auction;
 import model.Data;
 import model.Item;
+import model.Serializer;
 import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
@@ -14,7 +16,6 @@ import view.Calendar;
 import view.Input;
 import view.Menu;
 import view.Option;
-import view.OptionlessMenu;
 import view.Screen;
 import view.Text;
 
@@ -25,7 +26,7 @@ import view.Text;
  */
 public final class UIController implements Runnable {
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private Screen myScreen;
 
@@ -39,10 +40,10 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 
-		setup();
-
 		if (DEBUG)
 			loadState();
+		else
+			setup();
 
 		while (myIsRunning) {
 			myScreen = new Screen(null, null);
@@ -63,8 +64,19 @@ public final class UIController implements Runnable {
 
 	private void bidder() {
 		boolean shouldLoop = true;
+		
+		List<Auction> auctions = Data.getInstance().getAuctions();
+		Option[] auctionOptions = new Option[auctions.size()];
+		for (int i = 0; i < auctions.size(); i++) {
+			auctionOptions[i] = new Option(i, auctions.get(i).getName());
+		}
 
-		Auction selectedAuction = Data.getInstance().getAuctions().get(0);
+		myScreen = new Screen(myScreen.getUser(), new Menu(
+				"Select an auction to choose from",
+				new Input(), auctionOptions));
+		myScreen.display();
+		
+		Auction selectedAuction = auctions.get(Integer.parseInt(myScreen.getMenu().getInput()));
 
 		LocalDateTime time = selectedAuction.getDate();
 		int currentHour = time.getHour() % 12;
@@ -94,12 +106,16 @@ public final class UIController implements Runnable {
 
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
-				myScreen.setMenu(new OptionlessMenu(
+				myScreen.setMenu(new Menu(
 						"Type item ID to get more information and bid on the item",
 						new Input()));
 				myScreen.display();
 
-				Item selectedItem = selectedAuction.getItems().get(Integer.parseInt(myScreen.getMenu().getInput()));
+				Item selectedItem = null;
+				for (Item i : selectedAuction.getItems()) {
+					if (i.getItemID() == Integer.parseInt(myScreen.getMenu().getInput()))
+						selectedItem = i;
+				}
 				myScreen = new Screen(myScreen.getUser(), new Menu(
 						"What would you like to do?", new Input(),
 						new Option(1, "Place bid on this item"),
@@ -112,7 +128,7 @@ public final class UIController implements Runnable {
 				myScreen.display();
 				switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 				case 1:
-					Menu m = new OptionlessMenu("Enter bid of at least $" + selectedItem.getStartingBid()
+					Menu m = new Menu("Enter bid of at least $" + selectedItem.getStartingBid()
 					+ " (no dollar sign or period after dollar amount):", new Input());
 					m.display();
 					int bid = Integer.parseInt(m.getInput());
@@ -336,7 +352,7 @@ public final class UIController implements Runnable {
 						str.append(String.format("\tHighest Bid: $%s\n", highBid));
 					}
 					myScreen = new Screen(myScreen.getUser(), 
-							new OptionlessMenu("Enter anything to return",
+							new Menu("Enter anything to return",
 									new Input()),
 							new Text(str.toString()));
 					myScreen.display();
@@ -373,7 +389,7 @@ public final class UIController implements Runnable {
 
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
-				Menu calendarView = new OptionlessMenu(
+				Menu calendarView = new Menu(
 						"Specify a day to view (enter the two digit date), or -1 to go back",
 						new Input());
 				Calendar c = new Calendar(Data.getInstance().currentDateTime);
@@ -398,7 +414,7 @@ public final class UIController implements Runnable {
 		myScreen.display();
 		if (!myScreen.getMenu().getInput().isEmpty()) {
 			try {
-				// Data.setData((Data) Serializer.readFile(myScreen.getMenu().getInput()));
+				 Data.setInstance((Data) Serializer.readFile(myScreen.getMenu().getInput()));
 			} catch (Exception e) {
 				System.err.println("Incorrect filename for a serialized Data object.");
 			}
@@ -433,7 +449,7 @@ public final class UIController implements Runnable {
 
 	private void login() {
 		myScreen.setMenu(
-				new OptionlessMenu(
+				new Menu(
 						"Login",
 						new Input("Enter username: ")));
 		myScreen.display();
