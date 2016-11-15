@@ -233,48 +233,4 @@ public class Auction implements Serializable{
 		
 	}
 	
-	public String getBidderDisplay(Bidder theBidder) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("ID    Item name                             Condition      Min bid  My bid\n");
-		for (int i = 0; i < size; i++) {
-			Item tempItem = myItems.get(i);
-			String whitespace = "";
-
-			for (int j = 0; j < 6 - Integer.toString(tempItem.getItemID()).length(); j++) {
-				whitespace += " ";
-			}
-				sb.append(tempItem.getItemID() + whitespace);
-
-		    whitespace = "";
-			
-			if (tempItem.getName().length() > 32) {
-				sb.append(tempItem.getName().substring(0, 32) + "...   ");
-			} else {
-				for (int j = 0; j < 38 - tempItem.getName().length(); j++) {
-					whitespace += " ";
-				}
-				sb.append(tempItem.getName() + whitespace);
-			}
-			
-			
-			whitespace = "";
-			for (int j = 0; j < 15 - tempItem.getCondition().length(); j++) {
-				whitespace += " ";
-			}
-			sb.append(tempItem.getCondition() + whitespace);
-			
-			whitespace = "";
-			for (int j = 0; j < 8 - tempItem.getStartingBid().toString().length(); j++) {
-				whitespace += " ";
-			}
-			sb.append("$" + tempItem.getStartingBid() + whitespace);
-			
-			if (tempItem.getBid(theBidder) != null) {
-				sb.append("$" + tempItem.getBid(theBidder));
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
-		
-	}
 }
