@@ -41,7 +41,18 @@ public class SerializerTest {
 		String fileName = "testSerializableOnData.ser";
 		Serializer.writeFile((Serializable) original, fileName);
 		Data read = (Data) Serializer.readFile(fileName);
-		assertEquals(original.getAuctions(), read.getAuctions());
+		List<Auction> og = original.getAuctions();
+		List<Auction> rd = read.getAuctions();
+		for (int x = 0; x < og.size(); x++) {
+			Auction a = og.get(x);
+			Auction b = rd.get(x);
+			assertEquals(a.getDate(), b.getDate());
+			assertEquals(a.getItems(), b.getItems());
+			assertEquals(a.getDescription(), b.getDescription());
+			assertEquals(a.getName(), b.getName());
+			assertEquals(a.getNonprofit().getUsername(), b.getNonprofit().getUsername());
+			assertEquals(a.getSize(), b.getSize());
+		}
 		assertEquals(original.getCurrentDateTime(), read.getCurrentDateTime());
 		for (int i = 0; i < 25; i++) {
 			String u = "username" + i;

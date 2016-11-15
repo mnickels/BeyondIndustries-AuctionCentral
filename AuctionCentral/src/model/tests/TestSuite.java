@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	SerializerTest.class,
 	AccountTest.class,
+	BidderTest.class,
+	NonprofitTest.class,
 	AuctionTest.class,
 	DataTest.class,
 	ItemTest.class,

@@ -122,13 +122,6 @@ public class AuctionTest {
 				new BigDecimal(3.99), "Tasty snack that has never been opened.");
 		assertFalse(myAuction.removeItem(testItem));
 	}
-
-	@Test
-	public void testToString() {
-		String testOutput = "Auction: Onion Auction\nOrganization: null\nDate: 2016-11-09T11:00"
-				+ "\nNumber of items: 0\nDescription: This is a boring auction that only sell onion rings.";
-		assertEquals(testOutput, myAuction.toString());
-	}
 	
 	@Test
 	public void testIsAuctionAvailable() {
