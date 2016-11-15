@@ -160,21 +160,32 @@ public final class UIController implements Runnable {
 	
 	private void nonprofit() {
 		boolean shouldLoop = true;
-		
-		LocalDateTime time = Data.getInstance().currentDateTime;
 
 		while (shouldLoop) {
-			Menu menu = new Menu(
+			Nonprofit user = (Nonprofit) myScreen.getUser();
+			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(user);
+			if (currentAuction != null) {
+			myScreen = new Screen(myScreen.getUser(), new Menu(
 					"What would you like to do?",
 					new Input(),
 					new Option(1, "Submit an auction request"),
 					new Option(2, "Add item to auction"),
 					new Option(3, "View my inventory list"),
-					new Option(4, "Exit AuctionCentral"));
-			
-			myScreen.setMenu(menu);
+					new Option(4, "Exit AuctionCentral")),
+					new Text(String.format("Upcoming Auction: %s on %s %d, %d",
+							currentAuction.getName(), currentAuction.getDate().getMonth(),
+							currentAuction.getDate().getDayOfMonth(),
+							currentAuction.getDate().getYear())));
+			} else {
+				myScreen = new Screen(myScreen.getUser(), new Menu(
+						"What would you like to do?",
+						new Input(),
+						new Option(1, "Submit an auction request"),
+						new Option(2, "Add item to auction"),
+						new Option(3, "View my inventory list"),
+						new Option(4, "Exit AuctionCentral")));
+			}
 			myScreen.display();
-			Nonprofit user = (Nonprofit) myScreen.getUser();
 			
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
@@ -182,7 +193,7 @@ public final class UIController implements Runnable {
 				myScreen = new Screen(user, null,
 						new Text("New Auction from " + user.getOrganizationName()));
 				myScreen.display();
-				Input i = new Input("Please enter the name of the Auction: ");
+				Input i = new Input("Please enter the name of the auction: ");
 				i.display();
 				String auctionName = i.getInput();
 				
@@ -200,14 +211,15 @@ public final class UIController implements Runnable {
 				i.display();
 				int itemNum = Integer.parseInt(i.getInput());
 				
-				i = new Input("Please enter the item description: ");
+				i = new Input("Please enter the auction description: ");
 				i.display();
 				String desc = i.getInput();
 				
 				StringBuilder sb = new StringBuilder();
 				sb.append(String.format("%s from %s\n", auctionName, user.getOrganizationName()));
 				sb.append(String.format("Name: %s (%s)\n", user.getName(), user.getPhoneNumber()));
-				sb.append(String.format("Date: %s\n", date));
+				sb.append(String.format("Date: %s %d, %d @ %d:%d\n", date.getMonth(), date.getDayOfMonth(),
+						date.getYear(), date.getHour(), date.getMinute()));
 				sb.append(String.format("Item Count: %d\n", itemNum));
 				sb.append(String.format("Description: %s", desc));
 				
@@ -240,6 +252,95 @@ public final class UIController implements Runnable {
 				break;
 			case 2:
 				// add item to auction
+				Input in = new Input("Please enter item name: ");
+				in.display();
+				String name = in.getInput();
+				
+				in = new Input("Please enter item description: ");
+				in.display();
+				String description = in.getInput();
+				
+				in = new Input("Please enter item starting bid: $");
+				in.display();
+				int startBid = Integer.parseInt(in.getInput());
+				
+				in = new Input("Please enter donor's name: ");
+				in.display();
+				String donor = in.getInput();
+				
+				in = new Input("Please enter item quantity: ");
+				in.display();
+				int items = Integer.parseInt(in.getInput());
+				
+				in = new Input("Please enter item's condition: ");
+				in.display();
+				String condition = in.getInput();
+				
+				in = new Input("Please enter item size: ");
+				in.display();
+				String size = in.getInput();
+				
+				in = new Input("Please enter storage location: ");
+				in.display();
+				String address = in.getInput();
+				
+				StringBuilder s = new StringBuilder();
+				s.append(String.format("%s: $%d\n", name, startBid));
+				s.append(String.format("Donated by %s\n", donor));
+				s.append(String.format("Quantity: %d\n", items));
+				s.append(String.format("Item Size: %s\n", size));
+				s.append(String.format("Stored at: %s", address));
+				
+				myScreen = new Screen(user, new Menu(
+						"Are you sure you would like to submit this item for auction?",
+						new Input(),
+						new Option(1, "Submit item"),
+						new Option(2, "Go back without submitting"),
+						new Option(3, "Exit AuctionCentral without submitting")),
+						new Text(s.toString()));
+				myScreen.display();
+				
+				switch (Integer.parseInt(myScreen.getMenu().getInput())) {
+				case 1:
+					// submit auction request
+					Item item = new Item(name, donor, items, condition, size, address, new BigDecimal(startBid), description);
+					boolean itemAdded = Data.getInstance().getAuctionForThisNonprofit(user).addItem(item);
+					if (itemAdded) {
+						new Text(String.format("Your item %s was successfully submitted!", name)).display();
+					} else {
+						new Text("Your item was not able to be submitted at this time.").display();
+					}
+					break;
+				case 3:
+					shouldLoop = false;
+				case 2:
+					new Text("Your auction was not submitted.").display();
+					break;
+				}
+				
+				break;
+			case 3:
+				// 
+				if (currentAuction == null) {
+					new Text("You have no auction currently scheduled.").display();
+				} else {
+					StringBuilder str = new StringBuilder();
+					for (Item it : currentAuction.getItems()) {
+						BigDecimal highBid = BigDecimal.ZERO;
+						for (BigDecimal bid : it.getBids().values()) {
+							if (bid.compareTo(highBid) > 0) {
+								highBid = bid;
+							}
+						}
+						str.append(String.format("%s x %d\n", it.getName(), it.getQuantity()));
+						str.append(String.format("\tHighest Bid: $%s\n", highBid));
+					}
+					myScreen = new Screen(myScreen.getUser(), 
+							new OptionlessMenu("Enter anything to return",
+							new Input()),
+							new Text(str.toString()));
+					myScreen.display();
+				}
 				break;
 			case 4:
 				shouldLoop = false;
