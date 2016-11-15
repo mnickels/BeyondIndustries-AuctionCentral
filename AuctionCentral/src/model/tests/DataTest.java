@@ -32,99 +32,6 @@ public class DataTest {
 		
 	}
 	
-	
-	@Test
-	public void testAddAuctionOnListOfTwentyFiveUpcomingAuctions() {
-		Data d = Data.getInstance();		
-		
-		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
-		
-		/*System.out.println("FullTwentyFive");
-		System.out.println();*/
-		
-		//Add 25 different auctions, two for every next day.
-		int j = 1;
-		int r = 0;
-		for(int i = 0; i < 25; i++) {
-			if (r == 2) {
-				r = 0;
-				j = j + 1;
-			}
-			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-			Auction auc = new Auction(np, ld.plusDays(j), "AuctionName", "AuctionDescr");
-			d.addAuction(auc);
-			
-			r++;
-		}
-		
-		//System.out.println(d.totalNumberOfUpcommingAuctions());
-		
-		//Add a 26th auction
-		boolean result = d.addAuction(auc); 
-		
-		/*for(Auction a: d.getAuctions()) {
-			System.out.println(a.getNonprofit().getName() + " " + a.getDate().toLocalDate().toString());
-		}*/
-		
-		assertFalse(result);
-	}
-	
-	
-	@Test
-	public void testAddAuctionOnListOfTwentyFourUpcomingAuctions() {
-		Data d = Data.getInstance();
-		
-		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
-		
-		/*System.out.println();
-		System.out.println("FullTwentyFour");
-		System.out.println();
-		System.out.println(d.totalNumberOfUpcommingAuctions());
-		System.out.println(d.getAuctions().size());*/
-		
-		int j = 1;
-		int r = 0;
-		for(int i = 0; i < 24; i++) {
-			if (r == 2) {
-				r = 0;
-				j = j + 1;
-			}
-			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-			Auction auc = new Auction(np, ld.plusDays(j), "AuctionName", "AuctionDescr");
-			d.addAuction(auc);
-			
-			r++;
-		}
-	
-		//System.out.println(d.totalNumberOfUpcommingAuctions());
-		
-		/*Nonprofit np = new Nonprofit("John Smith", "jsmith", "jsmith@email.com", "2535550000", myLocalDateTime, "FreePuppies");
-		Auction auc = new Auction(np, LocalDateTime.now().plusDays(28), "SimpleAuction", "auction description");*/
-		
-		//add 25th auction
-		boolean result = d.addAuction(auc);
-		
-		/*for(Auction a: d.getAuctions()) {
-			System.out.println(a.getNonprofit().getName() + " " + a.getDate().toLocalDate().toString());
-		}*/
-		
-		assertTrue(result);
-	}
-	
-	@Test
-	public void testAddAuctionOnListOfLessThanTwentyFourUpcomingAuctions() {
-		Data d = Data.getInstance();
-		d.addAuction(auc);
-		
-		Nonprofit np = new Nonprofit(names[0], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
-		Auction auc2 = new Auction(np, ld.plusDays(1), "AuctionName", "AuctionDescr");
-		
-		boolean result = d.addAuction(auc2);
-		
-		assertTrue(result);
-	}
-	
 	@Test
 	public void testAddAuctionOnNoFutureAuctionsForANonprofit() {
 		Data d = Data.getInstance();
@@ -164,6 +71,80 @@ public class DataTest {
 		
 		assertFalse(result);
 	}
+	
+	
+	@Test
+	public void testAddAuctionOnListOfTwentyFiveUpcomingAuctions() {
+		Data d = Data.getInstance();		
+		
+		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
+		
+		//Add 25 different auctions, two for every next day.
+		int j = 1;
+		int r = 0;
+		for(int i = 0; i < 25; i++) {
+			if (r == 2) {
+				r = 0;
+				j = j + 1;
+			}
+			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
+			Auction auc = new Auction(np, ld.plusDays(j), "AuctionName", "AuctionDescr");
+			d.addAuction(auc);
+			
+			r++;
+		}
+		
+		
+		//Add a 26th auction
+		boolean result = d.addAuction(auc); 
+
+		
+		assertFalse(result);
+	}
+	
+	
+	@Test
+	public void testAddAuctionOnListOfTwentyFourUpcomingAuctions() {
+		Data d = Data.getInstance();
+		
+		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
+		
+		int j = 1;
+		int r = 0;
+		for(int i = 0; i < 24; i++) {
+			if (r == 2) {
+				r = 0;
+				j = j + 1;
+			}
+			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
+			Auction auc = new Auction(np, ld.plusDays(j), "AuctionName", "AuctionDescr");
+			d.addAuction(auc);
+			
+			r++;
+		}
+	
+		
+		//add 25th auction
+		boolean result = d.addAuction(auc);
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testAddAuctionOnListOfLessThanTwentyFourUpcomingAuctions() {
+		Data d = Data.getInstance();
+		d.addAuction(auc);
+		
+		Nonprofit np = new Nonprofit(names[0], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
+		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
+		Auction auc2 = new Auction(np, ld.plusDays(1), "AuctionName", "AuctionDescr");
+		
+		boolean result = d.addAuction(auc2);
+		
+		assertTrue(result);
+	}
+	
+	
 	
 	@Test
 	public void testAddAuctionOnNoScheduledAuctionsForThisDay() {
