@@ -97,11 +97,8 @@ public class Nonprofit extends Account {
 			return false;
 		}
 		
-		if (myLastAuctionDate.isAfter(myCurrentDate)){
-			return true;
-		}
-		
-		return !(myLastAuctionDate.isBefore(myCurrentDate.minusYears(1).plusDays(1)));
+		return !(myLastAuctionDate.isBefore(myCurrentDate.minusYears(1).plusDays(1))
+				|| (myLastAuctionDate.isAfter(myCurrentDate)));
 	}
 	
 	public String toString() {

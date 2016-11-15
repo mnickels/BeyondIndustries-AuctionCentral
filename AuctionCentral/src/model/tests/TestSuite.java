@@ -12,6 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	SerializerTest.class,
 	AccountTest.class,
+	BidderTest.class,
+	NonprofitTest.class,
 	AuctionTest.class,
 	DataTest.class,
 	ItemTest.class
