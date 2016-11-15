@@ -486,10 +486,10 @@ public final class UIController implements Runnable {
 			sb.append(tempItem.getCondition() + whitespace);
 			
 			whitespace = "";
-			for (int j = 0; j < 8 - tempItem.getStartingBid().toString().length(); j++) {
+			for (int j = 0; j < 11 - tempItem.getStartingBid().toString().length(); j++) {
 				whitespace += " ";
 			}
-			sb.append("$" + tempItem.getStartingBid() + whitespace);
+			sb.append("$" + tempItem.getStartingBid().toString().substring(0, tempItem.getStartingBid().toString().length() - 3) + whitespace);
 			
 			if (tempItem.getBid(theBidder) != null) {
 				sb.append("$" + tempItem.getBid(theBidder));
