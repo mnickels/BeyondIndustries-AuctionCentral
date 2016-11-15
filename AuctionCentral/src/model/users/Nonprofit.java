@@ -52,7 +52,7 @@ public class Nonprofit extends Account {
 		myOrganizationName = theOrganizationName;
 	}
 	
-	public void setLocalDateTime(LocalDateTime theLastAuctionDate){
+	public void setLastAuctionDate(LocalDateTime theLastAuctionDate){
 		myLastAuctionDate = theLastAuctionDate;
 	}
 	
@@ -93,9 +93,15 @@ public class Nonprofit extends Account {
 		 * When a new nonprofit object is contructed, myLastAuctionDate field should be assigned to
 		 * the same date as the date of his auction to be.
 		 */
+		if (myLastAuctionDate == null){
+			return false;
+		}
 		
-		return !(myLastAuctionDate.isBefore(myCurrentDate.minusYears(1).plusDays(1)) 
-				|| (myLastAuctionDate.isAfter(myCurrentDate)));
+		if (myLastAuctionDate.isAfter(myCurrentDate)){
+			return true;
+		}
+		
+		return !(myLastAuctionDate.isBefore(myCurrentDate.minusYears(1).plusDays(1)));
 	}
 	
 	public String toString() {
