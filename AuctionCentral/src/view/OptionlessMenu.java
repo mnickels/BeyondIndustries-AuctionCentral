@@ -13,8 +13,8 @@ public class OptionlessMenu extends Menu {
 	 * @param theQuery
 	 * @param theInput
 	 */
-	public OptionlessMenu(String theQuery, Input theInput) {
-		super(theQuery, theInput);
+	public OptionlessMenu(String theQuery, Input theInput, Option... theOptions) {
+		super(theQuery, theInput, theOptions);
 	}
 	
 	@Override

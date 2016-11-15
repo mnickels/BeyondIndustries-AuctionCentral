@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import model.Auction;
 import model.Data;
+import model.users.Bidder;
 import model.users.Nonprofit;
 
 import org.junit.After;
@@ -534,6 +535,24 @@ public class DataTest {
 		assertNull(o);
 	}
 	
+	@Test
+	public void testAddAnAuction() {
+		Nonprofit np2 = new Nonprofit(names[10], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
+		Auction auc3 = new Auction(np2, LocalDateTime.of(2016, 11, 25, 11, 00), "MyUniqueAuctionName", "AuctionDescr");
+		
+		Data.getInstance().addAuction(auc3);
+		
+		for (Auction a : Data.getInstance().getAuctions()) {
+			System.out.println(a);
+		}
+	}
+	
+	@Test
+	public void testGetUser() {
+		Data.getInstance().addUser("abc", new Bidder("name", "abc", "email", "phone", "addr"));
+		System.out.println(Data.getInstance().getUser("abc"));
+		assertNotNull(Data.getInstance().getUser("abc"));
+	}
 	
 	@After
 	public void cleanUp() {

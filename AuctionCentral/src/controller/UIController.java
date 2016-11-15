@@ -1,13 +1,16 @@
 package controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import model.Auction;
 import model.Data;
+import model.Item;
 import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
 import model.users.Staff;
+import view.Calendar;
 import view.Input;
 import view.Menu;
 import view.Option;
@@ -22,7 +25,7 @@ import view.Text;
  */
 public final class UIController implements Runnable {
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	private Screen myScreen;
 	
@@ -36,10 +39,13 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 		
+		setup();
+		
 		if (DEBUG)
 			loadState();
 		
 		while (myIsRunning) {
+			myScreen = new Screen(null, null);
 			login();
 			
 			Account user = myScreen.getUser();
@@ -58,13 +64,6 @@ public final class UIController implements Runnable {
 	private void bidder() {
 		boolean shouldLoop = true;
 		
-		// starting the bidder UI with an auction selected and open
-		// to demonstrate user story 1
-		Data.getInstance().addAuction(new Auction(
-				(Nonprofit) Data.getInstance().getUser("mnickels"),
-				Data.getInstance().currentDateTime.plusDays(5),
-				"Marxism for Moms Annual Auction Spectacular",
-				"An auction for the everyday, working-class mom."));
 		Auction selectedAuction = Data.getInstance().getAuctions().get(0);
 		
 		LocalDateTime time = Data.getInstance().currentDateTime;
@@ -82,35 +81,110 @@ public final class UIController implements Runnable {
 		while (shouldLoop) {
 			Menu menu = new Menu(
 					"What would you like to do?",
-					new Input(),
-					new Option(1, "Place a bid"),
-					new Option(2, ""),
-					new Option(3, ""));
+					new Input(" -> "),
+					new Option(1, "Bid on an item"),
+					new Option(2, "Go back"),
+					new Option(3, "Exit AuctionCentral"));
 			
-			myScreen = new Screen(myScreen.getUser(), menu);
+			myScreen.setMenu(menu);
 			myScreen.display();
 			
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
-				
+				// bid
+				break;
+			case 2:
+			case 3:
+				shouldLoop = false;
+				break;
 			}
 		}
 	}
 	
 	private void nonprofit() {
+		boolean shouldLoop = true;
 		
+		LocalDateTime time = Data.getInstance().currentDateTime;
+		myScreen = new Screen(myScreen.getUser(), myScreen.getMenu(),
+				new Text(String.format("%s %d, %d. Total number of upcoming auctions: %d",
+						time.getMonth(),
+						time.getDayOfMonth(),
+						time.getYear(),
+						Data.getInstance().totalNumberOfUpcommingAuctions())));
+
+		while (shouldLoop) {
+			Menu menu = new Menu(
+					"What would you like to do?",
+					new Input(" -> "),
+					new Option(1, "Submit an auction request"),
+					new Option(2, "Add item to auction"),
+					new Option(3, "View my inventory list"),
+					new Option(4, "Exit AuctionCentral"));
+			
+			myScreen.setMenu(menu);
+			myScreen.display();
+			
+			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
+			case 1:
+				// auction request
+				break;
+			case 2:
+				// add item to auction
+				break;
+			case 4:
+				shouldLoop = false;
+				break;
+			}
+		}
 	}
 	
 	private void staff() {
-		
+		boolean shouldLoop = true;
+
+		while (shouldLoop) {
+			LocalDateTime time = Data.getInstance().currentDateTime;
+			myScreen = new Screen(myScreen.getUser(), myScreen.getMenu(),
+					new Text(String.format("%s %d, %d. Total number of upcoming auctions: %d",
+							time.getMonth(),
+							time.getDayOfMonth(),
+							time.getYear(),
+							Data.getInstance().totalNumberOfUpcommingAuctions())));
+			
+			Menu menu = new Menu(
+					"What would you like to do?",
+					new Input(" -> "),
+					new Option(1, "View calendar of upcoming auctions"),
+					new Option(2, "Administrative functions"),
+					new Option(3, "Exit AuctionCentral"));
+			
+			myScreen.setMenu(menu);
+			myScreen.display();
+			
+			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
+			case 1:
+				Menu calendarView = new OptionlessMenu(
+						"Specify a day to view (enter the two digit date), or -1 to go back",
+						new Input(" -> "));
+				Calendar c = new Calendar(Data.getInstance().currentDateTime);
+				
+				myScreen = new Screen(myScreen.getUser(), calendarView, c);
+				myScreen.display();
+				break;
+			case 2:
+				break;
+			case 3:
+				shouldLoop = false;
+				break;
+			}
+		}
 	}
-	
+
 	private void loadState() {
 		myScreen.setMenu(
-new Menu(
+				new Menu(
 						"Would you like to load a serializable Data file?",
 						new Input("\tfilename: ")));
-
+		myScreen.display();
 		if (!myScreen.getMenu().getInput().isEmpty()) {
 			try {
 				// Data.setData((Data) Serializer.readFile(myScreen.getMenu().getInput()));
@@ -120,13 +194,27 @@ new Menu(
 		}
 	}
 	
-	private void login() {
-		Data.getInstance().addUser("mnickels", new Nonprofit("Mike Nickels",
-				"mnickels", "mnickels@uw.edu", "(253)555-5555",
-				LocalDateTime.MAX, "Marxism for Moms"));
+	private void setup() {
+		Data.getInstance().addUser("anonprof", new Nonprofit("Nonprofit Mann",
+				"anonprof", "nonprof@aspca.org", "(253)555-5555",
+				LocalDateTime.MIN, "ASPCA"));
 		Data.getInstance().addUser("abidder", new Bidder("Bid McKinsley",
 				"abidder", "bid@email.com", "(253)555-5556", "123 Somewhere St., Notown"));
-		
+		Data.getInstance().addUser("astaff", new Staff("Staff Guy",
+				"astaff", "staffguy@auctioncentral.com", "(253)555-5557"));
+
+		Auction selectedAuction = new Auction(
+				(Nonprofit) Data.getInstance().getUser("anonprof"),
+				Data.getInstance().currentDateTime.plusDays(5),
+				"ASPCA Annual Fundraiser",
+				"An auction to save the the puppies.");
+		selectedAuction.addItem(new Item("Football signed by Russell Wilson", "Pete Carroll", 1,
+				"Good", "Medium-Small", "Storage unit 1102", new BigDecimal(750),
+				"A football signed by Seahawks quarterback Russell Wilson."));
+		Data.getInstance().addAuction(selectedAuction);
+	}
+	
+	private void login() {
 		myScreen.setMenu(
 				new OptionlessMenu(
 						"Login",

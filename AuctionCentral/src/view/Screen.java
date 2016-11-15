@@ -42,6 +42,8 @@ public class Screen implements UIComponent {
 		System.out.printf("%s\n", SLOGAN);
 		if (myUser != null) {
 			System.out.printf("%s logged in as %s\n\n", myUser.getName(), myUser.toString());
+		} else {
+			System.out.println();
 		}
 		if (myComponents != null) {
 			for (UIComponent c : myComponents) {

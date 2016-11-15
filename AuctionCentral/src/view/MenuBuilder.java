@@ -31,12 +31,7 @@ public class MenuBuilder {
 				new Input(),
 				getDateAndUpcomingAuctionsText());
 		
-		NONPROFIT_CALENDAR_VIEW = new OptionlessMenu(
-				"Specify a day to view (enter the two digit date), or -1 to go back",
-				new Input(" -> "),
-				// if we ever need this to update when the date advances, just rebuild all the menus when the date advances
-				getDateAndUpcomingAuctionsText(),
-				new Calendar(Data.getInstance().currentDateTime));
+		NONPROFIT_CALENDAR_VIEW = );
 		
 //		BIDDER_MAIN_MENU = new Menu(
 //				"What would you like to do?",
@@ -47,18 +42,14 @@ public class MenuBuilder {
 		NONPROFIT_MAIN_MENU.addOption(new Option(2, "Administrative functions", null));
 		NONPROFIT_MAIN_MENU.addOption(new Option(3, "Exit AuctionCentral", null));
 		
-		NONPROFIT_CALENDAR_VIEW.addOption(new Option(-1, null, NONPROFIT_MAIN_MENU));
+		NONPROFIT_CALENDAR_VIEW.addOption();
 		
 		BIDDER_MAIN_MENU.addOption(new Option(1, "Place a bid", BIDDER_AUCTION_MENU));
 		
 	}
 	
-	private static Text getDateAndUpcomingAuctionsText() {
-		return new Text(String.format("%s %d, %d. Total number of upcoming auctions: %d",
-				Data.getInstance().currentDateTime.getMonth(),
-				Data.getInstance().currentDateTime.getDayOfMonth(),
-				Data.getInstance().currentDateTime.getYear(),
-				Data.getInstance().totalNumberOfUpcommingAuctions()));
-	}
+//	private static Text getDateAndUpcomingAuctionsText() {
+//		return new Text(String.format());
+//	}
 
 }

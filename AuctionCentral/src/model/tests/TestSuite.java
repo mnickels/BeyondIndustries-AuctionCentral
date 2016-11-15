@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
 	AccountTest.class,
 	AuctionTest.class,
 	DataTest.class,
-	ItemTest.class
+	ItemTest.class,
+	SerializerTest.class
 })
 public class TestSuite {
 	// empty class body
