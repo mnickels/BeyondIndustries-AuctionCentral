@@ -437,7 +437,7 @@ public class DataTest {
 		//Set current date to 11/25 - should have 4 scheduled auctions, counting today's auctions
 		d.setCurrentDateTime(LocalDateTime.of(2016, 11, 25, 11, 00));
 		
-		int result = d.totalNumberOfUpcommingAuctions();
+		int result = d.totalNumberOfUpcomingAuctions();
 		assertEquals(4, result);
 	}
 	

@@ -82,17 +82,17 @@ public final class Serializer {
 		for(int i = 0; i < 24; i++) {
 			
 			Auction auc = new Auction((Nonprofit) d.getUser("Nonprofit " + i), 
-					d.getCurrentDateTime().plusWeeks(1).plusDays(i), 
+					d.getCurrentDateTime().plusWeeks(1).plusDays(i / 2), 
 					"AuctionName" + i, "AuctionDescr");
 			
 			auc.addItem(new Item("Item 1", "Donor 1", 1, "new", "medium", "address", 
 					BigDecimal.valueOf(50), "description"));
 			
 			auc.addItem(new Item("Item 2", "Donor 2", 1, "like new", "large", "address", 
-					BigDecimal.valueOf(50), "description"));
+					BigDecimal.valueOf(60), "description"));
 			
 			auc.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
-					BigDecimal.valueOf(50), "description"));
+					BigDecimal.valueOf(70), "description"));
 			
 			
 			d.addAuction(auc);
@@ -104,7 +104,19 @@ public final class Serializer {
 			System.out.println(a.getName() + " " + a.getNonprofit().getName());
 		}
 		
-		writeFile(d, "dataInstance24Auctions.ser");
+		writeFile(d, "24Auctions.ser");
+		
+		Data.destroyInstance();
+		
+		d = Data.getInstance();
+		d.addUser("np364", new Nonprofit("Nonprofit", "Nonprofit", "nonprofit@email.com",
+				"##########", d.currentDateTime.minusDays(364), "Some Kind of Org"));
+		d.addUser("np365", new Nonprofit("Nonprofit2", "Nonprofit2", "nonprofit2@email.com",
+				"##########", d.currentDateTime.minusDays(365), "Some Kind of Org"));
+		d.addUser("np366", new Nonprofit("Nonprofit3", "Nonprofit3", "nonprofit3@email.com",
+				"##########", d.currentDateTime.minusDays(366), "Some Kind of Org"));
+		
+		writeFile(d, "prevAuctions.ser");
 		
 		System.out.println("Done!");
 		

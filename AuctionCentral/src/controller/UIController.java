@@ -131,7 +131,7 @@ public final class UIController implements Runnable {
 					Menu m = new Menu("Enter bid of at least $" + selectedItem.getStartingBid()
 					+ " (no dollar sign or period after dollar amount):", new Input());
 					m.display();
-					int bid = Integer.parseInt(m.getInput());
+					String bid = m.getInput();
 					if (new BigDecimal(bid).compareTo(selectedItem.getStartingBid()) >= 0) {
 						myScreen.setMenu(new Menu(
 								"What would you like to do?",
@@ -144,7 +144,7 @@ public final class UIController implements Runnable {
 						case 1:
 							// bid successfully placed
 							selectedItem.addBid((Bidder) myScreen.getUser(), new BigDecimal(bid));
-							new Text(String.format("You have just placed a bid of $%d on %s.\n"
+							new Text(String.format("You have just placed a bid of $%s on %s.\n"
 									+ "AuctionCentral will notify you after %s %d, %d to let you know if\n"
 									+ "yours is the winning bid.", bid, selectedItem.getName(),
 									time.getMonth(), time.getDayOfMonth(), time.getYear())).display();
@@ -278,7 +278,7 @@ public final class UIController implements Runnable {
 
 				in = new Input("Please enter item starting bid: $");
 				in.display();
-				int startBid = Integer.parseInt(in.getInput());
+				String startBid = in.getInput();
 
 				in = new Input("Please enter donor's name: ");
 				in.display();
@@ -301,7 +301,7 @@ public final class UIController implements Runnable {
 				String address = in.getInput();
 
 				StringBuilder s = new StringBuilder();
-				s.append(String.format("%s: $%d\n", name, startBid));
+				s.append(String.format("%s: $%s\n", name, startBid));
 				s.append(String.format("Donated by %s\n", donor));
 				s.append(String.format("Quantity: %d\n", items));
 				s.append(String.format("Item Size: %s\n", size));
@@ -375,7 +375,7 @@ public final class UIController implements Runnable {
 							time.getMonth(),
 							time.getDayOfMonth(),
 							time.getYear(),
-							Data.getInstance().totalNumberOfUpcommingAuctions())));
+							Data.getInstance().totalNumberOfUpcomingAuctions())));
 
 			Menu menu = new Menu(
 					"What would you like to do?",

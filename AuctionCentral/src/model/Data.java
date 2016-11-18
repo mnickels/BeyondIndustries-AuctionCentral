@@ -65,7 +65,7 @@ public final class Data implements Serializable {
 		if ((!nonprofitHasFutureAuction(theAuction.getNonprofit())) 
 				&& (!theAuction.getNonprofit().isAuctionWithinYear())
 				&& getAuctionsForThisDay(theAuction.getDate().toLocalDate()).size() <= 1
-				&& (totalNumberOfUpcommingAuctions() < MAX_NUM_OF_UPCOMING_AUCTIONS)
+				&& (totalNumberOfUpcomingAuctions() < MAX_NUM_OF_UPCOMING_AUCTIONS)
 				&& currentDateTime.toLocalDate().plusMonths(1).plusDays(1).isAfter(theAuction.getDate().toLocalDate())
 				&& theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))) {
 				
@@ -199,7 +199,7 @@ public final class Data implements Serializable {
 	 * 
 	 * @return An integer representing the total number of upcoming auctions.
 	 */
-	public int totalNumberOfUpcommingAuctions() { 
+	public int totalNumberOfUpcomingAuctions() { 
 		int counter = 0;
 		for(Auction a : myAuctions) {
 			if (a.getDate().isAfter(currentDateTime) || 
