@@ -514,7 +514,5 @@ public final class UIController implements Runnable {
 			sb.append("\n");
 		}
 		return sb.toString();
-
 	}
-
 }
