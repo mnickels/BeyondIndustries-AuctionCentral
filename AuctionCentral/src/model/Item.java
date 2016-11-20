@@ -66,6 +66,13 @@ public class Item implements Serializable {
 		}
 	}
 	
+	/**
+	 * @return the BigDecimal bid matched up to the given Bidder, or null if Bidder did not bid on item.
+	 */
+	public BigDecimal removeBid(final Bidder theBidder) {
+		return myBids.remove(theBidder);
+	}
+	
 	public String getName() {
 		return myName;
 	}

@@ -91,5 +91,19 @@ public class ItemTest {
 		Map<Bidder, BigDecimal> theCheck = myItem.getBids();
 		assertTrue(theCheck.keySet().equals(myCheck.keySet()));
 	}
+	
+	@Test
+	public void testRemoveBidOnNonExistantBid() {
+		assertEquals(null, myItem.removeBid(myBidder));
+		assertEquals(new HashMap<Bidder, BigDecimal>(), myItem.getBids());
+	}
+	
+	@Test
+	public void testRemoveBidOnExistingBid() {
+		BigDecimal bid = new BigDecimal(200);
+		myItem.addBid(myBidder, bid);
+		assertEquals(bid, myItem.removeBid(myBidder));
+		assertEquals(new HashMap<Bidder, BigDecimal>(), myItem.getBids());
+	}
 
 }
