@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.lang.Math;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import model.users.Bidder;
  * @version November 9 2016
  */
 public class Item implements Serializable {
+	private static final int DAYS_IN_ADVANCE = 2;
 	private static final long serialVersionUID = 1L;
 	private String myName;
 	private String myDonor;
@@ -67,10 +70,16 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @return the BigDecimal bid matched up to the given Bidder, or null if Bidder did not bid on item.
+	 * @return null if Bidder did not bid on item or if theAuctionDate is more than two days away, or
+	 * the amount theBidder bid if neither of those are true.
 	 */
-	public BigDecimal removeBid(final Bidder theBidder) {
-		return myBids.remove(theBidder);
+	public BigDecimal removeBid(final Bidder theBidder, final LocalDateTime theAuctionDate) {
+		LocalDate check = LocalDateTime.now().toLocalDate().plusDays(DAYS_IN_ADVANCE);
+		if (check.isBefore(theAuctionDate.toLocalDate())) {
+			return myBids.remove(theBidder);
+		} else {
+			return null;
+		}
 	}
 	
 	public String getName() {

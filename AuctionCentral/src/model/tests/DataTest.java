@@ -419,14 +419,14 @@ public class DataTest {
 		
 		Data d = Data.getInstance();
 		
-		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
+		LocalDateTime ld = d.getCurrentDateTime();
 		
-		Nonprofit np2 = new Nonprofit(names[10], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-		Auction auc3 = new Auction(np2, LocalDateTime.of(2016, 11, 25, 11, 00), "AuctionName", "AuctionDescr");
+		//Nonprofit np2 = new Nonprofit(names[10], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
+		//Auction auc3 = new Auction(np2, LocalDateTime.of(2016, 11, 25, 11, 00), "AuctionName", "AuctionDescr");
 
-		d.addAuction(auc3);
+		//d.addAuction(auc3);
 
-		for(int i = 0; i < 7; i++) {
+		for(int i = 4; i < 11; i++) {
 			Nonprofit np = new Nonprofit(names[i], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
 			Auction auc = new Auction(np, ld.plusDays(i), "AuctionName", "AuctionDescr");
 			d.addAuction(auc);
@@ -435,7 +435,7 @@ public class DataTest {
 		//Auctions sheduled for: 11/21; 11/22; 11/23; 11/24; 11/25; 11/25; 11/26; 11/27;
 		
 		//Set current date to 11/25 - should have 4 scheduled auctions, counting today's auctions
-		d.setCurrentDateTime(LocalDateTime.of(2016, 11, 25, 11, 00));
+		//d.setCurrentDateTime(LocalDateTime.of(2016, 11, 25, 11, 00));
 		
 		int result = d.totalNumberOfUpcomingAuctions();
 		assertEquals(4, result);
@@ -449,7 +449,7 @@ public class DataTest {
 		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
 		
 		Nonprofit np2 = new Nonprofit(names[10], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-		Auction auc3 = new Auction(np2, LocalDateTime.of(2016, 11, 25, 11, 00), "AuctionName", "AuctionDescr");
+		Auction auc3 = new Auction(np2, LocalDateTime.now().plusDays(14), "AuctionName", "AuctionDescr");
 
 		d.addAuction(auc3);
 
@@ -492,11 +492,11 @@ public class DataTest {
 		Data d = Data.getInstance();
 		
 		Nonprofit np2 = new Nonprofit(names[10], "username", "email", "phonenumber", myLocalDateTime.minusYears(1), "FreePuppies");
-		Auction auc3 = new Auction(np2, LocalDateTime.of(2016, 11, 25, 11, 00), "MyUniqueAuctionName", "AuctionDescr");
+		Auction auc3 = new Auction(np2, LocalDateTime.now().plusDays(14), "MyUniqueAuctionName", "AuctionDescr");
 
 		d.addAuction(auc3);
 
-		String result = d.getAuctionForThisNonprofit(np2).getName();		
+		String result = d.getAuctionForThisNonprofit(np2).getName();
 		assertEquals("MyUniqueAuctionName", result);
 	}
 	
@@ -531,7 +531,7 @@ public class DataTest {
 	@Test
 	public void testGetUser() {
 		Data.getInstance().addUser("abc", new Bidder("name", "abc", "email", "phone", "addr"));
-		System.out.println(Data.getInstance().getUser("abc"));
+		//System.out.println(Data.getInstance().getUser("abc"));
 		assertNotNull(Data.getInstance().getUser("abc"));
 	}
 	
