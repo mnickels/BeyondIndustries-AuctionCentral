@@ -247,7 +247,8 @@ public final class Data implements Serializable {
 	 * @author Mike Nickels | mnickels@uw.edu
 	 */
 	public void setMaxNumberOfAuctions(int newMax) {
-		maxAuctions = newMax;
+		if (newMax > 0)
+			maxAuctions = newMax;
 	}
 	
 	/**

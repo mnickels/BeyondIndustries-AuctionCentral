@@ -535,6 +535,24 @@ public class DataTest {
 		assertNotNull(Data.getInstance().getUser("abc"));
 	}
 	
+	@Test
+	public void testSetMaxAuctionsToNegative() {
+		Data.getInstance().setMaxNumberOfAuctions(-5);
+		assertNotEquals(-5, Data.getInstance().getMaxNumberOfAuctions());
+	}
+	
+	@Test
+	public void testSetMaxAuctionsToZero() {
+		Data.getInstance().setMaxNumberOfAuctions(0);
+		assertNotEquals(0, Data.getInstance().getMaxNumberOfAuctions());
+	}
+	
+	@Test
+	public void testSetMaxAuctionsToPositive() {
+		Data.getInstance().setMaxNumberOfAuctions(5);
+		assertEquals(5, Data.getInstance().getMaxNumberOfAuctions());
+	}
+	
 	@After
 	public void cleanUp() {
 		Data.destroyInstance();
