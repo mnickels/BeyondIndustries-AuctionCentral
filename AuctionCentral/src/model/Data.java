@@ -27,7 +27,7 @@ public final class Data implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/** Maximum number of upcoming auctions. */
-	public final int MAX_NUM_OF_UPCOMING_AUCTIONS = 25;
+	private int maxAuctions = 25;
 	
 	/** ID for each item */
 	public static int itemID;
@@ -65,7 +65,7 @@ public final class Data implements Serializable {
 		if ((!nonprofitHasFutureAuction(theAuction.getNonprofit())) 
 				&& (!theAuction.getNonprofit().isAuctionWithinYear())
 				&& getAuctionsForThisDay(theAuction.getDate().toLocalDate()).size() <= 1
-				&& (totalNumberOfUpcomingAuctions() < MAX_NUM_OF_UPCOMING_AUCTIONS)
+				&& (totalNumberOfUpcomingAuctions() < maxAuctions)
 				&& currentDateTime.toLocalDate().plusMonths(1).plusDays(1).isAfter(theAuction.getDate().toLocalDate())
 				&& theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))) {
 				
@@ -231,6 +231,23 @@ public final class Data implements Serializable {
 			*/
 		
 		currentDateTime = theDateTime;
+	}
+	
+	/**
+	 * Gets the max number of auctions that can be scheduled at one time.
+	 * @return The max number of auctions that can be scheduled at one time.
+	 * @author Mike Nickels | mnickels@uw.edu
+	 */
+	public int getMaxNumberOfAuctions() {
+		return maxAuctions;
+	}
+	
+	/**
+	 * Sets the max number of auctions that can be scheduled at one time.
+	 * @author Mike Nickels | mnickels@uw.edu
+	 */
+	public void setMaxNumberOfAuctions(int newMax) {
+		maxAuctions = newMax;
 	}
 	
 	/**
