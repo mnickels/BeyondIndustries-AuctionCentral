@@ -79,6 +79,33 @@ public final class Data implements Serializable {
 	
 	/**
 	 * 
+	 * Removes (cancels) an auction from the system according to the business rules. If all business rules for
+	 * canceling an auction are satisfied, the auction is canceled (removed) from the list.
+	 * 
+	 * @param theAuction - An auction to be removed (canceled) from the list.
+	 * @return True if auction was successfully removed (canceled) from the list. False otherwise.
+	 */
+	public boolean removeAuction(final Auction theAuction) {
+		boolean r = false;
+		int i = 0;
+		//for every auction in the system
+		for(Auction a : myAuctions) {
+			//check if the auction that's about to be removed its nonprofit already exists in the system
+			//and if the current date is 2 days before the auction scheduled date.
+			if (theAuction.getNonprofit().getName().equals(a.getNonprofit().getName())
+					&& currentDateTime.isBefore(theAuction.getDate().minusDays(2))) {
+				myAuctions.remove(i);
+				r = true;
+				break;
+			}
+			i++;
+		}
+		
+		return r;
+	}
+	
+	/**
+	 * 
 	 * Checks if a specific nonprofit has future auction in the system
 	 * 
 	 * @param theNonprofit - A nonprofit to check
