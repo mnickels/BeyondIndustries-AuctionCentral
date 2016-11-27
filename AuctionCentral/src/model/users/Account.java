@@ -18,7 +18,7 @@ public class Account implements Serializable{
 	/**
 	 * Private name of the person holding the account
 	 */
-	private String myName;
+	protected String myName;
 	
 	/**
 	 * Private username of the account holder

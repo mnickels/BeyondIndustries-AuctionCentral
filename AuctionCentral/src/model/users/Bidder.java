@@ -55,7 +55,8 @@ public class Bidder extends Account {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Bidder");
+		sb.append(myName);
+		sb.append(" logged in as a Bidder\n");
 		return sb.toString();
 	}
 

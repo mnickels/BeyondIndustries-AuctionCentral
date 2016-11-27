@@ -1,8 +1,26 @@
 package controller;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.border.LineBorder;
 
 import model.Auction;
 import model.Data;
@@ -24,71 +42,115 @@ import view.Text;
  * @author Mike Nickels | mnickels@uw.edu
  * @version November 11 2016
  */
-public final class UIController implements Runnable {
+public final class UIController extends JFrame implements Runnable {
 
-	private static final boolean DEBUG = true;
+	private static final long serialVersionUID = 1L;
 
-	private Screen myScreen;
+	//private static final boolean DEBUG = true;
+
+	private JPanel myScreen;
 
 	private boolean myIsRunning;
+	
+	private Account myUser;
 
 	UIController() {
-		myScreen = new Screen(null, null);
+		super("AuctionCentral");
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		setName("AuctionCentral");
+
+        setSize(700, 700);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+		
+		JMenuBar menuBar = new JMenuBar();
+
+		JMenu menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_F);
+		menuBar.add(menu);
+
+		JMenuItem menuItem = new JMenuItem("Logout", KeyEvent.VK_L);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+		menuItem.setVisible(true);
+		
+		menuItem.addActionListener(new loginActionListener());
+		
+		menu.add(menuItem);
+		
+		setJMenuBar(menuBar);
+		
+		
+		
+		myUser = null;
+		myScreen = new JPanel(new BorderLayout());
 		myIsRunning = true;
+		//myScreen.setBackground(Color.WHITE);
+		
+		add(myScreen);
+		
+		setVisible(myIsRunning);
 	}
 
 	@Override
 	public void run() {
-
-		if (DEBUG)
-			loadState();
-		else
-			setup();
-
-		while (myIsRunning) {
-			myScreen = new Screen(null, null);
-			login();
-
-			Account user = myScreen.getUser();
-			if (user instanceof Bidder) {
-				bidder();
-			} else if (user instanceof Nonprofit) {
-				nonprofit();
-			} else if (user instanceof Staff) {
-				staff();
-			} else {
-				System.err.println("This should never be the case...");
-			}
-		}
+		//if (DEBUG)
+		//	loadState();
+		//else
+		setup();
+		login();
 	}
 
 	private void bidder() {
-		boolean shouldLoop = true;
-		
+		myScreen.setVisible(true);
+		myScreen.setEnabled(true);
 		List<Auction> auctions = Data.getInstance().getAuctions();
-		Option[] auctionOptions = new Option[auctions.size()];
-		for (int i = 0; i < auctions.size(); i++) {
-			auctionOptions[i] = new Option(i, auctions.get(i).getName());
+		JLabel label = new JLabel("<html>" + myUser + 
+				"<br>Please Select an Auction for More Information</html>");
+	    label.setFont(new Font("Verdana",1,20));
+		label.setOpaque(myIsRunning);
+		label.setVisible(myIsRunning);
+		label.setBorder(new LineBorder(Color.BLACK));
+	    myScreen.setBorder(new LineBorder(Color.BLACK));
+		myScreen.add(label, BorderLayout.NORTH);
+		for (final Auction a : auctions) {
+			JButton button = new JButton(a.getName() + " : " + a.getNonprofit().getOrganizationName());
+			button.addActionListener(new ActionListener() {
+			    public void actionPerformed(final ActionEvent e) {
+			        bidderChoseAuction(a);
+			    }
+			});
+			button.setBorder(new LineBorder(Color.BLACK));
+			myScreen.add(button, BorderLayout.CENTER);
+			button.setVisible(true);
+			button.setEnabled(true);
 		}
-
-		myScreen = new Screen(myScreen.getUser(), new Menu(
-				"Select an auction to choose from",
-				new Input(), auctionOptions));
-		myScreen.display();
-		
-		Auction selectedAuction = auctions.get(Integer.parseInt(myScreen.getMenu().getInput()));
-
+	}
+	
+	private void bidderChoseAuction(final Auction selectedAuction) {
+		boolean shouldLoop = true;
 		LocalDateTime time = selectedAuction.getDate();
 		int currentHour = time.getHour() % 12;
 		if (currentHour == 0) currentHour = 12;
-
-		Text header = new Text(String.format("%s, %s %d, %d, %d%s",
+		
+		myScreen.removeAll();
+		
+		JLabel label = new JLabel(String.format("<html>%s<br>%s, %s %d, %d, %d%s<br>%s</html>",
+				myUser.toString(),
 				selectedAuction.getName(),
 				time.getMonth(),
 				time.getDayOfMonth(),
 				time.getYear(),
 				currentHour,
-				time.getHour() < 12 ? "AM" : "PM"));
+				time.getHour() < 12 ? "AM" : "PM",
+				getBidderDisplay((Bidder) myUser, selectedAuction)));
+
+	    label.setFont(new Font("Verdana",1,20));
+		label.setOpaque(myIsRunning);
+		label.setVisible(myIsRunning);
+		label.setBorder(new LineBorder(Color.BLACK));
+		myScreen.add(label, BorderLayout.NORTH);
 
 		while (shouldLoop) {
 			myScreen = new Screen(myScreen.getUser(), myScreen.getMenu(),
@@ -448,20 +510,32 @@ public final class UIController implements Runnable {
 	}
 
 	private void login() {
-		myScreen.setMenu(
-				new Menu(
-						"Login",
-						new Input("Enter username: ")));
-		myScreen.display();
-
-		Account user = Data.getInstance().getUser(myScreen.getMenu().getInput());
-		while (user == null) {
-			System.out.println("Incorrect username.\n");
-			myScreen.getMenu().display();
-			user = Data.getInstance().getUser(myScreen.getMenu().getInput());
+		//myScreen.setMenu(new Menu("Login", new Input("Enter username: ")));
+		
+		while (myUser == null) {
+			try {
+				String text = JOptionPane.showInputDialog(this, "Please Enter Username: ");
+				
+				if (text == null) { // User hits cancel button on login.
+					System.exit(EXIT_ON_CLOSE);
+				}
+				myUser = Data.getInstance().getUser(text); 
+				if (myUser == null) {
+					throw new Exception("Invalid Username");
+				}
+			} catch (final Exception e){
+				JOptionPane.showMessageDialog(this, "This Username does not exist", e.toString(), 
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
-
-		myScreen = new Screen(user, myScreen.getMenu());
+		
+		if (myUser instanceof Bidder) {
+			bidder();
+		} else if (myUser instanceof Nonprofit) {
+			nonprofit();
+		} else if (myUser instanceof Staff) {
+			staff();
+		}
 	}
 
 	/**
@@ -473,7 +547,8 @@ public final class UIController implements Runnable {
 	 */
 	public String getBidderDisplay(Bidder theBidder, Auction theAuction) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ID    Item name                             Condition      Min bid  My bid\n");
+		//sb.append("<html>");
+		sb.append("ID    Item name                             Condition      Min bid  My bid<br>");
 		for (int i = 0; i < theAuction.getSize(); i++) {
 			Item tempItem = theAuction.getItems().get(i);
 			String whitespace = "";
@@ -511,8 +586,20 @@ public final class UIController implements Runnable {
 			if (tempItem.getBid(theBidder) != null) {
 				sb.append("$" + tempItem.getBid(theBidder));
 			}
-			sb.append("\n");
+			sb.append("<br>");
 		}
 		return sb.toString();
+	}
+	
+	private class loginActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(final ActionEvent e) {
+			myUser = null;
+			myScreen.removeAll();
+			login();
+			
+		}
+		
 	}
 }

@@ -1,5 +1,7 @@
 package view;
 
+import javax.swing.JPanel;
+
 import model.users.Account;
 
 /**
@@ -7,8 +9,10 @@ import model.users.Account;
  * @author Mike Nickels | mnickels@uw.edu
  * @version November 11 2016
  */
-public class Screen implements UIComponent {
+public class Screen extends JPanel implements UIComponent {
 	
+	private static final long serialVersionUID = 1L;
+
 	/** The AuctionCentral slogan. */
 	private static final String SLOGAN = "AuctionCentral: the auctioneer for non-profit organizations.";
 	
@@ -19,6 +23,7 @@ public class Screen implements UIComponent {
 	private UIComponent[] myComponents;
 	
 	public Screen(Account theUser, Menu theStartingMenu, UIComponent... theComponents) {
+		super();
 		myUser = theUser;
 		myMenu = theStartingMenu;
 		myComponents = theComponents;
