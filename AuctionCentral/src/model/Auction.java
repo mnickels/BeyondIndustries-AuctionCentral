@@ -190,22 +190,47 @@ public class Auction implements Serializable{
 	 * remove an item from the auction
 	 * 
 	 * @param theItem the item that will be removed
+	 * @return 0 if item is removed, 1 if no item exist, 2 if within 2 days
 	 */
-	public boolean removeItem(Item theItem) {
-		boolean result = false;
+	public int removeItem(Item theItem) {
+		int result = 0;
+		int itemIndex = findItem(theItem);
+		
+			if (itemIndex == -1) {
+				result = 1;
+			} else {
+				if (LocalDateTime.now().isAfter(myDate.minusDays(2))) {
+					result = 2;
+				} else {
+					myItems.remove(itemIndex);
+					size--;
+					result = 0;
+				}
+			}
+
+		return result;
+	}
+	
+	/**
+	 * find the item from the item list and its index in the list.
+	 * 
+	 * @param the item to be found
+	 * 
+	 * @return item index if item is found, or -1 if item is not found
+	 */
+	public int findItem(Item theItem) {
+		int result = -1;
 		
 		for (int i = 0; i < size; i++) {
 			if (theItem.getName().equals(myItems.get(i).getName())) {
-				myItems.remove(i);
-				size--;
-				result = true;
+				result = i;
 				break;
 			}
 		}
 		
-
 		return result;
 	}
+	
 	
 	public String toString() {
 		String result = "Auction: ";
