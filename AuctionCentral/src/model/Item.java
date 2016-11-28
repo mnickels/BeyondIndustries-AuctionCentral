@@ -172,7 +172,7 @@ public class Item implements Serializable {
 		sb.append("\nStarting Bid: ");
 		sb.append(getStartingBid().toString());
 		if (myDescription != null && !myDescription.equals("")) {
-			sb.append('\n');
+			sb.append("\n");
 			sb.append(myDescription);
 		}
 		return sb.toString();

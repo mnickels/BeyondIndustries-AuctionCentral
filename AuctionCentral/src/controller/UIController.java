@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
 import model.users.Staff;
+import view.BidderPanel;
 import view.Calendar;
 import view.Input;
 import view.Menu;
@@ -57,11 +59,14 @@ public final class UIController extends JFrame implements Runnable {
 	UIController() {
 		super("AuctionCentral");
 		
+		setLayout(new BorderLayout());
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		setName("AuctionCentral");
 
-        setSize(700, 700);
+        setMinimumSize(new Dimension(700, 700));
+        this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 		
@@ -80,15 +85,9 @@ public final class UIController extends JFrame implements Runnable {
 		menu.add(menuItem);
 		
 		setJMenuBar(menuBar);
-		
-		
-		
-		myUser = null;
-		myScreen = new JPanel(new BorderLayout());
 		myIsRunning = true;
-		//myScreen.setBackground(Color.WHITE);
 		
-		add(myScreen);
+		myScreen = new JPanel(new BorderLayout());
 		
 		setVisible(myIsRunning);
 	}
@@ -103,139 +102,15 @@ public final class UIController extends JFrame implements Runnable {
 	}
 
 	private void bidder() {
+		myScreen = new BidderPanel((Bidder) myUser);
 		myScreen.setVisible(true);
 		myScreen.setEnabled(true);
-		List<Auction> auctions = Data.getInstance().getAuctions();
-		JLabel label = new JLabel("<html>" + myUser + 
-				"<br>Please Select an Auction for More Information</html>");
-	    label.setFont(new Font("Verdana",1,20));
-		label.setOpaque(myIsRunning);
-		label.setVisible(myIsRunning);
-		label.setBorder(new LineBorder(Color.BLACK));
-	    myScreen.setBorder(new LineBorder(Color.BLACK));
-		myScreen.add(label, BorderLayout.NORTH);
-		for (final Auction a : auctions) {
-			JButton button = new JButton(a.getName() + " : " + a.getNonprofit().getOrganizationName());
-			button.addActionListener(new ActionListener() {
-			    public void actionPerformed(final ActionEvent e) {
-			        bidderChoseAuction(a);
-			    }
-			});
-			button.setBorder(new LineBorder(Color.BLACK));
-			myScreen.add(button, BorderLayout.CENTER);
-			button.setVisible(true);
-			button.setEnabled(true);
-		}
+		this.add(myScreen);
+		revalidate();
+		repaint();
 	}
 	
-	private void bidderChoseAuction(final Auction selectedAuction) {
-		boolean shouldLoop = true;
-		LocalDateTime time = selectedAuction.getDate();
-		int currentHour = time.getHour() % 12;
-		if (currentHour == 0) currentHour = 12;
-		
-		myScreen.removeAll();
-		
-		JLabel label = new JLabel(String.format("<html>%s<br>%s, %s %d, %d, %d%s<br>%s</html>",
-				myUser.toString(),
-				selectedAuction.getName(),
-				time.getMonth(),
-				time.getDayOfMonth(),
-				time.getYear(),
-				currentHour,
-				time.getHour() < 12 ? "AM" : "PM",
-				getBidderDisplay((Bidder) myUser, selectedAuction)));
-
-	    label.setFont(new Font("Verdana",1,20));
-		label.setOpaque(myIsRunning);
-		label.setVisible(myIsRunning);
-		label.setBorder(new LineBorder(Color.BLACK));
-		myScreen.add(label, BorderLayout.NORTH);
-
-		while (shouldLoop) {
-			myScreen = new Screen(myScreen.getUser(), myScreen.getMenu(),
-					header, new Text(getBidderDisplay((Bidder) myScreen.getUser(), selectedAuction)));
-
-			Menu menu = new Menu(
-					"What would you like to do?",
-					new Input(),
-					new Option(1, "Bid on an item"),
-					new Option(2, "Go back"),
-					new Option(3, "Exit AuctionCentral"));
-
-			myScreen.setMenu(menu);
-			myScreen.display();
-
-			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
-			case 1:
-				myScreen.setMenu(new Menu(
-						"Type item ID to get more information and bid on the item",
-						new Input()));
-				myScreen.display();
-
-				Item selectedItem = null;
-				for (Item i : selectedAuction.getItems()) {
-					if (i.getItemID() == Integer.parseInt(myScreen.getMenu().getInput()))
-						selectedItem = i;
-				}
-				myScreen = new Screen(myScreen.getUser(), new Menu(
-						"What would you like to do?", new Input(),
-						new Option(1, "Place bid on this item"),
-						new Option(2, "Go back"),
-						new Option(3, "Exit AuctionCentral")),
-						header,
-						new Text(String.format("%s\t%s\t$%s\n%s", selectedItem.getName(),
-								selectedItem.getCondition(), selectedItem.getStartingBid(),
-								selectedItem.getDescription())));
-				myScreen.display();
-				switch (Integer.parseInt(myScreen.getMenu().getInput())) {
-				case 1:
-					Menu m = new Menu("Enter bid of at least $" + selectedItem.getStartingBid()
-					+ " (no dollar sign or period after dollar amount):", new Input());
-					m.display();
-					String bid = m.getInput();
-					if (new BigDecimal(bid).compareTo(selectedItem.getStartingBid()) >= 0) {
-						myScreen.setMenu(new Menu(
-								"What would you like to do?",
-								new Input(),
-								new Option(1, "Place bid of $" + bid + " on " + selectedItem.getName()),
-								new Option(2, "Go back without placing a bid"),
-								new Option(3, "Exit AuctionCentral without placing a bid")));
-						myScreen.display();
-						switch (Integer.parseInt(myScreen.getMenu().getInput())) {
-						case 1:
-							// bid successfully placed
-							selectedItem.addBid((Bidder) myScreen.getUser(), new BigDecimal(bid));
-							new Text(String.format("You have just placed a bid of $%s on %s.\n"
-									+ "AuctionCentral will notify you after %s %d, %d to let you know if\n"
-									+ "yours is the winning bid.", bid, selectedItem.getName(),
-									time.getMonth(), time.getDayOfMonth(), time.getYear())).display();
-							break;
-						case 3:
-							shouldLoop = false;
-						case 2:
-							new Text("No bid was placed.").display();
-							break;
-						}
-					} else {
-						new Text("Sorry, you cannot place a bid for that amount.").display();
-					}
-					break;
-				case 2:
-					break;
-				case 3:
-					shouldLoop = false;
-					break;
-				}
-				break;
-			case 2:
-			case 3:
-				shouldLoop = false;
-				break;
-			}
-		}
-	}
-
+	
 	private void nonprofit() {
 		boolean shouldLoop = true;
 
@@ -512,6 +387,11 @@ public final class UIController extends JFrame implements Runnable {
 	private void login() {
 		//myScreen.setMenu(new Menu("Login", new Input("Enter username: ")));
 		
+		remove(myScreen);
+		
+		revalidate();
+		repaint();
+		
 		while (myUser == null) {
 			try {
 				String text = JOptionPane.showInputDialog(this, "Please Enter Username: ");
@@ -536,59 +416,6 @@ public final class UIController extends JFrame implements Runnable {
 		} else if (myUser instanceof Staff) {
 			staff();
 		}
-	}
-
-	/**
-	 * Presents a string to display an Auction for a specific bidder.
-	 * @param theBidder the bidder user observing the auction.
-	 * @param theAuction the Auction being displayed
-	 * @return A string representing the view that the user should see.
-	 * @author Ming Lam
-	 */
-	public String getBidderDisplay(Bidder theBidder, Auction theAuction) {
-		StringBuilder sb = new StringBuilder();
-		//sb.append("<html>");
-		sb.append("ID    Item name                             Condition      Min bid  My bid<br>");
-		for (int i = 0; i < theAuction.getSize(); i++) {
-			Item tempItem = theAuction.getItems().get(i);
-			String whitespace = "";
-
-			for (int j = 0; j < 6 - Integer.toString(tempItem.getItemID()).length(); j++) {
-				whitespace += " ";
-			}
-			sb.append(tempItem.getItemID() + whitespace);
-
-			whitespace = "";
-
-			if (tempItem.getName().length() > 32) {
-				sb.append(tempItem.getName().substring(0, 32) + "...   ");
-			} else {
-				for (int j = 0; j < 38 - tempItem.getName().length(); j++) {
-					whitespace += " ";
-				}
-				sb.append(tempItem.getName() + whitespace);
-			}
-
-
-			whitespace = "";
-			for (int j = 0; j < 15 - tempItem.getCondition().length(); j++) {
-				whitespace += " ";
-			}
-			sb.append(tempItem.getCondition() + whitespace);
-
-			whitespace = "";
-			for (int j = 0; j < 11 - tempItem.getStartingBid().toString().length(); j++) {
-				whitespace += " ";
-			}
-
-			sb.append("$" + tempItem.getStartingBid().toString().substring(0, tempItem.getStartingBid().toString().length() - 3) + whitespace);
-			
-			if (tempItem.getBid(theBidder) != null) {
-				sb.append("$" + tempItem.getBid(theBidder));
-			}
-			sb.append("<br>");
-		}
-		return sb.toString();
 	}
 	
 	private class loginActionListener implements ActionListener {
