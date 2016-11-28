@@ -55,6 +55,13 @@ public class Auction implements Serializable{
 	 */
 	private String myDescription;
 	
+	public static final int SUCCESS = 0;
+	
+	public static final int FAILNOITEMEXIST = 1;
+	
+	public static final int FAILWITHINTWODAYS = 2;
+	
+	
 	/**
 	 * The constructor of the Auction class
 	 * 
@@ -197,14 +204,14 @@ public class Auction implements Serializable{
 		int itemIndex = findItem(theItem);
 		
 			if (itemIndex == -1) {
-				result = 1;
+				result = FAILNOITEMEXIST;
 			} else {
 				if (LocalDateTime.now().isAfter(myDate.minusDays(2))) {
-					result = 2;
+					result = FAILWITHINTWODAYS;
 				} else {
 					myItems.remove(itemIndex);
 					size--;
-					result = 0;
+					result = SUCCESS;
 				}
 			}
 
@@ -257,5 +264,4 @@ public class Auction implements Serializable{
 		return result;
 		
 	}
-	
 }
