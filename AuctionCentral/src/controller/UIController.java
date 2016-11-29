@@ -133,33 +133,10 @@ public final class UIController extends JFrame implements Runnable {
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNCANCELAUCTIONREQUEST);
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNADDITEM);
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNREMOVEITEM);
-
+ 
 			}
 			
 			/*
-			if (currentAuction != null) {
-				myScreen = new Screen(myScreen.getUser(), new Menu(
-						"What would you like to do?",
-						new Input(),
-						new Option(1, "Submit an auction request"),
-						new Option(2, "Add item to auction"),
-						new Option(3, "View my inventory list"),
-						new Option(4, "Exit AuctionCentral")),
-						new Text(String.format("Upcoming Auction: %s on %s %d, %d",
-								currentAuction.getName(), currentAuction.getDate().getMonth(),
-								currentAuction.getDate().getDayOfMonth(),
-								currentAuction.getDate().getYear())));
-			} else {
-				myScreen = new Screen(myScreen.getUser(), new Menu(
-						"What would you like to do?",
-						new Input(),
-						new Option(1, "Submit an auction request"),
-						new Option(2, "Add item to auction"),
-						new Option(3, "View my inventory list"),
-						new Option(4, "Exit AuctionCentral")));
-			}
-			myScreen.display();
-
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
 				// auction request
