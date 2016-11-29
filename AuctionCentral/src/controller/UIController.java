@@ -35,6 +35,7 @@ import view.BidderPanel;
 import view.Calendar;
 import view.Input;
 import view.Menu;
+import view.NonprofitPanel;
 import view.Option;
 import view.Screen;
 import view.Text;
@@ -114,9 +115,15 @@ public final class UIController extends JFrame implements Runnable {
 	private void nonprofit() {
 		boolean shouldLoop = true;
 
-		while (shouldLoop) {
-			Nonprofit user = (Nonprofit) myScreen.getUser();
-			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(user);
+		//while (shouldLoop) {
+			myScreen = new NonprofitPanel ((Nonprofit) myUser);
+			this.add(myScreen);
+			revalidate();
+			repaint();
+			
+			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) myUser);
+
+			/*
 			if (currentAuction != null) {
 				myScreen = new Screen(myScreen.getUser(), new Menu(
 						"What would you like to do?",
@@ -299,7 +306,8 @@ public final class UIController extends JFrame implements Runnable {
 				shouldLoop = false;
 				break;
 			}
-		}
+			*/
+		//}
 	}
 
 	private void staff() {
