@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Month;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,6 +23,14 @@ import model.users.Nonprofit;
 
 public class NonprofitPanel extends JPanel {
 	
+	public static final int BTNSUBMITAUCTIONREQUEST = 1;
+	
+	public static final int BTNCANCELAUCTIONREQUEST = 2;
+	
+	public static final int BTNADDITEM = 3;
+	
+	public static final int BTNREMOVEITEM = 4;
+	
 	/**
 	 * 
 	 */
@@ -30,6 +39,15 @@ public class NonprofitPanel extends JPanel {
 	private Nonprofit myNonprofit;
 	
 	private JTextArea myDisplayLabel;
+	
+	private JButton myBtnSubmitAuctionRequest;
+	
+	private JButton myBtnCancelAuctionRequest;
+	
+	private JButton myBtnAddItem;
+	
+	private JButton myBtnRemoveItem;
+
 		
 	public NonprofitPanel (Nonprofit theNonprofit) {
 		super();
@@ -43,21 +61,21 @@ public class NonprofitPanel extends JPanel {
 	private void mainMenu() {
 		//Create and initialize every button
 		
-		JButton btnSubmitAuctionRequest, btnCancelAuctionRequest, btnAddItem, btnRemoveItem;
-		btnSubmitAuctionRequest = new JButton("Proceed");
-		btnCancelAuctionRequest = new JButton("Proceed");
-		btnAddItem = new JButton("Proceed");
-		btnRemoveItem = new JButton("Proceed");
+		myBtnSubmitAuctionRequest = new JButton("Proceed");
+		myBtnCancelAuctionRequest = new JButton("Proceed");
+		myBtnAddItem = new JButton("Proceed");
+		myBtnRemoveItem = new JButton("Proceed");
 		
-		//Add button to the panel		
 		
 		initializeMenu("Main Menu");
+		myDisplayLabel.setText(myNonprofit.getName() + " logged in as a Nonprofit");
+		
 		
 		//Submit Auction Request Button
-		btnSubmitAuctionRequest.setBounds(580, 370, 100, 50);
-		add(btnSubmitAuctionRequest);
+		myBtnSubmitAuctionRequest.setBounds(580, 370, 100, 50);
+		add(myBtnSubmitAuctionRequest);
 		
-		btnSubmitAuctionRequest.addActionListener(new ActionListener () {
+		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitAuctionRequestMenu();
@@ -65,10 +83,10 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		//Cancel Auction Request Button
-		btnCancelAuctionRequest.setBounds(580, 440, 100, 50);
-		add(btnCancelAuctionRequest);
+		myBtnCancelAuctionRequest.setBounds(580, 440, 100, 50);
+		add(myBtnCancelAuctionRequest);
 		
-		btnCancelAuctionRequest.addActionListener(new ActionListener () {
+		myBtnCancelAuctionRequest.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -78,10 +96,10 @@ public class NonprofitPanel extends JPanel {
 
 		//Add Item Button
 		
-		btnAddItem.setBounds(580, 510, 100, 50);
-		add(btnAddItem);
+		myBtnAddItem.setBounds(580, 510, 100, 50);
+		add(myBtnAddItem);
 		
-		btnAddItem.addActionListener(new ActionListener () {
+		myBtnAddItem.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -90,10 +108,10 @@ public class NonprofitPanel extends JPanel {
 		});
 
 		//Remove Item Button
-		btnRemoveItem.setBounds(580, 580, 100, 50);
-		add(btnRemoveItem);
+		myBtnRemoveItem.setBounds(580, 580, 100, 50);
+		add(myBtnRemoveItem);
 		
-		btnRemoveItem.addActionListener(new ActionListener () {
+		myBtnRemoveItem.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -198,16 +216,36 @@ public class NonprofitPanel extends JPanel {
 
 		
 		myDisplayLabel = new JTextArea();
+		myDisplayLabel.setFont(myDisplayLabel.getFont().deriveFont(16f));
 		myDisplayLabel.setEditable(false);
 		myDisplayLabel.setBounds(new Rectangle(20, 20, 660, 330));
 		TitledBorder title;
 		Border blackline = BorderFactory.createLineBorder(Color.black);
-		title = BorderFactory.createTitledBorder(
-                blackline, theTitle);
+		title = BorderFactory.createTitledBorder(blackline, theTitle);
 		title.setTitleJustification(TitledBorder.CENTER);
 		myDisplayLabel.setBorder(title);
 		add(myDisplayLabel);
 		
 		repaint();
+	}
+	
+	public void displayUpcomingAuction(String theName, Month theMonth, int theDay, int theYear) {
+		myDisplayLabel.append("\n\n");
+		myDisplayLabel.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+				theName, theMonth, theDay, theYear));
+	}
+	
+	public void disableButton(int theButtonCode) {
+		switch (theButtonCode) {
+			case 1: myBtnSubmitAuctionRequest.setEnabled(false);
+					break;
+			case 2: myBtnCancelAuctionRequest.setEnabled(false);
+					break;
+			case 3: myBtnAddItem.setEnabled(false);
+					break;
+			case 4: myBtnRemoveItem.setEnabled(false);
+					break;
+			default: break;
+		}
 	}
 }

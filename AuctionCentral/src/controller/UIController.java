@@ -116,13 +116,26 @@ public final class UIController extends JFrame implements Runnable {
 		boolean shouldLoop = true;
 
 		//while (shouldLoop) {
-			myScreen = new NonprofitPanel ((Nonprofit) myUser);
+			myScreen = new NonprofitPanel((Nonprofit) myUser);
 			this.add(myScreen);
 			revalidate();
 			repaint();
 			
 			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) myUser);
+			if (currentAuction != null) {
+				((NonprofitPanel) myScreen).displayUpcomingAuction(currentAuction.getName(), 
+						currentAuction.getDate().getMonth(), 
+						currentAuction.getDate().getDayOfMonth(), 
+						currentAuction.getDate().getYear());
+				
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNSUBMITAUCTIONREQUEST);
+			} else {
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNCANCELAUCTIONREQUEST);
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNADDITEM);
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNREMOVEITEM);
 
+			}
+			
 			/*
 			if (currentAuction != null) {
 				myScreen = new Screen(myScreen.getUser(), new Menu(
