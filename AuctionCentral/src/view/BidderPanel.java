@@ -57,18 +57,25 @@ public class BidderPanel extends JPanel {
 				"<br><br>Main Menu: Please Select an Auction for More Information</html>");
 		add(myLabel, BorderLayout.NORTH);
 		List<Auction> auctions = myData.getAuctions();
+		
+		JPanel buttons = new JPanel(new GridLayout());
+		
 		for (final Auction a : auctions) {
-			JButton button = new JButton(a.getName() + " : " + a.getNonprofit().getOrganizationName());
-			button.addActionListener(new ActionListener() {
-			    public void actionPerformed(final ActionEvent e) {
-			        choseAuction(a);
-			    }
-			});
-			button.setBorder(new LineBorder(Color.BLACK));
-			add(button, BorderLayout.CENTER);
-			button.setVisible(true);
-			button.setEnabled(true);
+			if (a.getDate().isAfter(LocalDateTime.now())) {
+				JButton button = new JButton(a.getName() + " : " + a.getNonprofit().getOrganizationName());
+				button.addActionListener(new ActionListener() {
+				    public void actionPerformed(final ActionEvent e) {
+				        choseAuction(a);
+				    }
+				});
+				button.setBorder(new LineBorder(Color.BLACK));
+				buttons.add(button);
+				button.setVisible(true);
+				button.setEnabled(true);
+			}
 		}
+		
+		add(buttons);
 		
 		revalidate();
 		repaint();
@@ -251,7 +258,7 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
-		buttons.add(back, BorderLayout.SOUTH);
+		buttons.add(back, BorderLayout.EAST);
 		back.setVisible(true);
 		back.setEnabled(true);
 		

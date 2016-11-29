@@ -65,7 +65,7 @@ public final class UIController extends JFrame implements Runnable {
 		
 		setName("AuctionCentral");
 
-        setMinimumSize(new Dimension(700, 700));
+        setMinimumSize(new Dimension(800, 700));
         this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

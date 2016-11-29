@@ -155,7 +155,9 @@ public class Item implements Serializable {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Name: ");
+		sb.append("Item ID: ");
+		sb.append(myItemID);
+		sb.append("\nName: ");
 		sb.append(myName);
 		if (myDonor != null && !myDonor.equals("")) {
 			sb.append("\nDonor: ");
