@@ -366,6 +366,11 @@ public class NonprofitPanel extends JPanel {
 		btnAddItem.setBounds(680, 370, 100, 70);
 		add(btnAddItem);
 		
+		JButton btnCancelItem = new JButton("Cancel");
+		btnCancelItem.setBounds(680, 460, 100, 70);
+		btnCancelItem.setVisible(false);
+		add(btnCancelItem);
+		
 		JButton btnBackItem = new JButton("Back");
 		btnBackItem.setBounds(680, 550, 100, 70);
 		add(btnBackItem);
@@ -374,7 +379,13 @@ public class NonprofitPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mainMenu();
+				if (btnAddItem.getText().equals("Submit")) {
+					btnAddItem.setForeground(Color.RED);
+					btnAddItem.setText("Comfirm");
+					btnCancelItem.setVisible(true);
+				} else {
+					mainMenu();
+				}
 			}
 		});
 		
@@ -391,6 +402,8 @@ public class NonprofitPanel extends JPanel {
 	private void RemoveItemMenu() {
 		initializeMenu("Remove Item");
 		myDisplayLabel.setBounds(new Rectangle(20, 20, 760, 100));
+		myDisplayLabel.setText("Below is a list of all the items in the Auction\n"
+				+ "Choose the one you want to remove and click on the remove button.");
 		String[] columnNames = {"Name", "Donor", "Quantity", "Condition", "Size", "Starting Bid"};
 		Object[][] auctionItems = myData.getAuctionItems(myNonprofit);
 		JTable itemTable = new JTable(auctionItems, columnNames);
@@ -411,6 +424,41 @@ public class NonprofitPanel extends JPanel {
 	    itemList.setSelectedIndex(0);
 		itemList.setBounds(new Rectangle(20, 440, 250, 20));
 		add(itemList);
+		
+		JButton btnAddItem = new JButton("Submit");
+		btnAddItem.setBounds(680, 370, 100, 70);
+		add(btnAddItem);
+		
+		JButton btnCancelItem = new JButton("Cancel");
+		btnCancelItem.setBounds(680, 460, 100, 70);
+		btnCancelItem.setVisible(false);
+		add(btnCancelItem);
+		
+		JButton btnBackItem = new JButton("Back");
+		btnBackItem.setBounds(680, 550, 100, 70);
+		add(btnBackItem);
+		
+		btnAddItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (btnAddItem.getText().equals("Submit")) {
+					btnAddItem.setForeground(Color.RED);
+					btnAddItem.setText("Comfirm");
+					btnCancelItem.setVisible(true);
+				} else {
+					mainMenu();
+				}
+			}
+		});
+		
+		btnBackItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainMenu();
+			}
+		});
 		
 		this.revalidate();
 		this.repaint();
