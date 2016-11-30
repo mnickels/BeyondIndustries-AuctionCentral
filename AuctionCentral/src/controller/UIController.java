@@ -35,6 +35,7 @@ import view.BidderPanel;
 import view.Calendar;
 import view.Input;
 import view.Menu;
+import view.NonprofitPanel;
 import view.Option;
 import view.Screen;
 import view.Text;
@@ -114,32 +115,28 @@ public final class UIController extends JFrame implements Runnable {
 	private void nonprofit() {
 		boolean shouldLoop = true;
 
-		while (shouldLoop) {
-			Nonprofit user = (Nonprofit) myScreen.getUser();
-			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(user);
+		//while (shouldLoop) {
+			myScreen = new NonprofitPanel((Nonprofit) myUser);
+			this.add(myScreen);
+			revalidate();
+			repaint();
+			
+			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) myUser);
 			if (currentAuction != null) {
-				myScreen = new Screen(myScreen.getUser(), new Menu(
-						"What would you like to do?",
-						new Input(),
-						new Option(1, "Submit an auction request"),
-						new Option(2, "Add item to auction"),
-						new Option(3, "View my inventory list"),
-						new Option(4, "Exit AuctionCentral")),
-						new Text(String.format("Upcoming Auction: %s on %s %d, %d",
-								currentAuction.getName(), currentAuction.getDate().getMonth(),
-								currentAuction.getDate().getDayOfMonth(),
-								currentAuction.getDate().getYear())));
+				((NonprofitPanel) myScreen).displayUpcomingAuction(currentAuction.getName(), 
+						currentAuction.getDate().getMonth(), 
+						currentAuction.getDate().getDayOfMonth(), 
+						currentAuction.getDate().getYear());
+				
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNSUBMITAUCTIONREQUEST);
 			} else {
-				myScreen = new Screen(myScreen.getUser(), new Menu(
-						"What would you like to do?",
-						new Input(),
-						new Option(1, "Submit an auction request"),
-						new Option(2, "Add item to auction"),
-						new Option(3, "View my inventory list"),
-						new Option(4, "Exit AuctionCentral")));
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNCANCELAUCTIONREQUEST);
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNADDITEM);
+				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNREMOVEITEM);
+ 
 			}
-			myScreen.display();
-
+			
+			/*
 			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
 			case 1:
 				// auction request
@@ -299,7 +296,8 @@ public final class UIController extends JFrame implements Runnable {
 				shouldLoop = false;
 				break;
 			}
-		}
+			*/
+		//}
 	}
 
 	private void staff() {
