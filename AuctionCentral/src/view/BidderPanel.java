@@ -213,6 +213,8 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
+		ScrollPane pane = new ScrollPane();
+		
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 		
 		for (final Item i : theAuction.getItems()) {
@@ -240,7 +242,9 @@ public class BidderPanel extends JPanel {
 		back.setVisible(true);
 		back.setEnabled(true);
 		
-		add(buttons);
+		pane.add(buttons);
+		
+		add(pane);
 		
 		revalidate();
 		repaint();
