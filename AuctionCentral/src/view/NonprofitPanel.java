@@ -8,17 +8,21 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import model.Auction;
+import model.Data;
 import model.users.Nonprofit;
 
 public class NonprofitPanel extends JPanel {
@@ -44,14 +48,25 @@ public class NonprofitPanel extends JPanel {
 	
 	private JButton myBtnCancelAuctionRequest;
 	
+	private JButton myYes;
+	
+	private JButton myNo;
+	
+	private JButton myYes2;
+	
+	private JButton myNo2;
+	
 	private JButton myBtnAddItem;
 	
 	private JButton myBtnRemoveItem;
+	
+	private Data myData;
 
 		
 	public NonprofitPanel (Nonprofit theNonprofit) {
 		super();
 		myNonprofit = theNonprofit;
+		myData = Data.getInstance();
 		this.setLayout(null);
 		mainMenu();
 		setVisible(true);
@@ -60,11 +75,10 @@ public class NonprofitPanel extends JPanel {
 	
 	private void mainMenu() {
 		//Create and initialize every button
-		
-		myBtnSubmitAuctionRequest = new JButton("Proceed");
-		myBtnCancelAuctionRequest = new JButton("Proceed");
-		myBtnAddItem = new JButton("Proceed");
-		myBtnRemoveItem = new JButton("Proceed");
+		myBtnSubmitAuctionRequest = new JButton("Submit Auction Request");
+		myBtnCancelAuctionRequest = new JButton("Cancel Auction Request");
+		myBtnAddItem = new JButton("Add Item");
+		myBtnRemoveItem = new JButton("Remove Item");
 		
 		
 		initializeMenu("Main Menu");
@@ -72,7 +86,7 @@ public class NonprofitPanel extends JPanel {
 		
 		
 		//Submit Auction Request Button
-		myBtnSubmitAuctionRequest.setBounds(580, 370, 100, 50);
+		myBtnSubmitAuctionRequest.setBounds(480, 370, 200, 50);
 		add(myBtnSubmitAuctionRequest);
 		
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
@@ -83,7 +97,7 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		//Cancel Auction Request Button
-		myBtnCancelAuctionRequest.setBounds(580, 440, 100, 50);
+		myBtnCancelAuctionRequest.setBounds(480, 440, 200, 50);
 		add(myBtnCancelAuctionRequest);
 		
 		myBtnCancelAuctionRequest.addActionListener(new ActionListener () {
@@ -96,7 +110,7 @@ public class NonprofitPanel extends JPanel {
 
 		//Add Item Button
 		
-		myBtnAddItem.setBounds(580, 510, 100, 50);
+		myBtnAddItem.setBounds(480, 510, 200, 50);
 		add(myBtnAddItem);
 		
 		myBtnAddItem.addActionListener(new ActionListener () {
@@ -108,7 +122,7 @@ public class NonprofitPanel extends JPanel {
 		});
 
 		//Remove Item Button
-		myBtnRemoveItem.setBounds(580, 580, 100, 50);
+		myBtnRemoveItem.setBounds(480, 580, 200, 50);
 		add(myBtnRemoveItem);
 		
 		myBtnRemoveItem.addActionListener(new ActionListener () {
@@ -126,12 +140,158 @@ public class NonprofitPanel extends JPanel {
 	
 	private void submitAuctionRequestMenu() {
 		initializeMenu("Submit Auction Request");
+		myDisplayLabel.setText("In order to submit an auction request,"
+				+ "you have to enter the following information:\n"
+				+ "-Organization Name\n"
+				+ "-Contact Person Name\n"
+				+ "-Auction Date and Time\n"
+				+ "-Number of approximate Items\n"
+				+ "-Auction Description\n");
+		
+		//Initializing the form for submitting an auction request
+				JLabel labelOrgName = new JLabel("Organization Name:");
+				labelOrgName.setBounds(20, 370, 100, 20);
+				add(labelOrgName);
+				
+				JTextField fieldOrgName = new JTextField();
+				fieldOrgName.setBounds(140, 370, 300, 20);
+				add(fieldOrgName);
+				
+				JLabel labelContactName = new JLabel("Contact Person Name:");
+				labelContactName.setBounds(20, 410, 100, 20);
+				add(labelContactName);
+				
+				JTextField fieldContactName = new JTextField();
+				fieldContactName.setBounds(140, 410, 300, 20);
+				add(fieldContactName);
+				
+				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
+				labelDateAndTime.setBounds(20, 450, 100, 20);
+				add(labelDateAndTime);
+				
+				JTextField fieldDateAndTime = new JTextField();
+				fieldDateAndTime.setBounds(140, 450, 300, 20);
+				add(fieldDateAndTime);
+				
+				JLabel labelItemNumber = new JLabel("Number of approximate Items:");
+				labelItemNumber.setBounds(20, 490, 100, 20);
+				add(labelItemNumber);
+				
+				JTextField fieldItemNumber = new JTextField();
+				fieldItemNumber.setBounds(140, 490, 300, 20);
+				add(fieldItemNumber);
+				
+				JLabel labelAuctionDescript = new JLabel("Auction Description:");
+				labelAuctionDescript.setBounds(20, 530, 100, 20);
+				add(labelAuctionDescript);
+				
+				JTextField fieldAuctionDescript = new JTextField();
+				fieldAuctionDescript.setBounds(140, 530, 300, 20);
+				add(fieldAuctionDescript);
+				
+				JButton btnSubmitAuction = new JButton("Submit");
+				btnSubmitAuction.setBounds(580, 370, 100, 70);
+				add(btnSubmitAuction);
+				
+				JButton btnBackAuction = new JButton("Back");
+				btnBackAuction.setBounds(580, 550, 100, 70);
+				add(btnBackAuction);
+				
+				btnSubmitAuction.addActionListener(new ActionListener () {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						mainMenu();
+					}
+				});
+				
+				btnBackAuction.addActionListener(new ActionListener () {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						mainMenu();
+					}
+				});
 		
 	}
 	
 	private void CancelAuctionRequestMenu() {
 		initializeMenu("Cancel Auction Request");
-		myDisplayLabel.setText("2");
+		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(myNonprofit);
+		String theName = myNonprofit.getName();
+		Month theMonth = currentAuction.getDate().getMonth();
+		int theDay = currentAuction.getDate().getDayOfMonth();
+		int theYear = currentAuction.getDate().getYear();
+		myDisplayLabel.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+				theName, theMonth, theDay, theYear));
+		myDisplayLabel.append("\n\nWould you like to remove this auction?");
+		
+		myYes = new JButton("Yes");
+		myNo = new JButton("No");
+		
+		//Add Yes Button
+		
+		myYes.setBounds(480, 510, 200, 50);
+		add(myYes);
+				
+		myYes.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				initializeMenu("Confirmation");
+				myDisplayLabel.setText("Are you sure you want to remove this auction?");
+				myYes2 = new JButton("Yes");
+				myNo2 = new JButton("No");
+				
+				//Add Yes Button
+				
+				myYes2.setBounds(480, 510, 200, 50);
+				add(myYes2);
+						
+				myYes2.addActionListener(new ActionListener () {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if (myData.removeAuction(currentAuction) == true) {
+							JOptionPane.showMessageDialog(myYes2, "You have successfully removed this auction");
+							mainMenu();
+							myBtnCancelAuctionRequest.setEnabled(false);
+							myBtnAddItem.setEnabled(false);
+							myBtnRemoveItem.setEnabled(false);
+							myBtnSubmitAuctionRequest.setEnabled(true);
+						} else {
+							JOptionPane.showMessageDialog(myYes2, "You cannot cancel your auction as it is within 2 days of the date your auction is set for.");
+						}	
+					}
+				});
+				
+				//Add No Button
+				
+				myNo2.setBounds(480, 580, 200, 50);
+				add(myNo2);
+						
+				myNo2.addActionListener(new ActionListener () {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						CancelAuctionRequestMenu();
+					}
+				});
+			}
+		});
+		
+		//Add No Button
+		
+		myNo.setBounds(480, 580, 200, 50);
+		add(myNo);
+				
+		myNo.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainMenu();
+			}
+		});
 
 	}
 	
