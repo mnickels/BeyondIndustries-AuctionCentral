@@ -112,7 +112,7 @@ public class AuctionTest {
 
 		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
 				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		assertTrue(myAuction.removeItem(testItem));
+		assertEquals(myAuction.removeItem(myItem), 2);
 
 	}
 	
@@ -120,7 +120,7 @@ public class AuctionTest {
 	public void testRemoveItemOnNotExistItem() {		
 		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
 				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		assertFalse(myAuction.removeItem(testItem));
+		assertEquals(myAuction.removeItem(testItem), 1);
 	}
 	
 	@Test

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.users.Account;
+import model.users.Bidder;
 
 /**
  * The Data class is used as a data placeholder. It has a list of all Auctions in the system, and also 
@@ -261,6 +262,27 @@ public final class Data implements Serializable {
 	}
 	
 	/**
+	 * @return the Items bid upon by the given Bidder, null if Bidder has not bid.
+	 */
+	public Map<Auction, List<Item>> getItemsForBidder(final Bidder theBidder) {
+		Map<Auction, List<Item>> items = new HashMap<Auction, List<Item>>();
+		
+		for (final Auction a : myAuctions) {
+			List<Item> l = new ArrayList<Item>();
+			for (final Item i : a.getItems()) {
+				if (i.checkBidder(theBidder)) {
+					l.add(i);
+				}
+			}
+			if (!l.isEmpty()) {
+				items.put(a, l);
+			}
+		}
+		
+		return items;
+	}
+	
+	/**
 	 * Gets the max number of auctions that can be scheduled at one time.
 	 * @return The max number of auctions that can be scheduled at one time.
 	 * @author Mike Nickels | mnickels@uw.edu
@@ -274,7 +296,7 @@ public final class Data implements Serializable {
 	 * @author Mike Nickels | mnickels@uw.edu
 	 */
 	public void setMaxNumberOfAuctions(int newMax) {
-		if (newMax > totalNumberOfUpcomingAuctions())
+		if (newMax > 0)
 			maxAuctions = newMax;
 	}
 	
