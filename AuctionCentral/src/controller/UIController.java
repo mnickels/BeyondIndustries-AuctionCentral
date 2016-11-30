@@ -129,6 +129,10 @@ public final class UIController extends JFrame implements Runnable {
 						currentAuction.getDate().getYear());
 				
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNSUBMITAUCTIONREQUEST);
+				
+				if (currentAuction.getSize() == 0) {
+					((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNREMOVEITEM);
+				}
 			} else {
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNCANCELAUCTIONREQUEST);
 				((NonprofitPanel) myScreen).disableButton(((NonprofitPanel) myScreen).BTNADDITEM);
@@ -300,6 +304,8 @@ public final class UIController extends JFrame implements Runnable {
 		//}
 	}
 
+
+	
 	private void staff() {
 		boolean shouldLoop = true;
 

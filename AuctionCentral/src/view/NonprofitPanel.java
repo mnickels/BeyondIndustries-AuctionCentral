@@ -13,11 +13,16 @@ import java.time.Month;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -35,11 +40,12 @@ public class NonprofitPanel extends JPanel {
 	
 	public static final int BTNREMOVEITEM = 4;
 	
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	private Nonprofit myNonprofit;
 	
 	private JTextArea myDisplayLabel;
@@ -86,7 +92,7 @@ public class NonprofitPanel extends JPanel {
 		
 		
 		//Submit Auction Request Button
-		myBtnSubmitAuctionRequest.setBounds(480, 370, 200, 50);
+		myBtnSubmitAuctionRequest.setBounds(580, 370, 200, 50);
 		add(myBtnSubmitAuctionRequest);
 		
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
@@ -97,7 +103,7 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		//Cancel Auction Request Button
-		myBtnCancelAuctionRequest.setBounds(480, 440, 200, 50);
+		myBtnCancelAuctionRequest.setBounds(580, 440, 200, 50);
 		add(myBtnCancelAuctionRequest);
 		
 		myBtnCancelAuctionRequest.addActionListener(new ActionListener () {
@@ -110,7 +116,7 @@ public class NonprofitPanel extends JPanel {
 
 		//Add Item Button
 		
-		myBtnAddItem.setBounds(480, 510, 200, 50);
+		myBtnAddItem.setBounds(580, 510, 200, 50);
 		add(myBtnAddItem);
 		
 		myBtnAddItem.addActionListener(new ActionListener () {
@@ -122,7 +128,7 @@ public class NonprofitPanel extends JPanel {
 		});
 
 		//Remove Item Button
-		myBtnRemoveItem.setBounds(480, 580, 200, 50);
+		myBtnRemoveItem.setBounds(580, 580, 200, 50);
 		add(myBtnRemoveItem);
 		
 		myBtnRemoveItem.addActionListener(new ActionListener () {
@@ -150,43 +156,43 @@ public class NonprofitPanel extends JPanel {
 		
 		//Initializing the form for submitting an auction request
 				JLabel labelOrgName = new JLabel("Organization Name:");
-				labelOrgName.setBounds(20, 370, 100, 20);
+				labelOrgName.setBounds(20, 370, 150, 20);
 				add(labelOrgName);
 				
 				JTextField fieldOrgName = new JTextField();
-				fieldOrgName.setBounds(140, 370, 300, 20);
+				fieldOrgName.setBounds(190, 370, 300, 20);
 				add(fieldOrgName);
 				
 				JLabel labelContactName = new JLabel("Contact Person Name:");
-				labelContactName.setBounds(20, 410, 100, 20);
+				labelContactName.setBounds(20, 410, 150, 20);
 				add(labelContactName);
 				
 				JTextField fieldContactName = new JTextField();
-				fieldContactName.setBounds(140, 410, 300, 20);
+				fieldContactName.setBounds(190, 410, 300, 20);
 				add(fieldContactName);
 				
 				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
-				labelDateAndTime.setBounds(20, 450, 100, 20);
+				labelDateAndTime.setBounds(20, 450, 150, 20);
 				add(labelDateAndTime);
 				
 				JTextField fieldDateAndTime = new JTextField();
-				fieldDateAndTime.setBounds(140, 450, 300, 20);
+				fieldDateAndTime.setBounds(190, 450, 300, 20);
 				add(fieldDateAndTime);
 				
 				JLabel labelItemNumber = new JLabel("Number of approximate Items:");
-				labelItemNumber.setBounds(20, 490, 100, 20);
+				labelItemNumber.setBounds(20, 490, 150, 20);
 				add(labelItemNumber);
 				
 				JTextField fieldItemNumber = new JTextField();
-				fieldItemNumber.setBounds(140, 490, 300, 20);
+				fieldItemNumber.setBounds(190, 490, 300, 20);
 				add(fieldItemNumber);
 				
 				JLabel labelAuctionDescript = new JLabel("Auction Description:");
-				labelAuctionDescript.setBounds(20, 530, 100, 20);
+				labelAuctionDescript.setBounds(20, 530, 150, 20);
 				add(labelAuctionDescript);
 				
 				JTextField fieldAuctionDescript = new JTextField();
-				fieldAuctionDescript.setBounds(140, 530, 300, 20);
+				fieldAuctionDescript.setBounds(190, 530, 300, 20);
 				add(fieldAuctionDescript);
 				
 				JButton btnSubmitAuction = new JButton("Submit");
@@ -356,19 +362,58 @@ public class NonprofitPanel extends JPanel {
 		fieldStartingBid.setBounds(140, 570, 300, 20);
 		add(fieldStartingBid);
 		
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(580, 370, 100, 70);
-		add(btnSubmit);
+		JButton btnAddItem = new JButton("Submit");
+		btnAddItem.setBounds(680, 370, 100, 70);
+		add(btnAddItem);
 		
-		JButton btnBack = new JButton("Back");
-		btnBack.setBounds(580, 550, 100, 70);
-		add(btnBack);
+		JButton btnBackItem = new JButton("Back");
+		btnBackItem.setBounds(680, 550, 100, 70);
+		add(btnBackItem);
+		
+		btnAddItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainMenu();
+			}
+		});
+		
+		btnBackItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainMenu();
+			}
+		});
 		
 	}
 	
 	private void RemoveItemMenu() {
 		initializeMenu("Remove Item");
-		myDisplayLabel.setText("4");
+		myDisplayLabel.setBounds(new Rectangle(20, 20, 760, 100));
+		String[] columnNames = {"Name", "Donor", "Quantity", "Condition", "Size", "Starting Bid"};
+		Object[][] auctionItems = myData.getAuctionItems(myNonprofit);
+		JTable itemTable = new JTable(auctionItems, columnNames);
+		itemTable.setBounds(new Rectangle(20, 120, 760, 300));
+		itemTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+		JScrollPane scrollPane = new JScrollPane(itemTable);
+		itemTable.setFillsViewportHeight(true);
+		scrollPane.setBounds(new Rectangle(20, 120, 760, 300));
+		add(scrollPane);
+
+		String[] itemNames = new String[auctionItems.length];
+		for (int i = 0; i < auctionItems.length; i++) {
+			itemNames[i] = (String) auctionItems[i][0];
+		}
+				
+	    JComboBox itemList = new JComboBox(itemNames);
+	    itemList.setSelectedIndex(0);
+		itemList.setBounds(new Rectangle(20, 440, 250, 20));
+		add(itemList);
+		
+		this.revalidate();
+		this.repaint();
 	}
 	
 	private void initializeMenu(String theTitle) {
@@ -378,14 +423,14 @@ public class NonprofitPanel extends JPanel {
 		myDisplayLabel = new JTextArea();
 		myDisplayLabel.setFont(myDisplayLabel.getFont().deriveFont(16f));
 		myDisplayLabel.setEditable(false);
-		myDisplayLabel.setBounds(new Rectangle(20, 20, 660, 330));
+		myDisplayLabel.setBounds(new Rectangle(20, 20, 760, 330));
 		TitledBorder title;
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		title = BorderFactory.createTitledBorder(blackline, theTitle);
 		title.setTitleJustification(TitledBorder.CENTER);
 		myDisplayLabel.setBorder(title);
 		add(myDisplayLabel);
-		
+	
 		repaint();
 	}
 	

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import model.users.Account;
 import model.users.Bidder;
+import model.users.Nonprofit;
 
 /**
  * The Data class is used as a data placeholder. It has a list of all Auctions in the system, and also 
@@ -329,4 +330,21 @@ public final class Data implements Serializable {
 		return instance;
 	}
 	
+	public Object[][] getAuctionItems(Nonprofit theNonprofit) {
+		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) theNonprofit);
+		List<Item> tempItemList = currentAuction.getItems();
+		Object[][] resultItemList = new Object[tempItemList.size()][6];
+		for (int i = 0; i < tempItemList.size(); i++) {
+			Item tempItem = tempItemList.get(i);
+			resultItemList[i][0] = tempItem.getName();
+			resultItemList[i][1] = tempItem.getDonor();
+			resultItemList[i][2] = tempItem.getQuantity();
+			resultItemList[i][3] = tempItem.getCondition();
+			resultItemList[i][4] = tempItem.getSize();
+			resultItemList[i][5] = tempItem.getStartingBid();
+			
+		}
+		return resultItemList;
+		
+	}
 }
