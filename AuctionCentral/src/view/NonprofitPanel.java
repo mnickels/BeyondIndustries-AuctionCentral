@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -76,6 +77,7 @@ public class NonprofitPanel extends JPanel {
 		this.setLayout(null);
 		mainMenu();
 		setVisible(true);
+		
 
 	}
 	
@@ -149,8 +151,7 @@ public class NonprofitPanel extends JPanel {
 		myDisplayLabel.setText("In order to submit an auction request,"
 				+ "you have to enter the following information:\n"
 				+ "-Organization Name\n"
-				+ "-Contact Person Name\n"
-				+ "-Auction Date and Time\n"
+				+ "-Auction Date (YYYY-MM-DDTHH:MM)(MilitaryTime)\n"
 				+ "-Number of approximate Items\n"
 				+ "-Auction Description\n");
 		
@@ -163,36 +164,28 @@ public class NonprofitPanel extends JPanel {
 				fieldOrgName.setBounds(190, 370, 300, 20);
 				add(fieldOrgName);
 				
-				JLabel labelContactName = new JLabel("Contact Person Name:");
-				labelContactName.setBounds(20, 410, 150, 20);
-				add(labelContactName);
-				
-				JTextField fieldContactName = new JTextField();
-				fieldContactName.setBounds(190, 410, 300, 20);
-				add(fieldContactName);
-				
 				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
-				labelDateAndTime.setBounds(20, 450, 150, 20);
+				labelDateAndTime.setBounds(20, 410, 150, 20);
 				add(labelDateAndTime);
 				
 				JTextField fieldDateAndTime = new JTextField();
-				fieldDateAndTime.setBounds(190, 450, 300, 20);
-				add(fieldDateAndTime);
+				fieldDateAndTime.setBounds(190, 410, 300, 20);
+				add(fieldDateAndTime);				
 				
 				JLabel labelItemNumber = new JLabel("Number of approximate Items:");
-				labelItemNumber.setBounds(20, 490, 150, 20);
+				labelItemNumber.setBounds(20, 450, 150, 20);
 				add(labelItemNumber);
 				
 				JTextField fieldItemNumber = new JTextField();
-				fieldItemNumber.setBounds(190, 490, 300, 20);
+				fieldItemNumber.setBounds(190, 450, 300, 20);
 				add(fieldItemNumber);
 				
 				JLabel labelAuctionDescript = new JLabel("Auction Description:");
-				labelAuctionDescript.setBounds(20, 530, 150, 20);
+				labelAuctionDescript.setBounds(20, 490, 150, 20);
 				add(labelAuctionDescript);
 				
 				JTextField fieldAuctionDescript = new JTextField();
-				fieldAuctionDescript.setBounds(190, 530, 300, 20);
+				fieldAuctionDescript.setBounds(190, 490, 300, 20);
 				add(fieldAuctionDescript);
 				
 				JButton btnSubmitAuction = new JButton("Submit");
@@ -207,7 +200,38 @@ public class NonprofitPanel extends JPanel {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						mainMenu();
+						String orgName = fieldOrgName.getText();
+						
+						String numberItems = fieldItemNumber.getText();
+						
+						String auctionDesc = fieldAuctionDescript.getText();
+						
+						String dateTime = fieldDateAndTime.getText();
+						DateTimeFormatter newFormat = DateTimeFormatter.ISO_DATE_TIME;
+						LocalDateTime auctionDateTime = LocalDateTime.parse(dateTime, newFormat);
+						double numberOfItems = Double.parseDouble(numberItems);
+						Auction newAuction = new Auction(myNonprofit, auctionDateTime, orgName, auctionDesc);
+
+						if(myData.addAuction(newAuction) == true){
+							myBtnCancelAuctionRequest.setEnabled(true);
+							myBtnAddItem.setEnabled(true);
+							myBtnRemoveItem.setEnabled(false);
+							myBtnSubmitAuctionRequest.setEnabled(false);
+						} else if(myData.auctionMoreThan2Day(newAuction) == true) {
+							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as there "
+									+ "is already 2 auctions schedualed for the day you specified");
+						} else if(myData.auctionExceedsMax(newAuction) == true) {
+							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction at this time as there "
+									+ "is already the max number of auctions allowed in the system at this time");
+						} else if(myData.auctionPlannedWeekAhead(newAuction) == true) {
+							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as you "
+									+ "must submit your auction at least one week into the future");
+						} else {
+							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as you "
+									+ "must submit your auction at most no more than one month into the future");
+						}
+
+						
 					}
 				});
 				
@@ -299,6 +323,8 @@ public class NonprofitPanel extends JPanel {
 			}
 		});
 
+		this.revalidate();
+		this.repaint();
 	}
 	
 	private void AddItemMenu() {

@@ -66,10 +66,10 @@ public final class Data implements Serializable {
 		
 		if ((!nonprofitHasFutureAuction(theAuction.getNonprofit())) 
 				&& (!theAuction.getNonprofit().isAuctionWithinYear())
-				&& getAuctionsForThisDay(theAuction.getDate().toLocalDate()).size() <= 1
-				&& (totalNumberOfUpcomingAuctions() < maxAuctions)
-				&& currentDateTime.toLocalDate().plusMonths(1).plusDays(1).isAfter(theAuction.getDate().toLocalDate())
-				&& theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))) {
+				&& auctionMoreThan2Day(theAuction) == false
+				&& auctionExceedsMax(theAuction) == false
+				&& auctionPlannedWeekAhead(theAuction) == false
+				&& auctionExceedsOneMonthInFuture(theAuction) == false) {
 				
 			myAuctions.add(theAuction);
 			
@@ -77,6 +77,62 @@ public final class Data implements Serializable {
 		} 
 		
 		return r;
+	}
+	
+	/**
+	 * Checks if there is already 2 actions on that specified day.
+	 * 
+	 * @param theAuction
+	 * @return false if there is not 2 auctions on that day, true otherwise
+	 */
+	public boolean auctionMoreThan2Day(final Auction theAuction){
+		if(getAuctionsForThisDay(theAuction.getDate().toLocalDate()).size() <= 1){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks if this auction planned more than one month ahead
+	 * 
+	 * @param theAuction
+	 * @return false if the auction is planned within a month, true otherwise
+	 */
+	public boolean auctionExceedsOneMonthInFuture(final Auction theAuction){
+		if(currentDateTime.toLocalDate().plusMonths(1).plusDays(1).isAfter(theAuction.getDate().toLocalDate())){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks if this auction planned at least one week in advance
+	 * 
+	 * @param theAuction
+	 * @return false if the auction is planned at least a week ahead, true otherwise
+	 */
+	public boolean auctionPlannedWeekAhead(final Auction theAuction){
+		if(theAuction.getDate().toLocalDate().isAfter(currentDateTime.toLocalDate().plusWeeks(1).minusDays(1))){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks if adding this auction will exceed the max number of auctions
+	 * 
+	 * @param theAuction
+	 * @return false if it doesnt exceed, true otherwise
+	 */
+	public boolean auctionExceedsMax(final Auction theAuction){
+		if(totalNumberOfUpcomingAuctions() < maxAuctions){
+			return false;
+		} else{
+			return true;
+		}
 	}
 	
 	/**
