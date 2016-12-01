@@ -63,6 +63,12 @@ public class NonprofitPanel extends JPanel {
 	
 	private JButton myNo2;
 	
+	private JButton myYes3;
+	
+	private JButton myNo3;
+	
+	private JButton myReturn;
+	
 	private JButton myBtnAddItem;
 	
 	private JButton myBtnRemoveItem;
@@ -91,6 +97,22 @@ public class NonprofitPanel extends JPanel {
 		
 		initializeMenu("Main Menu");
 		myDisplayLabel.setText(myNonprofit.getName() + " logged in as a Nonprofit");
+		if(myData.nonprofitHasAuction(myNonprofit) == true){
+			Auction myAuction = myData.getAuctionForThisNonprofit(myNonprofit);
+			myDisplayLabel.append(String.format("\nYou have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+					myAuction.getName(), myAuction.getDate().getMonth(), 
+					myAuction.getDate().getDayOfMonth(), myAuction.getDate().getYear()));
+			myBtnCancelAuctionRequest.setEnabled(true);
+			myBtnAddItem.setEnabled(true);
+			myBtnRemoveItem.setEnabled(true);
+			myBtnSubmitAuctionRequest.setEnabled(false);
+		} else {
+			myBtnCancelAuctionRequest.setEnabled(false);
+			myBtnAddItem.setEnabled(false);
+			myBtnRemoveItem.setEnabled(false);
+			myBtnSubmitAuctionRequest.setEnabled(true);
+		}
+		
 		
 		
 		//Submit Auction Request Button
@@ -213,10 +235,63 @@ public class NonprofitPanel extends JPanel {
 						Auction newAuction = new Auction(myNonprofit, auctionDateTime, orgName, auctionDesc);
 
 						if(myData.addAuction(newAuction) == true){
-							myBtnCancelAuctionRequest.setEnabled(true);
-							myBtnAddItem.setEnabled(true);
-							myBtnRemoveItem.setEnabled(false);
-							myBtnSubmitAuctionRequest.setEnabled(false);
+							initializeMenu("Confirmation");
+							myDisplayLabel.append(String.format("Are you sure you want to submit this auction?"
+									+ "\nAuction Name: %s\n\n"
+									+ "Date: %s %d, %d\n"
+									+ "Description: %s\n"
+									+ "Number of approximate Items: %s\n"
+									, orgName, auctionDateTime.getMonth(), 
+									auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),
+									auctionDesc, numberOfItems));
+							myYes3 = new JButton("Yes");
+							myNo3 = new JButton("No");
+							
+							myYes3.setBounds(480, 510, 200, 50);
+							add(myYes3);
+							
+							myYes3.addActionListener(new ActionListener () {
+
+								@Override
+								public void actionPerformed(ActionEvent arg0) {
+									initializeMenu("Congrats");
+									myDisplayLabel.append(String.format("You have successfully submitted your auction"
+											+ "\nAuction Name: %s\n\n"
+											+ "Date: %s %d, %d\n"
+											+ "Description: %s\n"
+											+ "Number of approximate Items: %s\n"
+											, orgName, auctionDateTime.getMonth(), 
+											auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),
+											auctionDesc, numberOfItems));
+									myReturn = new JButton("Return");
+									
+									myReturn.setBounds(480, 510, 200, 50);
+									add(myReturn);
+									
+									myReturn.addActionListener(new ActionListener () {
+
+										@Override
+										public void actionPerformed(ActionEvent arg0) {
+											mainMenu();
+											myBtnRemoveItem.setEnabled(false);
+										}
+									});
+								}
+							});
+							
+							//Add No Button
+							
+							myNo3.setBounds(480, 580, 200, 50);
+							add(myNo3);
+									
+							myNo3.addActionListener(new ActionListener () {
+
+								@Override
+								public void actionPerformed(ActionEvent arg0) {
+									CancelAuctionRequestMenu();
+								}
+							});
+							
 						} else if(myData.auctionMoreThan2Day(newAuction) == true) {
 							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as there "
 									+ "is already 2 auctions schedualed for the day you specified");
@@ -285,10 +360,6 @@ public class NonprofitPanel extends JPanel {
 						if (myData.removeAuction(currentAuction) == true) {
 							JOptionPane.showMessageDialog(myYes2, "You have successfully removed this auction");
 							mainMenu();
-							myBtnCancelAuctionRequest.setEnabled(false);
-							myBtnAddItem.setEnabled(false);
-							myBtnRemoveItem.setEnabled(false);
-							myBtnSubmitAuctionRequest.setEnabled(true);
 						} else {
 							JOptionPane.showMessageDialog(myYes2, "You cannot cancel your auction as it is within 2 days of the date your auction is set for.");
 						}	

@@ -96,6 +96,7 @@ public final class UIController implements Runnable {
 			myFrame.revalidate();
 			myFrame.repaint();
 			
+			/*
 			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) myUser);
 			if (currentAuction != null) {
 				((NonprofitPanel) myScreen).displayUpcomingAuction(currentAuction.getName(), 
@@ -114,6 +115,7 @@ public final class UIController implements Runnable {
 				((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNREMOVEITEM);
  
 			}
+			*/
 	}
 
 
