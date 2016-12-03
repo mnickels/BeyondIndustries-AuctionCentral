@@ -404,9 +404,16 @@ public final class Data implements Serializable {
 		
 	}
 	
+	public boolean addItemInAuction(Nonprofit theNonprofit, Item theItem) {
+		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(theNonprofit);
+		boolean result = currentAuction.addItem(theItem);
+		return result;
+	}
+	
 	public int removeItemInAuction(Nonprofit theNonprofit, Item theItem) {
 		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(theNonprofit);
 		int errorCode = currentAuction.removeItem(theItem);
 		return errorCode;
 	}
+	
 }

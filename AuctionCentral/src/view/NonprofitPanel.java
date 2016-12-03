@@ -407,75 +407,110 @@ public class NonprofitPanel extends JPanel {
 	private void AddItemMenu() {
 		initializeMenu("Add Item");
 		
-		myDisplayLabel.setText("In order to add an item,"
-				+ "you have to enter the following information:\n"
-				+ "-Item Name\n"
-				+ "-Donor Name\n"
-				+ "-Quantity\n"
-				+ "-Item Condition\n"
-				+ "-Item Size\n"
-				+ "-Starting Bid");
+		myDisplayLabel.setText("In order to add an item,\n"
+				+ "The following information are required:\n"
+				+ "-Item Name\n-Quantity\n-Item Condition\n"
+				+ "-Item Size\n-Starting Bid\n\n"
+				+ "The following information are optional:\n"
+				+ "-Donor Name\n-Item Description\n-Comment");
 		
 		//Initializing the form for adding an item
+        Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+		
 		JLabel labelItemName = new JLabel("Item Name:");
-		labelItemName.setBounds(20, 370, 100, 20);
+		labelItemName.setBounds(20, 370, 80, 20);
 		add(labelItemName);
 		
 		JTextField fieldItemName = new JTextField();
-		fieldItemName.setBounds(140, 370, 300, 20);
+		fieldItemName.setBounds(120, 370, 300, 20);
+		fieldItemName.setBorder(fieldBorder);
 		add(fieldItemName);
 		
 		JLabel labelDonorName = new JLabel("Donor Name:");
-		labelDonorName.setBounds(20, 410, 100, 20);
+		labelDonorName.setBounds(20, 400, 80, 20);
 		add(labelDonorName);
 		
 		JTextField fieldDonorName = new JTextField();
-		fieldDonorName.setBounds(140, 410, 300, 20);
+		fieldDonorName.setBounds(120, 400, 300, 20);
+		fieldDonorName.setBorder(fieldBorder);
 		add(fieldDonorName);
 		
 		JLabel labelQuantity = new JLabel("Quantity:");
-		labelQuantity.setBounds(20, 450, 100, 20);
+		labelQuantity.setBounds(20, 430, 80, 20);
 		add(labelQuantity);
 		
 		JTextField fieldQuantity = new JTextField();
-		fieldQuantity.setBounds(140, 450, 300, 20);
+		fieldQuantity.setBounds(120, 430, 300, 20);
+		fieldQuantity.setBorder(fieldBorder);
 		add(fieldQuantity);
 		
+		String[] itemConditionList = {"Acceptable", "Good", "Very Good", "Like New", "New"};
+		String[] itemSizeList = {"Small", "Medium", "Large"};
+		
 		JLabel labelItemCondition = new JLabel("Item Condition:");
-		labelItemCondition.setBounds(20, 490, 100, 20);
+		labelItemCondition.setBounds(20, 460, 100, 20);
 		add(labelItemCondition);
 		
-		JTextField fieldItemCondition = new JTextField();
-		fieldItemCondition.setBounds(140, 490, 300, 20);
-		add(fieldItemCondition);
+		JComboBox boxItemCondition = new JComboBox(itemConditionList);
+		boxItemCondition.setBackground(Color.WHITE);
+		boxItemCondition.setSelectedIndex(0);		
+		boxItemCondition.setBounds(120, 460, 300, 20);
+		boxItemCondition.setBorder(fieldBorder);
+		add(boxItemCondition);
 		
 		JLabel labelItemSize = new JLabel("Item Size:");
-		labelItemSize.setBounds(20, 530, 100, 20);
+		labelItemSize.setBounds(20, 490, 80, 20);
 		add(labelItemSize);
 		
-		JTextField fieldItemSize = new JTextField();
-		fieldItemSize.setBounds(140, 530, 300, 20);
-		add(fieldItemSize);
+		JComboBox boxItemSize = new JComboBox(itemSizeList);
+		boxItemSize.setBackground(Color.WHITE);
+		boxItemSize.setSelectedIndex(0);
+		boxItemSize.setBounds(120, 490, 300, 20);
+		boxItemSize.setBorder(fieldBorder);
+		add(boxItemSize);
 		
 		JLabel labelStartingBid = new JLabel("Starting Bid:");
-		labelStartingBid.setBounds(20, 570, 100, 20);
+		labelStartingBid.setBounds(20, 520, 80, 20);
 		add(labelStartingBid);
 		
 		JTextField fieldStartingBid = new JTextField();
-		fieldStartingBid.setBounds(140, 570, 300, 20);
+		fieldStartingBid.setBounds(120, 520, 300, 20);
+		fieldStartingBid.setBorder(fieldBorder);
 		add(fieldStartingBid);
+				
+		JLabel labelItemDescription = new JLabel("Item Description");
+		labelItemDescription.setBounds(440, 370, 100, 20);
+		add(labelItemDescription);
+		
+		JTextArea fieldItemDescription = new JTextArea();
+		fieldItemDescription.setBounds(440, 400, 340, 140);
+		fieldItemDescription.setBorder(fieldBorder);
+		fieldItemDescription.setLineWrap(true);
+		add(fieldItemDescription);
+		
+		/*
+		JLabel labelComment = new JLabel("Comment");
+		labelComment.setBounds(440, 460, 100, 20);
+		add(labelComment);
+		
+		JTextArea fieldComment = new JTextArea();
+		fieldComment.setBounds(440, 490, 340, 50);
+		fieldComment.setBorder(fieldBorder);
+		fieldComment.setLineWrap(true);
+		add(fieldComment);
+		*/
 		
 		JButton btnAddItem = new JButton("Submit");
-		btnAddItem.setBounds(680, 370, 100, 70);
+		btnAddItem.setBounds(560, 560, 100, 70);
 		add(btnAddItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
-		btnCancelItem.setBounds(680, 460, 100, 70);
+		btnCancelItem.setBounds(680, 560, 100, 70);
 		btnCancelItem.setVisible(false);
 		add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setBounds(680, 550, 100, 70);
+		btnBackItem.setBounds(680, 560, 100, 70);
 		add(btnBackItem);
 		
 		btnAddItem.addActionListener(new ActionListener () {
@@ -486,9 +521,44 @@ public class NonprofitPanel extends JPanel {
 					btnAddItem.setForeground(Color.RED);
 					btnAddItem.setText("Comfirm");
 					btnCancelItem.setVisible(true);
+					btnBackItem.setVisible(false);
 				} else {
-					mainMenu();
+					if (fieldItemName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Item name is required!");
+					} else if (fieldQuantity.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Item quantity is required!");
+					} else if (fieldStartingBid.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Starting bid is required!");
+					} else {
+						Item tempItem = new Item(fieldItemName.getText(), fieldDonorName.getText(), 
+								Integer.parseInt(fieldQuantity.getText()), (String) boxItemCondition.getSelectedItem(), 
+								(String) boxItemSize.getSelectedItem(), null, 
+								new BigDecimal(Integer.parseInt(fieldStartingBid.getText())), fieldItemDescription.getText());
+						Auction currentAuction = myData.getInstance().getAuctionForThisNonprofit(myNonprofit);
+						boolean result = currentAuction.addItem(tempItem);
+						if (result) {
+							JOptionPane.showMessageDialog(null, "You have successfully added an item");
+							mainMenu();
+						} else {
+							JOptionPane.showMessageDialog(null, "Sorry, you cannot add the same item twice");
+						}
+
+					}
+					
+					
 				}
+			}
+		});
+		
+		btnCancelItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				btnAddItem.setForeground(Color.BLACK);
+				btnAddItem.setText("Submit");
+				
+				btnCancelItem.setVisible(false);
+				btnBackItem.setVisible(true);
 			}
 		});
 		
@@ -546,11 +616,6 @@ public class NonprofitPanel extends JPanel {
 		btnConfirm.setVisible(false);
 		add(btnConfirm);
 		
-		JLabel labelError = new JLabel();
-		labelError.setForeground(Color.RED);
-		labelError.setVisible(false);
-		add(labelError);
-		
 		btnRemoveItem.addActionListener(new ActionListener () {
 
 			@Override
@@ -568,23 +633,22 @@ public class NonprofitPanel extends JPanel {
 
 
 					if (errorCode == Auction.REMOVEITEMNOTEXIST) {
-						labelError.setText("Failed to Remove selected item because it doesn't exist!");
-						labelError.setBounds(150, 510, 400, 20);
-						labelError.setVisible(true);
+						JOptionPane.showMessageDialog(null, "Failed to Remove selected item "
+								+ "because it doesn't exist!");
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
 						btnConfirm.setVisible(true);
 						
 					} else if (errorCode == Auction.REMOVEITEMWITHINTWODAYS) {
-						labelError.setText("Failed to Remove selected item because remove application is submit within 2 days.");
-						labelError.setBounds(120, 510, 500, 20);
-						labelError.setVisible(true);
+						JOptionPane.showMessageDialog(null, "Failed to Remove selected item"
+								+ " because remove application is submitted within 2 days.");
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
 						btnConfirm.setVisible(true);
 					} else {
+						JOptionPane.showMessageDialog(null, "You have successfully removed an item");
 						mainMenu();
 					}
 				}
