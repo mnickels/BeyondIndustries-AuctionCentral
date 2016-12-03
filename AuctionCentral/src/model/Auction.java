@@ -20,6 +20,12 @@ import model.users.Nonprofit;
  */
 public class Auction implements Serializable{
 
+	public static final int REMOVEITEMSUCCEED = 0;
+	
+	public static final int REMOVEITEMNOTEXIST = 1;
+	
+	public static final int REMOVEITEMWITHINTWODAYS = 2;
+	
 	/**
 	 * Default UID
 	 */
@@ -197,14 +203,14 @@ public class Auction implements Serializable{
 		int itemIndex = findItem(theItem);
 		
 			if (itemIndex == -1) {
-				result = 1;
+				result = REMOVEITEMNOTEXIST;
 			} else {
 				if (LocalDateTime.now().isAfter(myDate.minusDays(2))) {
-					result = 2;
+					result = REMOVEITEMWITHINTWODAYS;
 				} else {
 					myItems.remove(itemIndex);
 					size--;
-					result = 0;
+					result = REMOVEITEMSUCCEED;
 				}
 			}
 

@@ -387,7 +387,7 @@ public final class Data implements Serializable {
 	}
 	
 	public Object[][] getAuctionItems(Nonprofit theNonprofit) {
-		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) theNonprofit);
+		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(theNonprofit);
 		List<Item> tempItemList = currentAuction.getItems();
 		Object[][] resultItemList = new Object[tempItemList.size()][6];
 		for (int i = 0; i < tempItemList.size(); i++) {
@@ -402,5 +402,11 @@ public final class Data implements Serializable {
 		}
 		return resultItemList;
 		
+	}
+	
+	public int removeItemInAuction(Nonprofit theNonprofit, Item theItem) {
+		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(theNonprofit);
+		int errorCode = currentAuction.removeItem(theItem);
+		return errorCode;
 	}
 }

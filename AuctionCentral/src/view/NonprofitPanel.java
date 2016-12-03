@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +30,7 @@ import javax.swing.border.TitledBorder;
 
 import model.Auction;
 import model.Data;
+import model.Item;
 import model.users.Nonprofit;
 
 public class NonprofitPanel extends JPanel {
@@ -106,6 +108,10 @@ public class NonprofitPanel extends JPanel {
 			myBtnAddItem.setEnabled(true);
 			myBtnRemoveItem.setEnabled(true);
 			myBtnSubmitAuctionRequest.setEnabled(false);
+			
+			if (myAuction.getSize() == 0) {
+				myBtnRemoveItem.setEnabled(false);
+			}
 		} else {
 			myBtnCancelAuctionRequest.setEnabled(false);
 			myBtnAddItem.setEnabled(false);
@@ -519,37 +525,93 @@ public class NonprofitPanel extends JPanel {
 				
 	    JComboBox itemList = new JComboBox(itemNames);
 	    itemList.setSelectedIndex(0);
-		itemList.setBounds(new Rectangle(20, 440, 250, 20));
+		itemList.setBounds(new Rectangle(225, 440, 250, 20));
 		add(itemList);
 		
-		JButton btnAddItem = new JButton("Submit");
-		btnAddItem.setBounds(680, 370, 100, 70);
-		add(btnAddItem);
+		JButton btnRemoveItem = new JButton("Submit");
+		btnRemoveItem.setBounds(240, 550, 100, 70);
+		add(btnRemoveItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
-		btnCancelItem.setBounds(680, 460, 100, 70);
+		btnCancelItem.setBounds(360, 550, 100, 70);
 		btnCancelItem.setVisible(false);
 		add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setBounds(680, 550, 100, 70);
+		btnBackItem.setBounds(360, 550, 100, 70);
 		add(btnBackItem);
 		
-		btnAddItem.addActionListener(new ActionListener () {
+		JButton btnConfirm = new JButton("OK");
+		btnConfirm.setBounds(300, 550, 100, 70);
+		btnConfirm.setVisible(false);
+		add(btnConfirm);
+		
+		JLabel labelError = new JLabel();
+		labelError.setForeground(Color.RED);
+		labelError.setVisible(false);
+		add(labelError);
+		
+		btnRemoveItem.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (btnAddItem.getText().equals("Submit")) {
-					btnAddItem.setForeground(Color.RED);
-					btnAddItem.setText("Comfirm");
+				if (btnRemoveItem.getText().equals("Submit")) {
+					btnRemoveItem.setForeground(Color.RED);
+					btnRemoveItem.setText("Comfirm");
 					btnCancelItem.setVisible(true);
+					btnBackItem.setVisible(false);
+					itemList.setEnabled(false);
 				} else {
-					mainMenu();
+					String itemName = (String) itemList.getSelectedItem();
+					Item tempItem = new Item(itemName, null, 0, null, null, null, new BigDecimal(0), null);
+					int errorCode = myData.removeItemInAuction(myNonprofit, tempItem);
+
+
+					if (errorCode == Auction.REMOVEITEMNOTEXIST) {
+						labelError.setText("Failed to Remove selected item because it doesn't exist!");
+						labelError.setBounds(150, 510, 400, 20);
+						labelError.setVisible(true);
+						
+						btnRemoveItem.setVisible(false);
+						btnCancelItem.setVisible(false);
+						btnConfirm.setVisible(true);
+						
+					} else if (errorCode == Auction.REMOVEITEMWITHINTWODAYS) {
+						labelError.setText("Failed to Remove selected item because remove application is submit within 2 days.");
+						labelError.setBounds(120, 510, 500, 20);
+						labelError.setVisible(true);
+						
+						btnRemoveItem.setVisible(false);
+						btnCancelItem.setVisible(false);
+						btnConfirm.setVisible(true);
+					} else {
+						mainMenu();
+					}
 				}
 			}
 		});
 		
+		btnCancelItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				btnRemoveItem.setForeground(Color.BLACK);
+				btnRemoveItem.setText("Submit");
+				btnCancelItem.setVisible(false);
+				btnBackItem.setVisible(true);
+				itemList.setEnabled(true);
+			}
+		});
+		
 		btnBackItem.addActionListener(new ActionListener () {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				mainMenu();
+			}
+		});
+		
+		btnConfirm.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -583,19 +645,5 @@ public class NonprofitPanel extends JPanel {
 		myDisplayLabel.append("\n\n");
 		myDisplayLabel.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
 				theName, theMonth, theDay, theYear));
-	}
-	
-	public void disableButton(int theButtonCode) {
-		switch (theButtonCode) {
-			case 1: myBtnSubmitAuctionRequest.setEnabled(false);
-					break;
-			case 2: myBtnCancelAuctionRequest.setEnabled(false);
-					break;
-			case 3: myBtnAddItem.setEnabled(false);
-					break;
-			case 4: myBtnRemoveItem.setEnabled(false);
-					break;
-			default: break;
-		}
 	}
 }
