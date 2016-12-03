@@ -57,17 +57,17 @@ public class NonprofitPanel extends JPanel {
 	
 	private JButton myBtnCancelAuctionRequest;
 	
-	private JButton myYes;
+	private JButton myConfirm;
 	
-	private JButton myNo;
+	private JButton myCancel;
 	
-	private JButton myYes2;
+	private JButton myConfirm2;
 	
-	private JButton myNo2;
+	private JButton myCancel2;
 	
-	private JButton myYes3;
+	private JButton myConfirm3;
 	
-	private JButton myNo3;
+	private JButton myCancel3;
 	
 	private JButton myReturn;
 	
@@ -180,8 +180,8 @@ public class NonprofitPanel extends JPanel {
 				+ "you have to enter the following information:\n"
 				+ "-Organization Name\n"
 				+ "-Auction Date (YYYY-MM-DDTHH:MM)(MilitaryTime)\n"
-				+ "-Number of approximate Items\n"
-				+ "-Auction Description\n");
+				+ "-Number of approximate Items (Optional)\n"
+				+ "-Auction Description (Optional)\n");
 		
 		//Initializing the form for submitting an auction request
 				JLabel labelOrgName = new JLabel("Organization Name:");
@@ -216,15 +216,15 @@ public class NonprofitPanel extends JPanel {
 				fieldAuctionDescript.setBounds(190, 490, 300, 20);
 				add(fieldAuctionDescript);
 				
-				JButton btnSubmitAuction = new JButton("Submit");
-				btnSubmitAuction.setBounds(580, 370, 100, 70);
-				add(btnSubmitAuction);
+				JButton btnConfirmAuction = new JButton("Confirm");
+				btnConfirmAuction.setBounds(580, 370, 100, 70);
+				add(btnConfirmAuction);
 				
-				JButton btnBackAuction = new JButton("Back");
-				btnBackAuction.setBounds(580, 550, 100, 70);
-				add(btnBackAuction);
+				JButton btnCancelAuction = new JButton("Cancel");
+				btnCancelAuction.setBounds(580, 550, 100, 70);
+				add(btnCancelAuction);
 				
-				btnSubmitAuction.addActionListener(new ActionListener () {
+				btnConfirmAuction.addActionListener(new ActionListener () {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -250,13 +250,13 @@ public class NonprofitPanel extends JPanel {
 									, orgName, auctionDateTime.getMonth(), 
 									auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),
 									auctionDesc, numberOfItems));
-							myYes3 = new JButton("Yes");
-							myNo3 = new JButton("No");
+							myConfirm3 = new JButton("Confirm");
+							myCancel3 = new JButton("Cancel");
 							
-							myYes3.setBounds(480, 510, 200, 50);
-							add(myYes3);
+							myConfirm3.setBounds(480, 510, 200, 50);
+							add(myConfirm3);
 							
-							myYes3.addActionListener(new ActionListener () {
+							myConfirm3.addActionListener(new ActionListener () {
 
 								@Override
 								public void actionPerformed(ActionEvent arg0) {
@@ -287,10 +287,10 @@ public class NonprofitPanel extends JPanel {
 							
 							//Add No Button
 							
-							myNo3.setBounds(480, 580, 200, 50);
-							add(myNo3);
+							myCancel3.setBounds(480, 580, 200, 50);
+							add(myCancel3);
 									
-							myNo3.addActionListener(new ActionListener () {
+							myCancel3.addActionListener(new ActionListener () {
 
 								@Override
 								public void actionPerformed(ActionEvent arg0) {
@@ -299,16 +299,16 @@ public class NonprofitPanel extends JPanel {
 							});
 							
 						} else if(myData.auctionMoreThan2Day(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as there "
+							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as there "
 									+ "is already 2 auctions schedualed for the day you specified");
 						} else if(myData.auctionExceedsMax(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction at this time as there "
+							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction at this time as there "
 									+ "is already the max number of auctions allowed in the system at this time");
 						} else if(myData.auctionPlannedWeekAhead(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as you "
+							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as you "
 									+ "must submit your auction at least one week into the future");
 						} else {
-							JOptionPane.showMessageDialog(btnSubmitAuction, "I'm sorry, you cannot submit this auction as you "
+							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as you "
 									+ "must submit your auction at most no more than one month into the future");
 						}
 
@@ -316,7 +316,7 @@ public class NonprofitPanel extends JPanel {
 					}
 				});
 				
-				btnBackAuction.addActionListener(new ActionListener () {
+				btnCancelAuction.addActionListener(new ActionListener () {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -337,47 +337,47 @@ public class NonprofitPanel extends JPanel {
 				theName, theMonth, theDay, theYear));
 		myDisplayLabel.append("\n\nWould you like to remove this auction?");
 		
-		myYes = new JButton("Yes");
-		myNo = new JButton("No");
+		myConfirm = new JButton("Confirm");
+		myCancel = new JButton("Cancel");
 		
 		//Add Yes Button
 		
-		myYes.setBounds(480, 510, 200, 50);
-		add(myYes);
+		myConfirm.setBounds(480, 510, 200, 50);
+		add(myConfirm);
 				
-		myYes.addActionListener(new ActionListener () {
+		myConfirm.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				initializeMenu("Confirmation");
 				myDisplayLabel.setText("Are you sure you want to remove this auction?");
-				myYes2 = new JButton("Yes");
-				myNo2 = new JButton("No");
+				myConfirm2 = new JButton("Confrim");
+				myCancel2 = new JButton("Cancel");
 				
 				//Add Yes Button
 				
-				myYes2.setBounds(480, 510, 200, 50);
-				add(myYes2);
+				myConfirm2.setBounds(480, 510, 200, 50);
+				add(myConfirm2);
 						
-				myYes2.addActionListener(new ActionListener () {
+				myConfirm2.addActionListener(new ActionListener () {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						if (myData.removeAuction(currentAuction) == true) {
-							JOptionPane.showMessageDialog(myYes2, "You have successfully removed this auction");
+							JOptionPane.showMessageDialog(myConfirm2, "You have successfully removed this auction");
 							mainMenu();
 						} else {
-							JOptionPane.showMessageDialog(myYes2, "You cannot cancel your auction as it is within 2 days of the date your auction is set for.");
+							JOptionPane.showMessageDialog(myConfirm2, "You cannot cancel your auction as it is within 2 days of the date your auction is set for.");
 						}	
 					}
 				});
 				
 				//Add No Button
 				
-				myNo2.setBounds(480, 580, 200, 50);
-				add(myNo2);
+				myCancel2.setBounds(480, 580, 200, 50);
+				add(myCancel2);
 						
-				myNo2.addActionListener(new ActionListener () {
+				myCancel2.addActionListener(new ActionListener () {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -389,10 +389,10 @@ public class NonprofitPanel extends JPanel {
 		
 		//Add No Button
 		
-		myNo.setBounds(480, 580, 200, 50);
-		add(myNo);
+		myCancel.setBounds(480, 580, 200, 50);
+		add(myCancel);
 				
-		myNo.addActionListener(new ActionListener () {
+		myCancel.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
