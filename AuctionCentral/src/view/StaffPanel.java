@@ -1,13 +1,10 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -36,6 +32,8 @@ public class StaffPanel extends JPanel {
 	private JButton myModifyMaxAucitons;
 	private JButton myBackBtn;
 	private JButton myChangeBtn;
+	private JLabel myCurrentAuctionsLbl;
+	private JTextField myChangeField;
 	
 	private Data myData;
 	
@@ -90,7 +88,7 @@ public class StaffPanel extends JPanel {
 		myModifyMaxAucitons.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				viewModifyMaxAuctions();
+				changeMaxNumAuctions();
 			}
 		});
 		
@@ -120,18 +118,18 @@ public class StaffPanel extends JPanel {
 		
 	}
 	
-	private void viewModifyMaxAuctions() {
+	private void viewModifyMaxAuctionsHeader() {
 		initHeader();
 		
-		JLabel aLabel = new JLabel();
-		aLabel.setOpaque(true);
+		myCurrentAuctionsLbl = new JLabel();
+		myCurrentAuctionsLbl.setOpaque(true);
 		Font f = new Font("Dialog.plain", Font.PLAIN, 20);
-		aLabel.setFont(f);
-		aLabel.setBounds(new Rectangle(20, 65, 760, 50));
-		aLabel.setText("Current number of maximum auctions allowed: " + Data.getInstance().getMaxNumberOfAuctions());
-		add(aLabel);
+		myCurrentAuctionsLbl.setFont(f);
+		myCurrentAuctionsLbl.setBounds(new Rectangle(20, 65, 760, 50));
+		myCurrentAuctionsLbl.setText("Current number of maximum auctions allowed: " + Data.getInstance().getMaxNumberOfAuctions());
+		add(myCurrentAuctionsLbl);
 		
-		JLabel aLabel2 = new JLabel();
+		/*JLabel aLabel2 = new JLabel();
 		aLabel2.setOpaque(true);
 		Font f2 = new Font("Dialog.plain", Font.PLAIN, 16);
 		aLabel2.setFont(f2);
@@ -162,7 +160,7 @@ public class StaffPanel extends JPanel {
 					showErrorMessage();
 				}
 			}
-		});
+		});*/
 		
 		myBackBtn = new JButton("<- BACK");
 		myBackBtn.setEnabled(true);
@@ -175,6 +173,82 @@ public class StaffPanel extends JPanel {
 				mainMenu();
 			}
 		});
+	}
+	
+	private void changeMaxNumAuctions() {
+		viewModifyMaxAuctionsHeader();
+		
+		JLabel aLabel2 = new JLabel();
+		aLabel2.setOpaque(true);
+		Font f2 = new Font("Dialog.plain", Font.PLAIN, 16);
+		aLabel2.setFont(f2);
+		aLabel2.setBounds(new Rectangle(20, 110, 760, 30));
+		aLabel2.setText("Change maximum auctions allowed:");
+		add(aLabel2);
+		
+		myErrorMsg = new JLabel();
+		myErrorMsg.setBounds(new Rectangle(20, 150, 760, 50));
+		
+		myChangeField = new JTextField();
+		myChangeField.setBounds(20, 140, 55, 20);
+		add(myChangeField);
+		
+		myChangeBtn = new JButton("Change");
+		myChangeBtn.setEnabled(true);
+		myChangeBtn.setBounds(new Rectangle(80, 140, 80, 20));
+		add(myChangeBtn);
+		
+		myChangeBtn.addActionListener(new ActionListener () {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (isValidInput(myChangeField.getText())) {
+					int v = Integer.parseInt(myChangeField.getText());
+					//Data.getInstance().setMaxNumberOfAuctions(v);
+					changeConfirmation();
+				} else {
+					showErrorMessage();
+				}
+			}
+		});
+	}
+	
+	private void changeConfirmation() {
+		viewModifyMaxAuctionsHeader();
+		
+		JLabel aLabel = new JLabel();
+		aLabel.setOpaque(true);
+		Font f2 = new Font("Dialog.plain", Font.PLAIN, 16);
+		aLabel.setFont(f2);
+		aLabel.setBounds(new Rectangle(20, 110, 760, 30));
+		aLabel.setText("Are you sure you want to change max number of auctions to: " + myChangeField.getText());
+		add(aLabel);
+		
+		JButton aButton = new JButton("Confirm");
+		aButton.setEnabled(true);
+		aButton.setBounds(new Rectangle(20, 140, 80, 20));
+		add(aButton);
+		
+		aButton.addActionListener(new ActionListener () {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int v = Integer.parseInt(myChangeField.getText());
+				Data.getInstance().setMaxNumberOfAuctions(v);
+				changeMaxNumAuctions();
+			}
+		});
+		
+		JButton aButton2 = new JButton("Cancel");
+		aButton2.setEnabled(true);
+		aButton2.setBounds(new Rectangle(110, 140, 80, 20));
+		add(aButton2);
+		
+		aButton2.addActionListener(new ActionListener () {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				changeMaxNumAuctions();
+			}
+		});
+		
 	}
 	
 	private void displayCalendar() {
