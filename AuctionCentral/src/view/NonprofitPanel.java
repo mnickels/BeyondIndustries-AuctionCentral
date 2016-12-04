@@ -1,9 +1,12 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -123,6 +126,7 @@ public class NonprofitPanel extends JPanel {
 		
 		//Submit Auction Request Button
 		myBtnSubmitAuctionRequest.setBounds(580, 370, 200, 50);
+		
 		add(myBtnSubmitAuctionRequest);
 		
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
@@ -169,7 +173,6 @@ public class NonprofitPanel extends JPanel {
 				
 			}
 		});
-
 		
 		repaint();
 	}
@@ -231,6 +234,8 @@ public class NonprofitPanel extends JPanel {
 				btnCancelAuction.setBounds(580, 550, 100, 70);
 				add(btnCancelAuction);
 				
+				repaint();
+				
 				btnConfirmAuction.addActionListener(new ActionListener () {
 
 					@Override
@@ -278,7 +283,7 @@ public class NonprofitPanel extends JPanel {
 											auctionDesc, numberOfItems));
 									myReturn = new JButton("Return");
 									
-									myReturn.setBounds(480, 510, 200, 50);
+									//myReturn.setBounds(480, 510, 200, 50);
 									add(myReturn);
 									
 									myReturn.addActionListener(new ActionListener () {
@@ -329,6 +334,7 @@ public class NonprofitPanel extends JPanel {
 						mainMenu();
 					}
 				});
+		repaint();		
 		
 	}
 	
