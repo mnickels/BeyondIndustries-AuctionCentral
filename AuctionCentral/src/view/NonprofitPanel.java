@@ -184,12 +184,15 @@ public class NonprofitPanel extends JPanel {
 				+ "-Auction Description (Optional)\n");
 		
 		//Initializing the form for submitting an auction request
+				Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+		
 				JLabel labelOrgName = new JLabel("Organization Name:");
 				labelOrgName.setBounds(20, 370, 150, 20);
 				add(labelOrgName);
 				
 				JTextField fieldOrgName = new JTextField();
 				fieldOrgName.setBounds(190, 370, 300, 20);
+				fieldOrgName.setBorder(fieldBorder);
 				add(fieldOrgName);
 				
 				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
@@ -198,22 +201,26 @@ public class NonprofitPanel extends JPanel {
 				
 				JTextField fieldDateAndTime = new JTextField();
 				fieldDateAndTime.setBounds(190, 410, 300, 20);
+				fieldDateAndTime.setBorder(fieldBorder);
 				add(fieldDateAndTime);				
 				
-				JLabel labelItemNumber = new JLabel("Number of approximate Items:");
+				JLabel labelItemNumber = new JLabel("Approximate Items:");
 				labelItemNumber.setBounds(20, 450, 150, 20);
 				add(labelItemNumber);
 				
 				JTextField fieldItemNumber = new JTextField();
 				fieldItemNumber.setBounds(190, 450, 300, 20);
+				fieldItemNumber.setBorder(fieldBorder);
 				add(fieldItemNumber);
 				
 				JLabel labelAuctionDescript = new JLabel("Auction Description:");
 				labelAuctionDescript.setBounds(20, 490, 150, 20);
 				add(labelAuctionDescript);
 				
-				JTextField fieldAuctionDescript = new JTextField();
-				fieldAuctionDescript.setBounds(190, 490, 300, 20);
+				JTextArea fieldAuctionDescript = new JTextArea();
+				fieldAuctionDescript.setBounds(190, 490, 300, 140);
+				fieldAuctionDescript.setBorder(fieldBorder);
+				fieldAuctionDescript.setLineWrap(true);
 				add(fieldAuctionDescript);
 				
 				JButton btnConfirmAuction = new JButton("Confirm");
