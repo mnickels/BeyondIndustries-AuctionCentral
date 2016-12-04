@@ -17,6 +17,10 @@ import view.BidderPanel;
 import view.LoginPanel;
 import view.MainFrame;
 import view.NonprofitPanel;
+import view.Option;
+import view.Screen;
+import view.StaffPanel;
+import view.Text;
 
 /**
  *
@@ -92,6 +96,12 @@ public final class UIController implements Runnable {
 
 	
 	private void staff() {
+		myFrame.remove(myScreen);
+		myScreen = new StaffPanel((Staff) myUser);
+		myFrame.add(myScreen);
+		myFrame.revalidate();
+		myFrame.repaint();
+		
 		/*
 		boolean shouldLoop = true;
 
@@ -165,6 +175,9 @@ public final class UIController implements Runnable {
 				"abidder", "bid@email.com", "(253)555-5556", "123 Somewhere St., Notown"));
 		Data.getInstance().addUser("astaff", new Staff("Staff Guy",
 				"astaff", "staffguy@auctioncentral.com", "(253)555-5557"));
+		
+		Data.getInstance().addUser("astaff2", new Staff("Robert Johnson",
+				"astaff2", "robertj@auctioncentral.com", "(253)556-5157"));
 
 		Auction selectedAuction = new Auction(
 				(Nonprofit) Data.getInstance().getUser("anonprof"),
