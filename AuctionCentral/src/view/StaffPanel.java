@@ -202,8 +202,6 @@ public class StaffPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (isValidInput(myChangeField.getText())) {
-					int v = Integer.parseInt(myChangeField.getText());
-					//Data.getInstance().setMaxNumberOfAuctions(v);
 					changeConfirmation();
 				} else {
 					showErrorMessage();
