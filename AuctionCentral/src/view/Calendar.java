@@ -36,7 +36,7 @@ public class Calendar implements UIComponent {
 							myData.getAuctionsForThisDay(theDate.toLocalDate()).size()));
 					theDate = theDate.plusDays(1);
 				} else {
-					sb.append("      |");
+					sb.append("       |");
 				}
 			}
 			sb.append('\n');
@@ -58,6 +58,10 @@ public class Calendar implements UIComponent {
 	@Override
 	public void display() {
 		System.out.println(myCalendar);
+	}
+	
+	public String getCalendar() {
+		return myCalendar;
 	}
 
 }
