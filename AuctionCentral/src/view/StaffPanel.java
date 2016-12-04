@@ -52,20 +52,6 @@ public class StaffPanel extends JPanel {
 	private void mainMenu() {
 		removeAll();
 		
-		/*myLabel.setOpaque(true);
-		myLabel.setFont(myLabel.getFont().deriveFont(16f));
-		myLabel.setFont(myLabel.getFont().deriveFont(Font.PLAIN));
-
-		LocalDateTime curr = Data.getInstance().getCurrentDateTime();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMM d - yyyy");
-		String text = curr.format(formatter);
-
-		myLabel.setText("<html>" + myStaff.getName() + " logged in as a Staff <br><br>" + "Current date: " 
-						+ text);
-		myLabel.setBounds(new Rectangle(20, 5, 760, 60));
-		//myLabel.setBackground(Color.white);
-		add(myLabel);*/
-		
 		initHeader();
 		
 		myViewUpcomingAuctionsBtn = new JButton("View calendar of upcoming auctions");
@@ -111,7 +97,6 @@ public class StaffPanel extends JPanel {
 		myLabel.setText("<html>" + myStaff.getName() + " logged in as a Staff <br><br>" + "Current date: " 
 						+ text);
 		myLabel.setBounds(new Rectangle(20, 5, 760, 60));
-		//myLabel.setBackground(Color.white);
 		add(myLabel);
 		
 		repaint();
@@ -128,39 +113,6 @@ public class StaffPanel extends JPanel {
 		myCurrentAuctionsLbl.setBounds(new Rectangle(20, 65, 760, 50));
 		myCurrentAuctionsLbl.setText("Current number of maximum auctions allowed: " + Data.getInstance().getMaxNumberOfAuctions());
 		add(myCurrentAuctionsLbl);
-		
-		/*JLabel aLabel2 = new JLabel();
-		aLabel2.setOpaque(true);
-		Font f2 = new Font("Dialog.plain", Font.PLAIN, 16);
-		aLabel2.setFont(f2);
-		aLabel2.setBounds(new Rectangle(20, 110, 760, 30));
-		aLabel2.setText("Change maximum auctions allowed:");
-		add(aLabel2);
-		
-		myErrorMsg = new JLabel();
-		myErrorMsg.setBounds(new Rectangle(20, 150, 760, 50));
-		
-		JTextField changeField = new JTextField();
-		changeField.setBounds(20, 140, 55, 20);
-		add(changeField);
-		
-		myChangeBtn = new JButton("Change");
-		myChangeBtn.setEnabled(true);
-		myChangeBtn.setBounds(new Rectangle(80, 140, 80, 20));
-		add(myChangeBtn);
-		
-		myChangeBtn.addActionListener(new ActionListener () {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (isValidInput(changeField.getText())) {
-					int v = Integer.parseInt(changeField.getText());
-					Data.getInstance().setMaxNumberOfAuctions(v);
-					viewModifyMaxAuctions();
-				} else {
-					showErrorMessage();
-				}
-			}
-		});*/
 		
 		myBackBtn = new JButton("<- BACK");
 		myBackBtn.setEnabled(true);
