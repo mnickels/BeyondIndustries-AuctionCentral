@@ -22,6 +22,7 @@ public class MainFrame extends JFrame{
 	private UIController myController;
 	
 	public MainFrame(UIController theController) {
+		super("Auction Central");
 		myController = theController;
 		setLayout(new BorderLayout());
 		

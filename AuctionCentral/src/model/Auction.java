@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.users.Bidder;
 import model.users.Nonprofit;
 
 /**

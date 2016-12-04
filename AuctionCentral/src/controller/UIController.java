@@ -17,10 +17,7 @@ import view.BidderPanel;
 import view.LoginPanel;
 import view.MainFrame;
 import view.NonprofitPanel;
-import view.Option;
-import view.Screen;
 import view.StaffPanel;
-import view.Text;
 
 /**
  *
@@ -28,8 +25,6 @@ import view.Text;
  * @version November 11 2016
  */
 public final class UIController implements Runnable {
-
-	private static final long serialVersionUID = 1L;
 
 	//private static final boolean DEBUG = true;
 
