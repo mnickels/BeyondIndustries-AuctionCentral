@@ -71,7 +71,7 @@ public class BidderPanel extends JPanel {
 		        choseListOfAuctions();
 		    }
 		});
-		auctions.setBorder(new LineBorder(Color.BLACK));
+//		auctions.setBorder(new LineBorder(Color.BLACK));
 		auctions.setOpaque(true);
 //		auctions.setBackground(Color.WHITE);
 		buttons.add(auctions);
@@ -84,7 +84,7 @@ public class BidderPanel extends JPanel {
 		        choseBids();
 		    }
 		});
-		bidButton.setBorder(new LineBorder(Color.BLACK));
+//		bidButton.setBorder(new LineBorder(Color.BLACK));
 		bidButton.setOpaque(true);
 //		bidButton.setBackground(Color.WHITE);
 		buttons.add(bidButton);
@@ -119,7 +119,7 @@ public class BidderPanel extends JPanel {
 				        choseItem(i, a);
 				    }
 				});
-				button.setBorder(new LineBorder(Color.BLACK));
+//				button.setBorder(new LineBorder(Color.BLACK));
 				button.setMinimumSize(new Dimension(500, 100));
 //				button.setBackground(Color.WHITE);
 				button.setOpaque(true);
@@ -135,7 +135,7 @@ public class BidderPanel extends JPanel {
 		        mainMenu();
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 //		back.setBackground(Color.WHITE);
 		back.setOpaque(true);
 		buttons.add(back, BorderLayout.SOUTH);
@@ -175,7 +175,7 @@ public class BidderPanel extends JPanel {
 				        choseAuction(a);
 				    }
 				});
-				button.setBorder(new LineBorder(Color.BLACK));
+//				button.setBorder(new LineBorder(Color.BLACK));
 //				button.setBackground(Color.WHITE);
 				button.setOpaque(true);
 				button.setMinimumSize(new Dimension(500, 100));
@@ -191,7 +191,7 @@ public class BidderPanel extends JPanel {
 		        mainMenu();
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 //		back.setBackground(Color.WHITE);
 		back.setOpaque(true);
 		buttons.add(back, BorderLayout.SOUTH);
@@ -239,7 +239,7 @@ public class BidderPanel extends JPanel {
 			        choseItem(i, theAuction);
 			    }
 			});
-			button.setBorder(new LineBorder(Color.BLACK));
+//			button.setBorder(new LineBorder(Color.BLACK));
 //			button.setBackground(Color.WHITE);
 			button.setOpaque(true);
 			button.setMinimumSize(new Dimension(500, 100));
@@ -254,7 +254,7 @@ public class BidderPanel extends JPanel {
 		        choseListOfAuctions();
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 //		back.setBackground(Color.WHITE);
 		back.setOpaque(true);
 		buttons.add(back, BorderLayout.SOUTH);
@@ -306,7 +306,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		button.setBorder(new LineBorder(Color.BLACK));
+//		button.setBorder(new LineBorder(Color.BLACK));
 		button.setOpaque(true);
 //		button.setBackground(Color.WHITE);
 		buttons.add(button);
@@ -328,7 +328,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		remove.setBorder(new LineBorder(Color.BLACK));
+//		remove.setBorder(new LineBorder(Color.BLACK));
 		remove.setOpaque(true);
 //		remove.setBackground(Color.WHITE);
 		buttons.add(remove);
@@ -350,7 +350,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		edit.setBorder(new LineBorder(Color.BLACK));
+//		edit.setBorder(new LineBorder(Color.BLACK));
 		edit.setOpaque(true);
 //		edit.setBackground(Color.WHITE);
 		buttons.add(edit);
@@ -363,7 +363,7 @@ public class BidderPanel extends JPanel {
 		        choseAuction(theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back, BorderLayout.SOUTH);
@@ -411,7 +411,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		confirm.setBorder(new LineBorder(Color.BLACK));
+//		confirm.setBorder(new LineBorder(Color.BLACK));
 		confirm.setOpaque(true);
 //		confirm.setBackground(Color.WHITE);
 		buttons.add(confirm);
@@ -424,7 +424,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back, BorderLayout.EAST);
@@ -458,7 +458,7 @@ public class BidderPanel extends JPanel {
 		    	confirmationPage(theItem, theAuction, "Your Bid Was Successfully Changed!");
 		    }
 		});
-		addButton.setBorder(new LineBorder(Color.BLACK));
+//		addButton.setBorder(new LineBorder(Color.BLACK));
 		addButton.setOpaque(true);
 //		addButton.setBackground(Color.WHITE);
 		buttons.add(addButton);
@@ -471,7 +471,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back);
@@ -500,7 +500,7 @@ public class BidderPanel extends JPanel {
 		JTextField text = new JTextField(50);
 		
 		text.setEnabled(true);
-		text.setBorder(new LineBorder(Color.BLACK));
+//		text.setBorder(new LineBorder(Color.BLACK));
 		buttons.add(text);
 		
 		JButton confirm = new JButton("Confirm Bid");
@@ -519,7 +519,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		confirm.setBorder(new LineBorder(Color.BLACK));
+//		confirm.setBorder(new LineBorder(Color.BLACK));
 		confirm.setOpaque(true);
 //		confirm.setBackground(Color.WHITE);
 		buttons.add(confirm);
@@ -532,7 +532,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back);
@@ -565,7 +565,7 @@ public class BidderPanel extends JPanel {
 		    	confirmationPage(theItem, theAuction, "Your Bid Was Successfully Placed!");
 		    }
 		});
-		addButton.setBorder(new LineBorder(Color.BLACK));
+//		addButton.setBorder(new LineBorder(Color.BLACK));
 		addButton.setOpaque(true);
 //		addButton.setBackground(Color.WHITE);
 		buttons.add(addButton);
@@ -578,7 +578,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back);
@@ -618,7 +618,7 @@ public class BidderPanel extends JPanel {
 		    	}
 		    }
 		});
-		remove.setBorder(new LineBorder(Color.BLACK));
+//		remove.setBorder(new LineBorder(Color.BLACK));
 		remove.setOpaque(true);
 //		remove.setBackground(Color.WHITE);
 		buttons.add(remove);
@@ -631,7 +631,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		back.setBorder(new LineBorder(Color.BLACK));
+//		back.setBorder(new LineBorder(Color.BLACK));
 		back.setOpaque(true);
 //		back.setBackground(Color.WHITE);
 		buttons.add(back);
@@ -673,7 +673,7 @@ public class BidderPanel extends JPanel {
 		        mainMenu();
 		    }
 		});
-		backMain.setBorder(new LineBorder(Color.BLACK));
+//		backMain.setBorder(new LineBorder(Color.BLACK));
 		backMain.setOpaque(true);
 //		backMain.setBackground(Color.WHITE);
 		buttons.add(backMain);
@@ -686,7 +686,7 @@ public class BidderPanel extends JPanel {
 		        choseListOfAuctions();
 		    }
 		});
-		backList.setBorder(new LineBorder(Color.BLACK));
+//		backList.setBorder(new LineBorder(Color.BLACK));
 		backList.setOpaque(true);
 //		backList.setBackground(Color.WHITE);
 		buttons.add(backList);
@@ -699,7 +699,7 @@ public class BidderPanel extends JPanel {
 		        choseAuction(theAuction);
 		    }
 		});
-		backAuc.setBorder(new LineBorder(Color.BLACK));
+//		backAuc.setBorder(new LineBorder(Color.BLACK));
 		backAuc.setOpaque(true);
 //		backAuc.setBackground(Color.WHITE);
 		buttons.add(backAuc);
@@ -712,7 +712,7 @@ public class BidderPanel extends JPanel {
 		        choseItem(theItem, theAuction);
 		    }
 		});
-		backItem.setBorder(new LineBorder(Color.BLACK));
+//		backItem.setBorder(new LineBorder(Color.BLACK));
 		backItem.setOpaque(true);
 //		backItem.setBackground(Color.WHITE);
 		buttons.add(backItem);
