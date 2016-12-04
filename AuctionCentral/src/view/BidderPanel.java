@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,9 +41,15 @@ public class BidderPanel extends JPanel {
 	
 	private Data myData;
 	
+	private FlowLayout myFlowLayout;
+	
+	//private BoxLayout myBoxLayout;
+	
 	public BidderPanel(final Bidder theBidder) {
 		super(new BorderLayout());
 		myBidder = theBidder;
+		myFlowLayout = new FlowLayout(FlowLayout.CENTER, 20, 20);
+		//myBoxLayout = new BoxLayout();
 		myLabel = new JLabel();
 	    myLabel.setFont(new Font("Verdana", Font.PLAIN ,16));
 		myLabel.setOpaque(true);
@@ -61,7 +67,7 @@ public class BidderPanel extends JPanel {
 				"<br><br>Main Menu: What Would You Like to Do?</html>");
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton auctions = new JButton("View List of Auctions");
 		auctions.addActionListener(new ActionListener() {
@@ -70,6 +76,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		auctions.setBorder(new LineBorder(Color.BLACK));
+		auctions.setOpaque(true);
+		auctions.setBackground(Color.WHITE);
 		buttons.add(auctions);
 		auctions.setVisible(true);
 		auctions.setEnabled(true);
@@ -81,6 +89,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		bidButton.setBorder(new LineBorder(Color.BLACK));
+		bidButton.setOpaque(true);
+		bidButton.setBackground(Color.WHITE);
 		buttons.add(bidButton);
 		bidButton.setVisible(true);
 		bidButton.setEnabled(true);
@@ -103,7 +113,7 @@ public class BidderPanel extends JPanel {
 		add(myLabel, BorderLayout.NORTH);
 		
 		ScrollPane pane = new ScrollPane();
-		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		for (final Auction a : bids.keySet()) {
 			for (final Item i : bids.get(a)) {
@@ -152,7 +162,7 @@ public class BidderPanel extends JPanel {
 		
 		ScrollPane pane = new ScrollPane();
 		
-		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		for (final Auction a : auctions) {
 			if (a.getDate().isAfter(LocalDateTime.now())) {
@@ -224,7 +234,7 @@ public class BidderPanel extends JPanel {
 		
 		ScrollPane pane = new ScrollPane();
 		
-		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		for (final Item i : theAuction.getItems()) {
 			JButton button = new JButton(itemDisplay(i));
@@ -283,7 +293,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton button = new JButton("Place Bid on Item");
 		button.addActionListener(new ActionListener() {
@@ -301,6 +311,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		button.setBorder(new LineBorder(Color.BLACK));
+		button.setOpaque(true);
+		button.setBackground(Color.WHITE);
 		buttons.add(button);
 		button.setVisible(true);
 		button.setEnabled(true);
@@ -321,6 +333,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		remove.setBorder(new LineBorder(Color.BLACK));
+		remove.setOpaque(true);
+		remove.setBackground(Color.WHITE);
 		buttons.add(remove);
 		remove.setVisible(true);
 		remove.setEnabled(true);
@@ -341,6 +355,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		edit.setBorder(new LineBorder(Color.BLACK));
+		edit.setOpaque(true);
+		edit.setBackground(Color.WHITE);
 		buttons.add(edit);
 		edit.setVisible(true);
 		edit.setEnabled(true);
@@ -352,6 +368,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
 		buttons.add(back, BorderLayout.SOUTH);
 		back.setVisible(true);
 		back.setEnabled(true);
@@ -373,9 +391,9 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new BorderLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
-		JTextField text = new JTextField();
+		JTextField text = new JTextField(50);
 		
 		text.setEnabled(true);
 		text.setBorder(new LineBorder(Color.BLACK));
@@ -398,6 +416,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		confirm.setBorder(new LineBorder(Color.BLACK));
+		confirm.setOpaque(true);
+		confirm.setBackground(Color.WHITE);
 		buttons.add(confirm);
 		confirm.setVisible(true);
 		confirm.setEnabled(true);
@@ -409,6 +429,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
 		buttons.add(back, BorderLayout.EAST);
 		back.setVisible(true);
 		back.setEnabled(true);
@@ -430,7 +452,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton addButton = new JButton("Yes");
 		addButton.addActionListener(new ActionListener() {
@@ -441,6 +463,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		addButton.setBorder(new LineBorder(Color.BLACK));
+		addButton.setOpaque(true);
+		addButton.setBackground(Color.WHITE);
 		buttons.add(addButton);
 		addButton.setVisible(true);
 		addButton.setEnabled(true);
@@ -452,6 +476,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
 		buttons.add(back);
 		back.setVisible(true);
 		back.setEnabled(true);
@@ -473,13 +499,13 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new BorderLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
-		JTextField text = new JTextField();
+		JTextField text = new JTextField(50);
 		
 		text.setEnabled(true);
 		text.setBorder(new LineBorder(Color.BLACK));
-		buttons.add(text, BorderLayout.NORTH);
+		buttons.add(text);
 		
 		JButton confirm = new JButton("Confirm Bid");
 		confirm.addActionListener(new ActionListener() {
@@ -498,6 +524,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		confirm.setBorder(new LineBorder(Color.BLACK));
+		confirm.setOpaque(true);
+		confirm.setBackground(Color.WHITE);
 		buttons.add(confirm);
 		confirm.setVisible(true);
 		confirm.setEnabled(true);
@@ -509,7 +537,9 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
-		buttons.add(back, BorderLayout.EAST);
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
+		buttons.add(back);
 		back.setVisible(true);
 		back.setEnabled(true);
 		
@@ -530,7 +560,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton addButton = new JButton("Yes");
 		addButton.addActionListener(new ActionListener() {
@@ -540,6 +570,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		addButton.setBorder(new LineBorder(Color.BLACK));
+		addButton.setOpaque(true);
+		addButton.setBackground(Color.WHITE);
 		buttons.add(addButton);
 		addButton.setVisible(true);
 		addButton.setEnabled(true);
@@ -551,6 +583,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
 		buttons.add(back);
 		back.setVisible(true);
 		back.setEnabled(true);
@@ -571,7 +605,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton remove = new JButton("Yes");
 		remove.addActionListener(new ActionListener() {
@@ -589,6 +623,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		remove.setBorder(new LineBorder(Color.BLACK));
+		remove.setOpaque(true);
+		remove.setBackground(Color.WHITE);
 		buttons.add(remove);
 		remove.setVisible(true);
 		remove.setEnabled(true);
@@ -600,6 +636,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		back.setBorder(new LineBorder(Color.BLACK));
+		back.setOpaque(true);
+		back.setBackground(Color.WHITE);
 		buttons.add(back);
 		back.setVisible(true);
 		back.setEnabled(true);
@@ -631,7 +669,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		JPanel buttons = new JPanel(new GridLayout());
+		JPanel buttons = new JPanel(myFlowLayout);
 		
 		JButton backMain = new JButton("Return to Main Menu");
 		backMain.addActionListener(new ActionListener() {
@@ -640,6 +678,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		backMain.setBorder(new LineBorder(Color.BLACK));
+		backMain.setOpaque(true);
+		backMain.setBackground(Color.WHITE);
 		buttons.add(backMain);
 		backMain.setVisible(true);
 		backMain.setEnabled(true);
@@ -651,6 +691,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		backList.setBorder(new LineBorder(Color.BLACK));
+		backList.setOpaque(true);
+		backList.setBackground(Color.WHITE);
 		buttons.add(backList);
 		backList.setVisible(true);
 		backList.setEnabled(true);
@@ -662,6 +704,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		backAuc.setBorder(new LineBorder(Color.BLACK));
+		backAuc.setOpaque(true);
+		backAuc.setBackground(Color.WHITE);
 		buttons.add(backAuc);
 		backAuc.setVisible(true);
 		backAuc.setEnabled(true);
@@ -673,6 +717,8 @@ public class BidderPanel extends JPanel {
 		    }
 		});
 		backItem.setBorder(new LineBorder(Color.BLACK));
+		backItem.setOpaque(true);
+		backItem.setBackground(Color.WHITE);
 		buttons.add(backItem);
 		backItem.setVisible(true);
 		backItem.setEnabled(true);
