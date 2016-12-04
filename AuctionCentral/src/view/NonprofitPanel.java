@@ -43,10 +43,6 @@ public class NonprofitPanel extends JPanel {
 	
 	public static final int BTNREMOVEITEM = 4;
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Nonprofit myNonprofit;
