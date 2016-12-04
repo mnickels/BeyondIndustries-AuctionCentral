@@ -17,9 +17,6 @@ import controller.UIController;
 
 public class MainFrame extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private UIController myController;
