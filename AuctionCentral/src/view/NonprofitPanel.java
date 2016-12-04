@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -32,6 +33,7 @@ import model.Auction;
 import model.Data;
 import model.Item;
 import model.users.Nonprofit;
+import java.awt.FlowLayout;
 
 public class NonprofitPanel extends JPanel {
 	
@@ -43,6 +45,7 @@ public class NonprofitPanel extends JPanel {
 	
 	public static final int BTNREMOVEITEM = 4;
 	
+	public static final Dimension MAINMENUBTNDIM = new Dimension(170, 50);
 	
 	/**
 	 * 
@@ -77,27 +80,44 @@ public class NonprofitPanel extends JPanel {
 	
 	private Data myData;
 
+	private FlowLayout myLayout;
 		
 	public NonprofitPanel (Nonprofit theNonprofit) {
 		super();
 		myNonprofit = theNonprofit;
 		myData = Data.getInstance();
-		this.setLayout(null);
+
+		this.setPreferredSize(new Dimension(800, 700));
+		myLayout = new FlowLayout();
+		this.setLayout(myLayout);
+		
 		mainMenu();
 		setVisible(true);
-		
-
 	}
 	
 	private void mainMenu() {
 		//Create and initialize every button
-		myBtnSubmitAuctionRequest = new JButton("Submit Auction Request");
-		myBtnCancelAuctionRequest = new JButton("Cancel Auction Request");
-		myBtnAddItem = new JButton("Add Item");
-		myBtnRemoveItem = new JButton("Remove Item");
 		
 		
 		initializeMenu("Main Menu");
+		
+		
+		myBtnSubmitAuctionRequest = new JButton("Submit Auction Request");
+		myBtnSubmitAuctionRequest.setPreferredSize(MAINMENUBTNDIM);
+		myBtnCancelAuctionRequest = new JButton("Cancel Auction Request");
+		myBtnCancelAuctionRequest.setPreferredSize(MAINMENUBTNDIM);
+		myBtnAddItem = new JButton("Add Item");
+		myBtnAddItem.setPreferredSize(MAINMENUBTNDIM);
+		myBtnRemoveItem = new JButton("Remove Item");
+		myBtnRemoveItem.setPreferredSize(MAINMENUBTNDIM);
+					
+		add(myBtnSubmitAuctionRequest);
+		add(myBtnCancelAuctionRequest);
+		add(myBtnAddItem);
+		add(myBtnRemoveItem);
+
+		myLayout.setVgap(50);
+
 		myDisplayLabel.setText(myNonprofit.getName() + " logged in as a Nonprofit");
 		if(myData.nonprofitHasAuction(myNonprofit) == true){
 			Auction myAuction = myData.getAuctionForThisNonprofit(myNonprofit);
@@ -119,22 +139,12 @@ public class NonprofitPanel extends JPanel {
 			myBtnSubmitAuctionRequest.setEnabled(true);
 		}
 		
-		
-		
-		//Submit Auction Request Button
-		myBtnSubmitAuctionRequest.setBounds(580, 370, 200, 50);
-		add(myBtnSubmitAuctionRequest);
-		
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitAuctionRequestMenu();
 			}
 		});
-		
-		//Cancel Auction Request Button
-		myBtnCancelAuctionRequest.setBounds(580, 440, 200, 50);
-		add(myBtnCancelAuctionRequest);
 		
 		myBtnCancelAuctionRequest.addActionListener(new ActionListener () {
 
@@ -143,11 +153,6 @@ public class NonprofitPanel extends JPanel {
 				CancelAuctionRequestMenu();
 			}
 		});
-
-		//Add Item Button
-		
-		myBtnAddItem.setBounds(580, 510, 200, 50);
-		add(myBtnAddItem);
 		
 		myBtnAddItem.addActionListener(new ActionListener () {
 
@@ -156,10 +161,6 @@ public class NonprofitPanel extends JPanel {
 				AddItemMenu();
 			}
 		});
-
-		//Remove Item Button
-		myBtnRemoveItem.setBounds(580, 580, 200, 50);
-		add(myBtnRemoveItem);
 		
 		myBtnRemoveItem.addActionListener(new ActionListener () {
 
@@ -169,13 +170,18 @@ public class NonprofitPanel extends JPanel {
 				
 			}
 		});
-
+	
 		
 		repaint();
 	}
 	
 	private void submitAuctionRequestMenu() {
 		initializeMenu("Submit Auction Request");
+		
+		myLayout = new FlowLayout(FlowLayout.CENTER, 40, 50);
+		this.setLayout(myLayout);
+		
+		
 		myDisplayLabel.setText("In order to submit an auction request,"
 				+ "you have to enter the following information:\n"
 				+ "-Organization Name\n"
@@ -186,50 +192,60 @@ public class NonprofitPanel extends JPanel {
 		//Initializing the form for submitting an auction request
 				Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
 		
+				JPanel leftFormPanel = new JPanel();
+		        leftFormPanel.setPreferredSize(new Dimension(450, 200));
+		        leftFormPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		        add(leftFormPanel);
+				
 				JLabel labelOrgName = new JLabel("Organization Name:");
-				labelOrgName.setBounds(20, 370, 150, 20);
-				add(labelOrgName);
+				labelOrgName.setPreferredSize(new Dimension(150, 20));
+				leftFormPanel.add(labelOrgName);
 				
 				JTextField fieldOrgName = new JTextField();
-				fieldOrgName.setBounds(190, 370, 300, 20);
+				fieldOrgName.setPreferredSize(new Dimension(300, 20));
 				fieldOrgName.setBorder(fieldBorder);
-				add(fieldOrgName);
+				leftFormPanel.add(fieldOrgName);
 				
 				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
-				labelDateAndTime.setBounds(20, 410, 150, 20);
-				add(labelDateAndTime);
+				labelDateAndTime.setPreferredSize(new Dimension(150, 20));
+				leftFormPanel.add(labelDateAndTime);
 				
 				JTextField fieldDateAndTime = new JTextField();
-				fieldDateAndTime.setBounds(190, 410, 300, 20);
+				fieldDateAndTime.setPreferredSize(new Dimension(300, 20));
 				fieldDateAndTime.setBorder(fieldBorder);
-				add(fieldDateAndTime);				
+				leftFormPanel.add(fieldDateAndTime);				
 				
 				JLabel labelItemNumber = new JLabel("Approximate Items:");
-				labelItemNumber.setBounds(20, 450, 150, 20);
-				add(labelItemNumber);
+				labelItemNumber.setPreferredSize(new Dimension(150, 20));
+				leftFormPanel.add(labelItemNumber);
 				
 				JTextField fieldItemNumber = new JTextField();
-				fieldItemNumber.setBounds(190, 450, 300, 20);
+				fieldItemNumber.setPreferredSize(new Dimension(300, 20));
 				fieldItemNumber.setBorder(fieldBorder);
-				add(fieldItemNumber);
+				leftFormPanel.add(fieldItemNumber);
 				
 				JLabel labelAuctionDescript = new JLabel("Auction Description:");
-				labelAuctionDescript.setBounds(20, 490, 150, 20);
-				add(labelAuctionDescript);
+				labelAuctionDescript.setPreferredSize(new Dimension(150, 20));
+				leftFormPanel.add(labelAuctionDescript);
 				
 				JTextArea fieldAuctionDescript = new JTextArea();
-				fieldAuctionDescript.setBounds(190, 490, 300, 140);
+				fieldAuctionDescript.setPreferredSize(new Dimension(300, 20));
 				fieldAuctionDescript.setBorder(fieldBorder);
 				fieldAuctionDescript.setLineWrap(true);
-				add(fieldAuctionDescript);
+				leftFormPanel.add(fieldAuctionDescript);
+				
+				JPanel rightFormPanel = new JPanel();
+				rightFormPanel.setPreferredSize(new Dimension(100, 200));
+				rightFormPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		        add(rightFormPanel);
 				
 				JButton btnConfirmAuction = new JButton("Confirm");
-				btnConfirmAuction.setBounds(580, 370, 100, 70);
-				add(btnConfirmAuction);
+				btnConfirmAuction.setPreferredSize(new Dimension(100, 60));
+				rightFormPanel.add(btnConfirmAuction);
 				
 				JButton btnCancelAuction = new JButton("Cancel");
-				btnCancelAuction.setBounds(580, 550, 100, 70);
-				add(btnCancelAuction);
+				btnCancelAuction.setPreferredSize(new Dimension(100, 60));
+				rightFormPanel.add(btnCancelAuction);
 				
 				btnConfirmAuction.addActionListener(new ActionListener () {
 
@@ -260,7 +276,6 @@ public class NonprofitPanel extends JPanel {
 							myConfirm3 = new JButton("Confirm");
 							myCancel3 = new JButton("Cancel");
 							
-							myConfirm3.setBounds(480, 510, 200, 50);
 							add(myConfirm3);
 							
 							myConfirm3.addActionListener(new ActionListener () {
@@ -278,7 +293,6 @@ public class NonprofitPanel extends JPanel {
 											auctionDesc, numberOfItems));
 									myReturn = new JButton("Return");
 									
-									myReturn.setBounds(480, 510, 200, 50);
 									add(myReturn);
 									
 									myReturn.addActionListener(new ActionListener () {
@@ -293,7 +307,6 @@ public class NonprofitPanel extends JPanel {
 							
 							//Add No Button
 							
-							myCancel3.setBounds(480, 580, 200, 50);
 							add(myCancel3);
 									
 							myCancel3.addActionListener(new ActionListener () {
@@ -334,6 +347,10 @@ public class NonprofitPanel extends JPanel {
 	
 	private void CancelAuctionRequestMenu() {
 		initializeMenu("Cancel Auction Request");
+		
+		myLayout = new FlowLayout(FlowLayout.CENTER, 20, 50);
+		this.setLayout(myLayout);
+		
 		Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit(myNonprofit);
 		String theName = myNonprofit.getName();
 		Month theMonth = currentAuction.getDate().getMonth();
@@ -348,7 +365,7 @@ public class NonprofitPanel extends JPanel {
 		
 		//Add Yes Button
 		
-		myConfirm.setBounds(480, 510, 200, 50);
+		myConfirm.setPreferredSize(new Dimension(100, 70));
 		add(myConfirm);
 				
 		myConfirm.addActionListener(new ActionListener () {
@@ -357,12 +374,13 @@ public class NonprofitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				initializeMenu("Confirmation");
 				myDisplayLabel.setText("Are you sure you want to remove this auction?");
-				myConfirm2 = new JButton("Confrim");
+				myConfirm2 = new JButton("Confirm");
+				myConfirm2.setForeground(Color.RED);
 				myCancel2 = new JButton("Cancel");
 				
 				//Add Yes Button
 				
-				myConfirm2.setBounds(480, 510, 200, 50);
+				myConfirm2.setPreferredSize(new Dimension(100, 70));
 				add(myConfirm2);
 						
 				myConfirm2.addActionListener(new ActionListener () {
@@ -380,7 +398,7 @@ public class NonprofitPanel extends JPanel {
 				
 				//Add No Button
 				
-				myCancel2.setBounds(480, 580, 200, 50);
+				myCancel2.setPreferredSize(new Dimension(100, 70));
 				add(myCancel2);
 						
 				myCancel2.addActionListener(new ActionListener () {
@@ -395,7 +413,7 @@ public class NonprofitPanel extends JPanel {
 		
 		//Add No Button
 		
-		myCancel.setBounds(480, 580, 200, 50);
+		myCancel.setPreferredSize(new Dimension(100, 70));
 		add(myCancel);
 				
 		myCancel.addActionListener(new ActionListener () {
@@ -413,6 +431,9 @@ public class NonprofitPanel extends JPanel {
 	private void AddItemMenu() {
 		initializeMenu("Add Item");
 		
+		myLayout = new FlowLayout(FlowLayout.CENTER, 20, 0);
+		this.setLayout(myLayout);
+		
 		myDisplayLabel.setText("In order to add an item,\n"
 				+ "The following information are required:\n"
 				+ "-Item Name\n-Quantity\n-Item Condition\n"
@@ -423,100 +444,99 @@ public class NonprofitPanel extends JPanel {
 		//Initializing the form for adding an item
         Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
 		
+        JPanel leftFormPanel = new JPanel();
+        leftFormPanel.setPreferredSize(new Dimension(400, 200));
+        leftFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+        add(leftFormPanel);
+        
 		JLabel labelItemName = new JLabel("Item Name:");
-		labelItemName.setBounds(20, 370, 80, 20);
-		add(labelItemName);
+		labelItemName.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelItemName);
 		
 		JTextField fieldItemName = new JTextField();
-		fieldItemName.setBounds(120, 370, 300, 20);
+		fieldItemName.setPreferredSize(new Dimension(300, 20));
 		fieldItemName.setBorder(fieldBorder);
-		add(fieldItemName);
+		leftFormPanel.add(fieldItemName);
 		
 		JLabel labelDonorName = new JLabel("Donor Name:");
-		labelDonorName.setBounds(20, 400, 80, 20);
-		add(labelDonorName);
+		labelDonorName.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelDonorName);
 		
 		JTextField fieldDonorName = new JTextField();
-		fieldDonorName.setBounds(120, 400, 300, 20);
+		fieldDonorName.setPreferredSize(new Dimension(300, 20));
 		fieldDonorName.setBorder(fieldBorder);
-		add(fieldDonorName);
+		leftFormPanel.add(fieldDonorName);
 		
 		JLabel labelQuantity = new JLabel("Quantity:");
-		labelQuantity.setBounds(20, 430, 80, 20);
-		add(labelQuantity);
+		labelQuantity.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelQuantity);
 		
 		JTextField fieldQuantity = new JTextField();
-		fieldQuantity.setBounds(120, 430, 300, 20);
+		fieldQuantity.setPreferredSize(new Dimension(300, 20));
 		fieldQuantity.setBorder(fieldBorder);
-		add(fieldQuantity);
+		leftFormPanel.add(fieldQuantity);
 		
 		String[] itemConditionList = {"Acceptable", "Good", "Very Good", "Like New", "New"};
 		String[] itemSizeList = {"Small", "Medium", "Large"};
 		
 		JLabel labelItemCondition = new JLabel("Item Condition:");
-		labelItemCondition.setBounds(20, 460, 100, 20);
-		add(labelItemCondition);
+		labelItemCondition.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelItemCondition);
 		
 		JComboBox boxItemCondition = new JComboBox(itemConditionList);
 		boxItemCondition.setBackground(Color.WHITE);
 		boxItemCondition.setSelectedIndex(0);		
-		boxItemCondition.setBounds(120, 460, 300, 20);
+		boxItemCondition.setPreferredSize(new Dimension(300, 20));
 		boxItemCondition.setBorder(fieldBorder);
-		add(boxItemCondition);
+		leftFormPanel.add(boxItemCondition);
 		
 		JLabel labelItemSize = new JLabel("Item Size:");
-		labelItemSize.setBounds(20, 490, 80, 20);
-		add(labelItemSize);
+		labelItemSize.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelItemSize);
 		
 		JComboBox boxItemSize = new JComboBox(itemSizeList);
 		boxItemSize.setBackground(Color.WHITE);
 		boxItemSize.setSelectedIndex(0);
-		boxItemSize.setBounds(120, 490, 300, 20);
+		boxItemSize.setPreferredSize(new Dimension(300, 20));
 		boxItemSize.setBorder(fieldBorder);
-		add(boxItemSize);
+		leftFormPanel.add(boxItemSize);
 		
 		JLabel labelStartingBid = new JLabel("Starting Bid:");
-		labelStartingBid.setBounds(20, 520, 80, 20);
-		add(labelStartingBid);
+		labelStartingBid.setPreferredSize(new Dimension(100, 20));
+		leftFormPanel.add(labelStartingBid);
 		
 		JTextField fieldStartingBid = new JTextField();
-		fieldStartingBid.setBounds(120, 520, 300, 20);
+		fieldStartingBid.setPreferredSize(new Dimension(300, 20));
 		fieldStartingBid.setBorder(fieldBorder);
-		add(fieldStartingBid);
-				
+		leftFormPanel.add(fieldStartingBid);
+						
+        JPanel rightFormPanel = new JPanel();
+        rightFormPanel.setPreferredSize(new Dimension(340, 200));
+        rightFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+        add(rightFormPanel);
+		
+		
 		JLabel labelItemDescription = new JLabel("Item Description");
-		labelItemDescription.setBounds(440, 370, 100, 20);
-		add(labelItemDescription);
+		labelItemDescription.setPreferredSize(new Dimension(340, 20));
+		rightFormPanel.add(labelItemDescription);
 		
 		JTextArea fieldItemDescription = new JTextArea();
-		fieldItemDescription.setBounds(440, 400, 340, 140);
+		fieldItemDescription.setPreferredSize(new Dimension(340, 140));
 		fieldItemDescription.setBorder(fieldBorder);
 		fieldItemDescription.setLineWrap(true);
-		add(fieldItemDescription);
-		
-		/*
-		JLabel labelComment = new JLabel("Comment");
-		labelComment.setBounds(440, 460, 100, 20);
-		add(labelComment);
-		
-		JTextArea fieldComment = new JTextArea();
-		fieldComment.setBounds(440, 490, 340, 50);
-		fieldComment.setBorder(fieldBorder);
-		fieldComment.setLineWrap(true);
-		add(fieldComment);
-		*/
+		rightFormPanel.add(fieldItemDescription);
 		
 		JButton btnAddItem = new JButton("Submit");
-		btnAddItem.setBounds(560, 560, 100, 70);
+		btnAddItem.setPreferredSize(new Dimension(100, 70));
 		add(btnAddItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
-		btnCancelItem.setBounds(680, 560, 100, 70);
+		btnCancelItem.setPreferredSize(new Dimension(100, 70));
 		btnCancelItem.setVisible(false);
 		add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setBounds(680, 560, 100, 70);
+		btnBackItem.setPreferredSize(new Dimension(100, 70));
 		add(btnBackItem);
 		
 		btnAddItem.addActionListener(new ActionListener () {
@@ -580,18 +600,22 @@ public class NonprofitPanel extends JPanel {
 	
 	private void RemoveItemMenu() {
 		initializeMenu("Remove Item");
-		myDisplayLabel.setBounds(new Rectangle(20, 20, 760, 100));
+		
+		myLayout = new FlowLayout();
+		this.setLayout(myLayout);
+		myDisplayLabel.setPreferredSize(new Dimension(760, 150));
+		
 		myDisplayLabel.setText("Below is a list of all the items in the Auction\n"
 				+ "Choose the one you want to remove and click on the remove button.");
 		String[] columnNames = {"Name", "Donor", "Quantity", "Condition", "Size", "Starting Bid"};
 		Object[][] auctionItems = myData.getAuctionItems(myNonprofit);
 		JTable itemTable = new JTable(auctionItems, columnNames);
-		itemTable.setBounds(new Rectangle(20, 120, 760, 300));
+		itemTable.setPreferredSize(new Dimension(760, 300));
 		itemTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		JScrollPane scrollPane = new JScrollPane(itemTable);
 		itemTable.setFillsViewportHeight(true);
-		scrollPane.setBounds(new Rectangle(20, 120, 760, 300));
+		scrollPane.setPreferredSize(new Dimension(760, 300));
 		add(scrollPane);
 
 		String[] itemNames = new String[auctionItems.length];
@@ -599,28 +623,31 @@ public class NonprofitPanel extends JPanel {
 			itemNames[i] = (String) auctionItems[i][0];
 		}
 				
+		JPanel bottomHalf = new JPanel();
+		bottomHalf.setPreferredSize(new Dimension(300, 200));
+		bottomHalf.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
+		
 	    JComboBox itemList = new JComboBox(itemNames);
+	    itemList.setPreferredSize(new Dimension(250, 20));
 	    itemList.setSelectedIndex(0);
-		itemList.setBounds(new Rectangle(225, 440, 250, 20));
-		add(itemList);
+		bottomHalf.add(itemList);
 		
 		JButton btnRemoveItem = new JButton("Submit");
-		btnRemoveItem.setBounds(240, 550, 100, 70);
-		add(btnRemoveItem);
+		btnRemoveItem.setPreferredSize(new Dimension(100, 50));
+		bottomHalf.add(btnRemoveItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
-		btnCancelItem.setBounds(360, 550, 100, 70);
 		btnCancelItem.setVisible(false);
-		add(btnCancelItem);
+		btnCancelItem.setPreferredSize(new Dimension(100, 50));
+		bottomHalf.add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setBounds(360, 550, 100, 70);
-		add(btnBackItem);
+		btnBackItem.setPreferredSize(new Dimension(100, 50));
+		bottomHalf.add(btnBackItem);
 		
-		JButton btnConfirm = new JButton("OK");
-		btnConfirm.setBounds(300, 550, 100, 70);
-		btnConfirm.setVisible(false);
-		add(btnConfirm);
+
+		
+		add(bottomHalf);
 		
 		btnRemoveItem.addActionListener(new ActionListener () {
 
@@ -644,7 +671,6 @@ public class NonprofitPanel extends JPanel {
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
-						btnConfirm.setVisible(true);
 						
 					} else if (errorCode == Auction.REMOVEITEMWITHINTWODAYS) {
 						JOptionPane.showMessageDialog(null, "Failed to Remove selected item"
@@ -652,7 +678,6 @@ public class NonprofitPanel extends JPanel {
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
-						btnConfirm.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "You have successfully removed an item");
 						mainMenu();
@@ -681,14 +706,6 @@ public class NonprofitPanel extends JPanel {
 			}
 		});
 		
-		btnConfirm.addActionListener(new ActionListener () {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				mainMenu();
-			}
-		});
-		
 		this.revalidate();
 		this.repaint();
 	}
@@ -696,11 +713,11 @@ public class NonprofitPanel extends JPanel {
 	private void initializeMenu(String theTitle) {
 		this.removeAll();
 
-		
 		myDisplayLabel = new JTextArea();
 		myDisplayLabel.setFont(myDisplayLabel.getFont().deriveFont(16f));
 		myDisplayLabel.setEditable(false);
-		myDisplayLabel.setBounds(new Rectangle(20, 20, 760, 330));
+		myDisplayLabel.setPreferredSize(new Dimension(760, 350));
+		
 		TitledBorder title;
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		title = BorderFactory.createTitledBorder(blackline, theTitle);
