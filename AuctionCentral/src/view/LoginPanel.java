@@ -9,13 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.UIController;
-import model.Data;
 
 public class LoginPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-
-	private Data myData;
 	
 	private UIController myController;
 	
@@ -24,7 +21,6 @@ public class LoginPanel extends JPanel{
 	public LoginPanel(UIController theController) {
 		super();
 		myController = theController;
-		myData = Data.getInstance();
 		this.setLayout(null);
 		
 		setupLoginMenu();
