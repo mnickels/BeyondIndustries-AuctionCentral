@@ -237,7 +237,7 @@ public class NonprofitPanel extends JPanel {
 						String dateTime = fieldDateAndTime.getText();
 						DateTimeFormatter newFormat = DateTimeFormatter.ISO_DATE_TIME;
 						LocalDateTime auctionDateTime = LocalDateTime.parse(dateTime, newFormat);
-						double numberOfItems = Double.parseDouble(numberItems);
+						int numberOfItems = Integer.parseInt(numberItems);
 						Auction newAuction = new Auction(myNonprofit, auctionDateTime, orgName, auctionDesc);
 
 						if(myData.addAuction(newAuction) == true){
@@ -279,7 +279,6 @@ public class NonprofitPanel extends JPanel {
 										@Override
 										public void actionPerformed(ActionEvent arg0) {
 											mainMenu();
-											myBtnRemoveItem.setEnabled(false);
 										}
 									});
 								}
