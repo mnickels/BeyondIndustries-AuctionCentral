@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Auction;
@@ -218,7 +219,7 @@ public final class UIController implements Runnable {
 			myUser = Data.getInstance().getUser(theUsername); 
 			
 			if (myUser == null) {
-			((LoginPanel) myScreen).showInvalidUsernameError();
+				JOptionPane.showMessageDialog(null, "Sorry, the username is invalid");
 			} else {
 				if (myUser instanceof Bidder) {
 					bidder();

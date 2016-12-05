@@ -48,12 +48,52 @@ public class NonprofitPanel extends JPanel {
 	
 	public static final int BTNREMOVEITEM = 4;
 	
-	public static final Dimension MAINMENUBTNDIM = new Dimension(170, 50);
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Main menu components dimension.
+	 */
+	private final Dimension btnMainDim = new Dimension(170, 50);
+	
+	/**
+	 * Submit auction request components dimension.
+	 */
+	private final Dimension leftPanelAuctionDim = new Dimension(450, 200);
+	
+	private final Dimension rightPanelAuctionDim = new Dimension(100, 200);
+	
+	private final Dimension labelAuctionDim = new Dimension(150, 20);
+	
+	private final Dimension fieldAuctionDim = new Dimension(300, 20);
+	
+	/**
+	 * Cancel auction request components dimension.
+	 */
+	private final Dimension btnDimension = new Dimension(100, 70);
+	
+	/**
+	 * Add item components dimension.
+	 */
+	private final Dimension leftPanelItemDim = new Dimension(400, 200);
+	
+	private final Dimension rightPanelItemDim = new Dimension(340, 200);
+	
+	private final Dimension labelItemDim = new Dimension(100, 20);
+	
+	private final Dimension fieldItemDim = new Dimension(300, 20);
+	
+	private final Dimension fieldDescriptionDim = new Dimension(340, 140);
+	
+	private final Dimension btnAddItemDim = new Dimension(100, 70);
+	
+	/**
+	 * Remove item components dimension
+	 */
+	private final Dimension btnRemoveItemDim = new Dimension(100, 50);
 	
 	private Nonprofit myNonprofit;
 	
@@ -94,7 +134,6 @@ public class NonprofitPanel extends JPanel {
 
 		this.setPreferredSize(new Dimension(800, 700));
 		myLayout = new FlowLayout();
-		this.setLayout(myLayout);
 		
 		mainMenu();
 		setVisible(true);
@@ -103,18 +142,18 @@ public class NonprofitPanel extends JPanel {
 	private void mainMenu() {
 		//Create and initialize every button
 		
-		
+		this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		initializeMenu("Main Menu");
 		
 		
 		myBtnSubmitAuctionRequest = new JButton("Submit Auction Request");
-		myBtnSubmitAuctionRequest.setPreferredSize(MAINMENUBTNDIM);
+		myBtnSubmitAuctionRequest.setPreferredSize(btnMainDim);
 		myBtnCancelAuctionRequest = new JButton("Cancel Auction Request");
-		myBtnCancelAuctionRequest.setPreferredSize(MAINMENUBTNDIM);
+		myBtnCancelAuctionRequest.setPreferredSize(btnMainDim);
 		myBtnAddItem = new JButton("Add Item");
-		myBtnAddItem.setPreferredSize(MAINMENUBTNDIM);
+		myBtnAddItem.setPreferredSize(btnMainDim);
 		myBtnRemoveItem = new JButton("Remove Item");
-		myBtnRemoveItem.setPreferredSize(MAINMENUBTNDIM);
+		myBtnRemoveItem.setPreferredSize(btnMainDim);
 					
 		add(myBtnSubmitAuctionRequest);
 		add(myBtnCancelAuctionRequest);
@@ -129,28 +168,23 @@ public class NonprofitPanel extends JPanel {
 			myDisplayLabel.append(String.format("\nYou have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
 					myAuction.getName(), myAuction.getDate().getMonth(), 
 					myAuction.getDate().getDayOfMonth(), myAuction.getDate().getYear()));
+			myBtnSubmitAuctionRequest.setEnabled(false);
 			myBtnCancelAuctionRequest.setEnabled(true);
 			myBtnAddItem.setEnabled(true);
 			myBtnRemoveItem.setEnabled(true);
-			myBtnSubmitAuctionRequest.setEnabled(false);
 			
 			if (myAuction.getSize() == 0) {
 				myBtnRemoveItem.setEnabled(false);
 			}
 		} else {
+			myBtnSubmitAuctionRequest.setEnabled(true);
 			myBtnCancelAuctionRequest.setEnabled(false);
 			myBtnAddItem.setEnabled(false);
 			myBtnRemoveItem.setEnabled(false);
-			myBtnSubmitAuctionRequest.setEnabled(true);
 		}
 		
 		
-		//Submit Auction Request Button
-		myBtnSubmitAuctionRequest.setBounds(580, 370, 200, 50);
-		
-		add(myBtnSubmitAuctionRequest);
-		
-
+		//Submit Auction Request Button			
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -196,7 +230,6 @@ public class NonprofitPanel extends JPanel {
 		myLayout = new FlowLayout(FlowLayout.CENTER, 40, 50);
 		this.setLayout(myLayout);
 		
-		
 		myDisplayLabel.setText("In order to submit an auction request,"
 				+ "you have to enter the following information:\n"
 				+ "-Organization Name\n"
@@ -208,49 +241,49 @@ public class NonprofitPanel extends JPanel {
 				Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
 		
 				JPanel leftFormPanel = new JPanel();
-		        leftFormPanel.setPreferredSize(new Dimension(450, 200));
+		        leftFormPanel.setPreferredSize(leftPanelAuctionDim);
 		        leftFormPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 		        add(leftFormPanel);
 				
 				JLabel labelOrgName = new JLabel("Organization Name:");
-				labelOrgName.setPreferredSize(new Dimension(150, 20));
+				labelOrgName.setPreferredSize(labelAuctionDim);
 				leftFormPanel.add(labelOrgName);
 				
 				JTextField fieldOrgName = new JTextField();
-				fieldOrgName.setPreferredSize(new Dimension(300, 20));
+				fieldOrgName.setPreferredSize(fieldAuctionDim);
 				fieldOrgName.setBorder(fieldBorder);
 				leftFormPanel.add(fieldOrgName);
 				
 				JLabel labelDateAndTime = new JLabel("Auction Date and Time:");
-				labelDateAndTime.setPreferredSize(new Dimension(150, 20));
+				labelDateAndTime.setPreferredSize(labelAuctionDim);
 				leftFormPanel.add(labelDateAndTime);
 				
 				JTextField fieldDateAndTime = new JTextField();
-				fieldDateAndTime.setPreferredSize(new Dimension(300, 20));
+				fieldDateAndTime.setPreferredSize(fieldAuctionDim);
 				fieldDateAndTime.setBorder(fieldBorder);
 				leftFormPanel.add(fieldDateAndTime);				
 				
 				JLabel labelItemNumber = new JLabel("Approximate Items:");
-				labelItemNumber.setPreferredSize(new Dimension(150, 20));
+				labelItemNumber.setPreferredSize(labelAuctionDim);
 				leftFormPanel.add(labelItemNumber);
 				
 				JTextField fieldItemNumber = new JTextField();
-				fieldItemNumber.setPreferredSize(new Dimension(300, 20));
+				fieldItemNumber.setPreferredSize(fieldAuctionDim);
 				fieldItemNumber.setBorder(fieldBorder);
 				leftFormPanel.add(fieldItemNumber);
 				
 				JLabel labelAuctionDescript = new JLabel("Auction Description:");
-				labelAuctionDescript.setPreferredSize(new Dimension(150, 20));
+				labelAuctionDescript.setPreferredSize(labelAuctionDim);
 				leftFormPanel.add(labelAuctionDescript);
 				
 				JTextArea fieldAuctionDescript = new JTextArea();
-				fieldAuctionDescript.setPreferredSize(new Dimension(300, 20));
+				fieldAuctionDescript.setPreferredSize(fieldAuctionDim);
 				fieldAuctionDescript.setBorder(fieldBorder);
 				fieldAuctionDescript.setLineWrap(true);
 				leftFormPanel.add(fieldAuctionDescript);
 				
 				JPanel rightFormPanel = new JPanel();
-				rightFormPanel.setPreferredSize(new Dimension(100, 200));
+				rightFormPanel.setPreferredSize(rightPanelAuctionDim);
 				rightFormPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 		        add(rightFormPanel);
 				
@@ -390,7 +423,7 @@ public class NonprofitPanel extends JPanel {
 		
 		//Add Yes Button
 		
-		myConfirm.setPreferredSize(new Dimension(100, 70));
+		myConfirm.setPreferredSize(btnDimension);
 		add(myConfirm);
 				
 		myConfirm.addActionListener(new ActionListener () {
@@ -405,7 +438,7 @@ public class NonprofitPanel extends JPanel {
 				
 				//Add Yes Button
 				
-				myConfirm2.setPreferredSize(new Dimension(100, 70));
+				myConfirm2.setPreferredSize(btnDimension);
 				add(myConfirm2);
 						
 				myConfirm2.addActionListener(new ActionListener () {
@@ -423,7 +456,7 @@ public class NonprofitPanel extends JPanel {
 				
 				//Add No Button
 				
-				myCancel2.setPreferredSize(new Dimension(100, 70));
+				myCancel2.setPreferredSize(btnDimension);
 				add(myCancel2);
 						
 				myCancel2.addActionListener(new ActionListener () {
@@ -438,7 +471,7 @@ public class NonprofitPanel extends JPanel {
 		
 		//Add No Button
 		
-		myCancel.setPreferredSize(new Dimension(100, 70));
+		myCancel.setPreferredSize(btnDimension);
 		add(myCancel);
 				
 		myCancel.addActionListener(new ActionListener () {
@@ -470,34 +503,34 @@ public class NonprofitPanel extends JPanel {
         Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
 		
         JPanel leftFormPanel = new JPanel();
-        leftFormPanel.setPreferredSize(new Dimension(400, 200));
+        leftFormPanel.setPreferredSize(leftPanelItemDim);
         leftFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
         add(leftFormPanel);
         
 		JLabel labelItemName = new JLabel("Item Name:");
-		labelItemName.setPreferredSize(new Dimension(100, 20));
+		labelItemName.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelItemName);
 		
 		JTextField fieldItemName = new JTextField();
-		fieldItemName.setPreferredSize(new Dimension(300, 20));
+		fieldItemName.setPreferredSize(fieldItemDim);
 		fieldItemName.setBorder(fieldBorder);
 		leftFormPanel.add(fieldItemName);
 		
 		JLabel labelDonorName = new JLabel("Donor Name:");
-		labelDonorName.setPreferredSize(new Dimension(100, 20));
+		labelDonorName.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelDonorName);
 		
 		JTextField fieldDonorName = new JTextField();
-		fieldDonorName.setPreferredSize(new Dimension(300, 20));
+		fieldDonorName.setPreferredSize(fieldItemDim);
 		fieldDonorName.setBorder(fieldBorder);
 		leftFormPanel.add(fieldDonorName);
 		
 		JLabel labelQuantity = new JLabel("Quantity:");
-		labelQuantity.setPreferredSize(new Dimension(100, 20));
+		labelQuantity.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelQuantity);
 		
 		JTextField fieldQuantity = new JTextField();
-		fieldQuantity.setPreferredSize(new Dimension(300, 20));
+		fieldQuantity.setPreferredSize(fieldItemDim);
 		fieldQuantity.setBorder(fieldBorder);
 		leftFormPanel.add(fieldQuantity);
 		
@@ -505,63 +538,63 @@ public class NonprofitPanel extends JPanel {
 		String[] itemSizeList = {"Small", "Medium", "Large"};
 		
 		JLabel labelItemCondition = new JLabel("Item Condition:");
-		labelItemCondition.setPreferredSize(new Dimension(100, 20));
+		labelItemCondition.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelItemCondition);
 		
 		JComboBox boxItemCondition = new JComboBox(itemConditionList);
 		boxItemCondition.setBackground(Color.WHITE);
 		boxItemCondition.setSelectedIndex(0);		
-		boxItemCondition.setPreferredSize(new Dimension(300, 20));
+		boxItemCondition.setPreferredSize(fieldItemDim);
 		boxItemCondition.setBorder(fieldBorder);
 		leftFormPanel.add(boxItemCondition);
 		
 		JLabel labelItemSize = new JLabel("Item Size:");
-		labelItemSize.setPreferredSize(new Dimension(100, 20));
+		labelItemSize.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelItemSize);
 		
 		JComboBox boxItemSize = new JComboBox(itemSizeList);
 		boxItemSize.setBackground(Color.WHITE);
 		boxItemSize.setSelectedIndex(0);
-		boxItemSize.setPreferredSize(new Dimension(300, 20));
+		boxItemSize.setPreferredSize(fieldItemDim);
 		boxItemSize.setBorder(fieldBorder);
 		leftFormPanel.add(boxItemSize);
 		
 		JLabel labelStartingBid = new JLabel("Starting Bid:");
-		labelStartingBid.setPreferredSize(new Dimension(100, 20));
+		labelStartingBid.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelStartingBid);
 		
 		JTextField fieldStartingBid = new JTextField();
-		fieldStartingBid.setPreferredSize(new Dimension(300, 20));
+		fieldStartingBid.setPreferredSize(fieldItemDim);
 		fieldStartingBid.setBorder(fieldBorder);
 		leftFormPanel.add(fieldStartingBid);
 						
         JPanel rightFormPanel = new JPanel();
-        rightFormPanel.setPreferredSize(new Dimension(340, 200));
+        rightFormPanel.setPreferredSize(rightPanelItemDim);
         rightFormPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
         add(rightFormPanel);
 		
 		
 		JLabel labelItemDescription = new JLabel("Item Description");
-		labelItemDescription.setPreferredSize(new Dimension(340, 20));
+		labelItemDescription.setPreferredSize(labelItemDim);
 		rightFormPanel.add(labelItemDescription);
 		
 		JTextArea fieldItemDescription = new JTextArea();
-		fieldItemDescription.setPreferredSize(new Dimension(340, 140));
+		fieldItemDescription.setPreferredSize(fieldDescriptionDim);
 		fieldItemDescription.setBorder(fieldBorder);
 		fieldItemDescription.setLineWrap(true);
 		rightFormPanel.add(fieldItemDescription);
 		
 		JButton btnAddItem = new JButton("Submit");
-		btnAddItem.setPreferredSize(new Dimension(100, 70));
+		btnAddItem.setPreferredSize(btnAddItemDim);
 		add(btnAddItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
-		btnCancelItem.setPreferredSize(new Dimension(100, 70));
+		btnCancelItem.setPreferredSize(btnAddItemDim);
 		btnCancelItem.setVisible(false);
 		add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setPreferredSize(new Dimension(100, 70));
+		btnBackItem.setPreferredSize(btnAddItemDim);
 		add(btnBackItem);
 		
 		btnAddItem.addActionListener(new ActionListener () {
@@ -593,10 +626,7 @@ public class NonprofitPanel extends JPanel {
 						} else {
 							JOptionPane.showMessageDialog(null, "Sorry, you cannot add the same item twice");
 						}
-
 					}
-					
-					
 				}
 			}
 		});
@@ -620,7 +650,6 @@ public class NonprofitPanel extends JPanel {
 				mainMenu();
 			}
 		});
-		
 	}
 	
 	private void RemoveItemMenu() {
@@ -658,20 +687,18 @@ public class NonprofitPanel extends JPanel {
 		bottomHalf.add(itemList);
 		
 		JButton btnRemoveItem = new JButton("Submit");
-		btnRemoveItem.setPreferredSize(new Dimension(100, 50));
+		btnRemoveItem.setPreferredSize(btnRemoveItemDim);
 		bottomHalf.add(btnRemoveItem);
 		
 		JButton btnCancelItem = new JButton("Cancel");
 		btnCancelItem.setVisible(false);
-		btnCancelItem.setPreferredSize(new Dimension(100, 50));
+		btnCancelItem.setPreferredSize(btnRemoveItemDim);
 		bottomHalf.add(btnCancelItem);
 		
 		JButton btnBackItem = new JButton("Back");
-		btnBackItem.setPreferredSize(new Dimension(100, 50));
+		btnBackItem.setPreferredSize(btnRemoveItemDim);
 		bottomHalf.add(btnBackItem);
-		
 
-		
 		add(bottomHalf);
 		
 		btnRemoveItem.addActionListener(new ActionListener () {

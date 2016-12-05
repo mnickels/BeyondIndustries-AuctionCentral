@@ -1,10 +1,14 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -13,6 +17,22 @@ import controller.UIController;
 public class LoginPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+
+	private final Dimension labelTitleDim = new Dimension(450, 200);
+	
+	private final Dimension labelCreditDim = new Dimension(200, 20);
+	
+	private final Dimension labelUsernameDim = new Dimension(70, 20);
+	
+	private final Dimension fieldUsernameDim = new Dimension(200, 20);
+	
+	private final Dimension btnLoginDim = new Dimension(100, 30);
+		
+	private final Dimension topPanelDim = new Dimension(450, 450);
+	
+	private final Dimension midPanelDim = new Dimension(400, 160);
+	
+	private final Dimension botPanelDim = new Dimension(800, 100);
 	
 	private UIController myController;
 	
@@ -21,41 +41,53 @@ public class LoginPanel extends JPanel{
 	public LoginPanel(UIController theController) {
 		super();
 		myController = theController;
-		this.setLayout(null);
+		this.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 0));
 		
 		setupLoginMenu();
 	}
 
 	private void setupLoginMenu() {
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setPreferredSize(topPanelDim);
+		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 50));
+		add(topPanel);
+		
 		JLabel labelTitle = new JLabel("Auction Central");
 		labelTitle.setFont(labelTitle.getFont().deriveFont(60f));
-		labelTitle.setBounds(170, 50, 600, 200);
-		add(labelTitle);
+		labelTitle.setPreferredSize(labelTitleDim);
+		topPanel.add(labelTitle);
 		
-		JLabel labelCredit = new JLabel("Created by: Beyond Industries");
-		labelCredit.setBounds(620, 630, 200, 20);
-		add(labelCredit);
+		JPanel midPanel = new JPanel();
+		midPanel.setPreferredSize(midPanelDim);
+		add(midPanel);
 		
 		JLabel labelUsername = new JLabel("Username: ");
-		labelUsername.setBounds(250, 450, 70, 20);
-		add(labelUsername);
+		labelUsername.setPreferredSize(labelUsernameDim);
+		midPanel.add(labelUsername);
 		
 		JTextField fieldUsername = new JTextField();
-		fieldUsername.setBounds(330, 450, 200, 20);
-		add(fieldUsername);
+		fieldUsername.setPreferredSize(fieldUsernameDim);
+		midPanel.add(fieldUsername);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(330, 490, 100, 30);
-		add(btnLogin);
+		btnLogin.setPreferredSize(btnLoginDim);
+		midPanel.add(btnLogin);
 		
-		myLabelError = new JLabel();
-		myLabelError.setBounds(250, 420, 350, 20);
+		JPanel botPanel = new JPanel();
+		botPanel.setPreferredSize(botPanelDim);
+		botPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+		add(botPanel);
+		
+		JLabel labelCredit = new JLabel("Created by: Beyond Industries");
+		labelCredit.setPreferredSize(labelCreditDim);
+		botPanel.add(labelCredit);
 		
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (fieldUsername.getText().isEmpty()) {
-					showEmptyFieldError();
+					JOptionPane.showMessageDialog(null, "Sorry, the username cannot be empty");
 				} else {
 					myController.validateLoginInfo(fieldUsername.getText());
 				}
