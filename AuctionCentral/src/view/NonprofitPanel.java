@@ -187,6 +187,9 @@ public class NonprofitPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Creates the submit auction gui menu and all components pretaining to it.
+	 */
 	private void submitAuctionRequestMenu() {
 		initializeMenu("Submit Auction Request");
 		
@@ -364,6 +367,9 @@ public class NonprofitPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Creates the cancel auction menu and all components pretaining to it.
+	 */
 	private void CancelAuctionRequestMenu() {
 		initializeMenu("Cancel Auction Request");
 		
