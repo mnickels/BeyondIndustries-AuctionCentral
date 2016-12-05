@@ -84,6 +84,8 @@ public class NonprofitPanel extends JPanel {
 	private Data myData;
 
 	private FlowLayout myLayout;
+	
+	private int numberOfItems;
 		
 	public NonprofitPanel (Nonprofit theNonprofit) {
 		super();
@@ -268,11 +270,15 @@ public class NonprofitPanel extends JPanel {
 						String numberItems = fieldItemNumber.getText();
 						
 						String auctionDesc = fieldAuctionDescript.getText();
-						
 						String dateTime = fieldDateAndTime.getText();
 						DateTimeFormatter newFormat = DateTimeFormatter.ISO_DATE_TIME;
 						LocalDateTime auctionDateTime = LocalDateTime.parse(dateTime, newFormat);
-						int numberOfItems = Integer.parseInt(numberItems);
+						numberOfItems = 0; 
+						if(!fieldAuctionDescript.getText().isEmpty()){
+							numberOfItems = Integer.parseInt(numberItems);
+						}
+
+						
 						Auction newAuction = new Auction(myNonprofit, auctionDateTime, orgName, auctionDesc);
 
 						if(myData.addAuction(newAuction) == true){
