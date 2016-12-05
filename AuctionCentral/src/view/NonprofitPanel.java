@@ -680,14 +680,14 @@ public class NonprofitPanel extends JPanel {
 
 					if (errorCode == Auction.REMOVEITEMNOTEXIST) {
 						JOptionPane.showMessageDialog(null, "Failed to Remove selected item "
-								+ "because it doesn't exist!");
+								+ "because it doesn't exist.");
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
 						
 					} else if (errorCode == Auction.REMOVEITEMWITHINTWODAYS) {
 						JOptionPane.showMessageDialog(null, "Failed to Remove selected item"
-								+ " because remove application is submitted within 2 days.");
+								+ " because remove application is submitted within 2 days of the auction.");
 						
 						btnRemoveItem.setVisible(false);
 						btnCancelItem.setVisible(false);
