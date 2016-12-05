@@ -204,23 +204,28 @@ public class StaffPanel extends JPanel {
 	private void displayCalendar() {
 		myViewUpcomingAuctionsBtn.setEnabled(false);
 		
-		myCalendarLabel = new JTextArea();
-		myCalendarLabel.setFont(myCalendarLabel.getFont().deriveFont(20f));
-		myCalendarLabel.setEditable(false);
-		myCalendarLabel.setBounds(new Rectangle(20, 120, 760, 330));
-		TitledBorder title;
-		Border blackline = BorderFactory.createLineBorder(Color.black);
-		title = BorderFactory.createTitledBorder(blackline, "Number of upcoming auctions: " + myData.totalNumberOfUpcomingAuctions());
-		title.setTitleJustification(TitledBorder.CENTER);
-		title.setTitleFont(title.getTitleFont().deriveFont(16f));
-		title.setTitleFont(title.getTitleFont().deriveFont(Font.PLAIN));
+//		myCalendarLabel = new JTextArea();
+//		myCalendarLabel.setFont(myCalendarLabel.getFont().deriveFont(20f));
+//		myCalendarLabel.setEditable(false);
+//		myCalendarLabel.setBounds(new Rectangle(20, 120, 760, 330));
+//		TitledBorder title;
+//		Border blackline = BorderFactory.createLineBorder(Color.black);
+//		title = BorderFactory.createTitledBorder(blackline, "Number of upcoming auctions: " + myData.totalNumberOfUpcomingAuctions());
+//		title.setTitleJustification(TitledBorder.CENTER);
+//		title.setTitleFont(title.getTitleFont().deriveFont(16f));
+//		title.setTitleFont(title.getTitleFont().deriveFont(Font.PLAIN));
+//		
+//		myCalendarLabel.setBorder(title);
+//		Calendar c = new Calendar(Data.getInstance().getCurrentDateTime());
+//		String txt = c.getCalendar();
+//		myCalendarLabel.setText(txt);
+//		add(myCalendarLabel);
 		
-		myCalendarLabel.setBorder(title);
-		Calendar c = new Calendar(Data.getInstance().getCurrentDateTime());
-		String txt = c.getCalendar();
-		myCalendarLabel.setText(txt);
-		add(myCalendarLabel);
+		Calendar c = new Calendar(Data.getInstance().getCurrentDateTime().plusDays(1).toLocalDate());
+		c.setBounds(new Rectangle(20, 120, 760, 330));
+		add(c);
 		
+		revalidate();
 		repaint();
 	}
 	
