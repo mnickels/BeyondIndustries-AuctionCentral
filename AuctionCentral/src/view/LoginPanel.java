@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -16,8 +15,14 @@ import controller.UIController;
 
 public class LoginPanel extends JPanel{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Dimension of components in the Login Panel.
+	 */
 	private final Dimension labelTitleDim = new Dimension(450, 200);
 	
 	private final Dimension labelCreditDim = new Dimension(200, 20);
@@ -34,10 +39,15 @@ public class LoginPanel extends JPanel{
 	
 	private final Dimension botPanelDim = new Dimension(800, 100);
 	
+	/**
+	 * 
+	 */
 	private UIController myController;
-	
-	private JLabel myLabelError;
-	
+		
+	/**
+	 * Constructor of the LoginPanel class
+	 * @param the controller for this panel
+	 */
 	public LoginPanel(UIController theController) {
 		super();
 		myController = theController;
@@ -46,8 +56,10 @@ public class LoginPanel extends JPanel{
 		setupLoginMenu();
 	}
 
+	/**
+	 * initialize all the components in the login panel.
+	 */
 	private void setupLoginMenu() {
-		
 		JPanel topPanel = new JPanel();
 		topPanel.setPreferredSize(topPanelDim);
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 50));
@@ -93,17 +105,5 @@ public class LoginPanel extends JPanel{
 				}
 			}
 		});
-	}
-	
-	public void showInvalidUsernameError() {
-		myLabelError.setText("Sorry, the username is invalid");
-		add(myLabelError);
-		repaint();
-	}
-	
-	public void showEmptyFieldError() {
-		myLabelError.setText("Sorry, the username cannot be empty");
-		add(myLabelError);
-		repaint();
 	}
 }

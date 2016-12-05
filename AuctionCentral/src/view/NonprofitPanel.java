@@ -1,15 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -21,14 +14,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -36,7 +27,6 @@ import model.Auction;
 import model.Data;
 import model.Item;
 import model.users.Nonprofit;
-import java.awt.FlowLayout;
 
 public class NonprofitPanel extends JPanel {
 	
@@ -70,6 +60,7 @@ public class NonprofitPanel extends JPanel {
 	
 	private final Dimension fieldAuctionDim = new Dimension(300, 20);
 	
+	private final Dimension btnAuctionDim = new Dimension(100, 60);
 	/**
 	 * Cancel auction request components dimension.
 	 */
@@ -95,9 +86,10 @@ public class NonprofitPanel extends JPanel {
 	 */
 	private final Dimension btnRemoveItemDim = new Dimension(100, 50);
 	
-	private Nonprofit myNonprofit;
-	
-	private JTextArea myDisplayLabel;
+	/**
+	 * Nonprofit panel components.
+	 */
+	private JTextArea myDisplayArea;
 	
 	private JButton myBtnSubmitAuctionRequest;
 	
@@ -121,12 +113,31 @@ public class NonprofitPanel extends JPanel {
 	
 	private JButton myBtnRemoveItem;
 	
+	private Nonprofit myNonprofit;
+	
+	private JButton myBtnSubmit;
+	
+	private JButton myBtnBack;
+
+	/**
+	 * Data instance.
+	 */
 	private Data myData;
 
+	/**
+	 * layout of the frame
+	 */
 	private FlowLayout myLayout;
 	
+	/**
+	 * number of items in the auction
+	 */
 	private int numberOfItems;
-		
+	
+	/**
+	 * Constructor for NonprofitPanel class.
+	 * @param the nonprofit that login to this panel
+	 */
 	public NonprofitPanel (Nonprofit theNonprofit) {
 		super();
 		myNonprofit = theNonprofit;
@@ -139,12 +150,13 @@ public class NonprofitPanel extends JPanel {
 		setVisible(true);
 	}
 	
-	private void mainMenu() {
-		//Create and initialize every button
-		
+	/**
+	 * The main menu of the panel. This will be the first to display
+	 * when a nonprofit login to the panel.
+	 */
+	private void mainMenu() {		
 		this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		initializeMenu("Main Menu");
-		
 		
 		myBtnSubmitAuctionRequest = new JButton("Submit Auction Request");
 		myBtnSubmitAuctionRequest.setPreferredSize(btnMainDim);
@@ -162,10 +174,10 @@ public class NonprofitPanel extends JPanel {
 
 		myLayout.setVgap(50);
 
-		myDisplayLabel.setText(myNonprofit.getName() + " logged in as a Nonprofit");
+		myDisplayArea.setText(myNonprofit.getName() + " logged in as a Nonprofit");
 		if(myData.nonprofitHasAuction(myNonprofit) == true){
 			Auction myAuction = myData.getAuctionForThisNonprofit(myNonprofit);
-			myDisplayLabel.append(String.format("\nYou have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+			myDisplayArea.append(String.format("\nYou have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
 					myAuction.getName(), myAuction.getDate().getMonth(), 
 					myAuction.getDate().getDayOfMonth(), myAuction.getDate().getYear()));
 			myBtnSubmitAuctionRequest.setEnabled(false);
@@ -183,7 +195,6 @@ public class NonprofitPanel extends JPanel {
 			myBtnRemoveItem.setEnabled(false);
 		}
 		
-		
 		//Submit Auction Request Button			
 		myBtnSubmitAuctionRequest.addActionListener(new ActionListener () {
 			@Override
@@ -193,7 +204,6 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		myBtnCancelAuctionRequest.addActionListener(new ActionListener () {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				CancelAuctionRequestMenu();
@@ -201,7 +211,6 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		myBtnAddItem.addActionListener(new ActionListener () {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				AddItemMenu();
@@ -209,14 +218,11 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		myBtnRemoveItem.addActionListener(new ActionListener () {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				RemoveItemMenu();
-				
 			}
 		});
-
 		
 		repaint();
 	}
@@ -230,7 +236,7 @@ public class NonprofitPanel extends JPanel {
 		myLayout = new FlowLayout(FlowLayout.CENTER, 40, 50);
 		this.setLayout(myLayout);
 		
-		myDisplayLabel.setText("In order to submit an auction request,"
+		myDisplayArea.setText("In order to submit an auction request,"
 				+ "you have to enter the following information:\n"
 				+ "-Organization Name\n"
 				+ "-Auction Date (YYYY-MM-DDTHH:MM)(MilitaryTime)\n"
@@ -287,24 +293,31 @@ public class NonprofitPanel extends JPanel {
 				rightFormPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 		        add(rightFormPanel);
 				
+		        myBtnSubmit.setPreferredSize(btnAuctionDim);
+		        rightFormPanel.add(myBtnSubmit);
+		        /*
 				JButton btnConfirmAuction = new JButton("Confirm");
 				btnConfirmAuction.setPreferredSize(new Dimension(100, 60));
 				rightFormPanel.add(btnConfirmAuction);
-				
+				*/
+		        
+		        myBtnBack.setPreferredSize(btnAuctionDim);
+		        rightFormPanel.add(myBtnBack);
+		        
+		        /*
 				JButton btnCancelAuction = new JButton("Cancel");
 				btnCancelAuction.setPreferredSize(new Dimension(100, 60));
 				rightFormPanel.add(btnCancelAuction);
-				
+				*/
+		        
 				repaint();
 				
-				btnConfirmAuction.addActionListener(new ActionListener () {
-
+				//
+				myBtnSubmit.addActionListener(new ActionListener () {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						String orgName = fieldOrgName.getText();
-						
 						String numberItems = fieldItemNumber.getText();
-						
 						String auctionDesc = fieldAuctionDescript.getText();
 						String dateTime = fieldDateAndTime.getText();
 						DateTimeFormatter newFormat = DateTimeFormatter.ISO_DATE_TIME;
@@ -314,19 +327,14 @@ public class NonprofitPanel extends JPanel {
 							numberOfItems = Integer.parseInt(numberItems);
 						}
 
-						
 						Auction newAuction = new Auction(myNonprofit, auctionDateTime, orgName, auctionDesc);
 
 						if(myData.addAuction(newAuction) == true){
 							initializeMenu("Confirmation");
-							myDisplayLabel.append(String.format("Are you sure you want to submit this auction?"
-									+ "\nAuction Name: %s\n\n"
-									+ "Date: %s %d, %d\n"
-									+ "Description: %s\n"
-									+ "Number of approximate Items: %s\n"
-									, orgName, auctionDateTime.getMonth(), 
-									auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),
-									auctionDesc, numberOfItems));
+							myDisplayArea.append(String.format("Are you sure you want to submit this auction?"
+									+ "\nAuction Name: %s\n\n" + "Date: %s %d, %d\n" + "Description: %s\n"
+									+ "Number of approximate Items: %s\n", orgName, auctionDateTime.getMonth(), 
+									auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),  auctionDesc, numberOfItems));
 							myConfirm3 = new JButton("Confirm");
 							myCancel3 = new JButton("Cancel");
 							
@@ -337,7 +345,7 @@ public class NonprofitPanel extends JPanel {
 								@Override
 								public void actionPerformed(ActionEvent arg0) {
 									initializeMenu("Congrats");
-									myDisplayLabel.append(String.format("You have successfully submitted your auction"
+									myDisplayArea.append(String.format("You have successfully submitted your auction"
 											+ "\nAuction Name: %s\n\n"
 											+ "Date: %s %d, %d\n"
 											+ "Description: %s\n"
@@ -372,30 +380,21 @@ public class NonprofitPanel extends JPanel {
 							});
 							
 						} else if(myData.auctionMoreThan2Day(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as there "
+							JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as there "
 									+ "is already 2 auctions schedualed for the day you specified");
 						} else if(myData.auctionExceedsMax(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction at this time as there "
+							JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction at this time as there "
 									+ "is already the max number of auctions allowed in the system at this time");
 						} else if(myData.auctionPlannedWeekAhead(newAuction) == true) {
-							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as you "
+							JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as you "
 									+ "must submit your auction at least one week into the future");
 						} else {
-							JOptionPane.showMessageDialog(btnConfirmAuction, "I'm sorry, you cannot submit this auction as you "
+							JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as you "
 									+ "must submit your auction at most no more than one month into the future");
 						}
-
-						
 					}
 				});
 				
-				btnCancelAuction.addActionListener(new ActionListener () {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						mainMenu();
-					}
-				});
 		repaint();		
 		
 	}
@@ -414,9 +413,9 @@ public class NonprofitPanel extends JPanel {
 		Month theMonth = currentAuction.getDate().getMonth();
 		int theDay = currentAuction.getDate().getDayOfMonth();
 		int theYear = currentAuction.getDate().getYear();
-		myDisplayLabel.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+		myDisplayArea.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
 				theName, theMonth, theDay, theYear));
-		myDisplayLabel.append("\n\nWould you like to remove this auction?");
+		myDisplayArea.append("\n\nWould you like to remove this auction?");
 		
 		myConfirm = new JButton("Confirm");
 		myCancel = new JButton("Cancel");
@@ -431,7 +430,7 @@ public class NonprofitPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				initializeMenu("Confirmation");
-				myDisplayLabel.setText("Are you sure you want to remove this auction?");
+				myDisplayArea.setText("Are you sure you want to remove this auction?");
 				myConfirm2 = new JButton("Confirm");
 				myConfirm2.setForeground(Color.RED);
 				myCancel2 = new JButton("Cancel");
@@ -486,18 +485,21 @@ public class NonprofitPanel extends JPanel {
 		this.repaint();
 	}
 	
+	/**
+	 * Create adding item menu and all the GUI components.
+	 */
 	private void AddItemMenu() {
 		initializeMenu("Add Item");
 		
 		myLayout = new FlowLayout(FlowLayout.CENTER, 20, 0);
 		this.setLayout(myLayout);
 		
-		myDisplayLabel.setText("In order to add an item,\n"
+		myDisplayArea.setText("In order to add an item,\n"
 				+ "The following information are required:\n"
 				+ "-Item Name\n-Quantity\n-Item Condition\n"
 				+ "-Item Size\n-Starting Bid\n\n"
 				+ "The following information are optional:\n"
-				+ "-Donor Name\n-Item Description\n-Comment");
+				+ "-Donor Name\n-Item Description");
 		
 		//Initializing the form for adding an item
         Border fieldBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -541,7 +543,7 @@ public class NonprofitPanel extends JPanel {
 		labelItemCondition.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelItemCondition);
 		
-		JComboBox boxItemCondition = new JComboBox(itemConditionList);
+		JComboBox<String> boxItemCondition = new JComboBox<String>(itemConditionList);
 		boxItemCondition.setBackground(Color.WHITE);
 		boxItemCondition.setSelectedIndex(0);		
 		boxItemCondition.setPreferredSize(fieldItemDim);
@@ -552,7 +554,7 @@ public class NonprofitPanel extends JPanel {
 		labelItemSize.setPreferredSize(labelItemDim);
 		leftFormPanel.add(labelItemSize);
 		
-		JComboBox boxItemSize = new JComboBox(itemSizeList);
+		JComboBox<String> boxItemSize = new JComboBox<String>(itemSizeList);
 		boxItemSize.setBackground(Color.WHITE);
 		boxItemSize.setSelectedIndex(0);
 		boxItemSize.setPreferredSize(fieldItemDim);
@@ -652,20 +654,24 @@ public class NonprofitPanel extends JPanel {
 		});
 	}
 	
+	/**
+	 * Create removing item menu and all the components.
+	 */
 	private void RemoveItemMenu() {
 		initializeMenu("Remove Item");
 		
 		myLayout = new FlowLayout();
 		this.setLayout(myLayout);
-		myDisplayLabel.setPreferredSize(new Dimension(760, 150));
+		myDisplayArea.setPreferredSize(new Dimension(760, 150));
 		
-		myDisplayLabel.setText("Below is a list of all the items in the Auction\n"
+		myDisplayArea.setText("Below is a list of all the items in the Auction\n"
 				+ "Choose the one you want to remove and click on the remove button.");
 		String[] columnNames = {"Name", "Donor", "Quantity", "Condition", "Size", "Starting Bid"};
 		Object[][] auctionItems = myData.getAuctionItems(myNonprofit);
 		JTable itemTable = new JTable(auctionItems, columnNames);
 		itemTable.setPreferredSize(new Dimension(760, 300));
 		itemTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		itemTable.setEnabled(false);
 
 		JScrollPane scrollPane = new JScrollPane(itemTable);
 		itemTable.setFillsViewportHeight(true);
@@ -681,7 +687,7 @@ public class NonprofitPanel extends JPanel {
 		bottomHalf.setPreferredSize(new Dimension(300, 200));
 		bottomHalf.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
 		
-	    JComboBox itemList = new JComboBox(itemNames);
+	    JComboBox<String> itemList = new JComboBox<String>(itemNames);
 	    itemList.setPreferredSize(new Dimension(250, 20));
 	    itemList.setSelectedIndex(0);
 		bottomHalf.add(itemList);
@@ -739,7 +745,6 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		btnCancelItem.addActionListener(new ActionListener () {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				btnRemoveItem.setForeground(Color.BLACK);
@@ -751,7 +756,6 @@ public class NonprofitPanel extends JPanel {
 		});
 		
 		btnBackItem.addActionListener(new ActionListener () {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				mainMenu();
@@ -762,27 +766,38 @@ public class NonprofitPanel extends JPanel {
 		this.repaint();
 	}
 	
+	/**
+	 * Initialize the display area of the panel.
+	 * @param text that will be the displayed on the top of the display area
+	 */
 	private void initializeMenu(String theTitle) {
 		this.removeAll();
 
-		myDisplayLabel = new JTextArea();
-		myDisplayLabel.setFont(myDisplayLabel.getFont().deriveFont(16f));
-		myDisplayLabel.setEditable(false);
-		myDisplayLabel.setPreferredSize(new Dimension(760, 350));
+		myDisplayArea = new JTextArea();
+		myDisplayArea.setFont(myDisplayArea.getFont().deriveFont(16f));
+		myDisplayArea.setEditable(false);
+		myDisplayArea.setPreferredSize(new Dimension(760, 350));
 		
 		TitledBorder title;
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		title = BorderFactory.createTitledBorder(blackline, theTitle);
 		title.setTitleJustification(TitledBorder.CENTER);
-		myDisplayLabel.setBorder(title);
-		add(myDisplayLabel);
+		myDisplayArea.setBorder(title);
+		add(myDisplayArea);
 	
 		repaint();
 	}
 	
+	/**
+	 * Display the upcoming auction in the text area.
+	 * @param the name of the auction
+	 * @param the month of the auction
+	 * @param the date of the auction
+	 * @param the year of the auction
+	 */
 	public void displayUpcomingAuction(String theName, Month theMonth, int theDay, int theYear) {
-		myDisplayLabel.append("\n\n");
-		myDisplayLabel.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
+		myDisplayArea.append("\n\n");
+		myDisplayArea.append(String.format("You have one upcoming auction:\nAuction Name: %s\nDate: %s %d, %d",
 				theName, theMonth, theDay, theYear));
 	}
 }
