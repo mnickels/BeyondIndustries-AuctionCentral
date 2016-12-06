@@ -44,7 +44,7 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 		//if (DEBUG)
-			loadState();
+			//loadState();
 		//else
 		setup();
 		login();
@@ -142,15 +142,6 @@ public final class UIController implements Runnable {
 	}
 
 	private void loadState() {
-		String filename = JOptionPane.showInputDialog("Would you like to load a serializable Data file?\nfilename: ");
-		if(!filename.isEmpty()){
-			try {
-				 Data.setInstance((Data) Serializer.readFile(filename));
-			} catch (Exception e) {
-				System.err.println("Incorrect filename for a serialized Data object.");
-			}
-		}
-			
 
 		/*
 		myScreen.setMenu(
