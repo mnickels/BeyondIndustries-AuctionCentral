@@ -68,17 +68,17 @@ public final class Serializer {
 		Data d = Data.getInstance();
 		
 		for(int i = 0; i < 26; i++) {
-			Account np = new Nonprofit("Nonprofit " + i, "username", "email", "phonenumber", LocalDateTime.MIN, "FreePuppies");
+			Account np = new Nonprofit("nonprofit" + i, "username", "email", "phonenumber", LocalDateTime.MIN, "FreePuppies");
 			d.addUser(np.getName(), np);
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			Account b = new Bidder("Bidder " + i, "username", "email", "phonenumber", "address");
+			Account b = new Bidder("bidder" + i, "username", "email", "phonenumber", "address");
 			d.addUser(b.getName(), b);
 		}
 		
 		for(int i = 0; i < 3; i++) {
-			Account s = new Staff("Staff " + i, "username", "email", "phonenumber");
+			Account s = new Staff("staff" + i, "username", "email", "phonenumber");
 			d.addUser(s.getName(), s);
 		}
 		
@@ -86,7 +86,7 @@ public final class Serializer {
 		
 		for (int i = 0; i < 22; i++) {
 			
-			Auction auc = new Auction((Nonprofit) d.getUser("Nonprofit " + i), 
+			Auction auc = new Auction((Nonprofit) d.getUser("nonprofit" + i), 
 					d.getCurrentDateTime().plusWeeks(1).plusDays(i / 2), 
 					"AuctionName" + i, "AuctionDescr");
 			
@@ -103,7 +103,7 @@ public final class Serializer {
 			auctions.add(auc);
 		}
 		
-		Auction auc = new Auction((Nonprofit) d.getUser("Nonprofit 22"), 
+		Auction auc = new Auction((Nonprofit) d.getUser("nonprofit22"), 
 				d.getCurrentDateTime().plusDays(2), 
 				"AuctionName 22", "AuctionDescr");
 		
@@ -119,7 +119,7 @@ public final class Serializer {
 		
 		auctions.add(auc);
 		
-		Auction auc1 = new Auction((Nonprofit) d.getUser("Nonprofit 23"), 
+		Auction auc1 = new Auction((Nonprofit) d.getUser("nonprofit23"), 
 				d.getCurrentDateTime().plusDays(2), 
 				"AuctionName 23", "AuctionDescr");
 		
