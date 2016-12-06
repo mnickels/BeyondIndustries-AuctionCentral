@@ -21,7 +21,6 @@ public class Calendar extends JPanel {
 
 	public Calendar(LocalDate theDate) {
 		super();
-//		setFont(new Font(Font.MONOSPACED, Font.PLAIN, 24));
 		setup(theDate);
 	}
 	
