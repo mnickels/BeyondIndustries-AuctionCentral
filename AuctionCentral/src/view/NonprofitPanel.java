@@ -531,7 +531,7 @@ public class NonprofitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnSubmit.getText().equals("Submit")) {
 					myBtnSubmit.setForeground(Color.RED);
-					myBtnSubmit.setText("Comfirm");
+					myBtnSubmit.setText("Confirm");
 					myBtnBack.setText("Cancel");
 				} else {
 					if (fieldItemName.getText().isEmpty()) {
@@ -623,7 +623,7 @@ public class NonprofitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnSubmit.getText().equals("Submit")) {
 					myBtnSubmit.setForeground(Color.RED);
-					myBtnSubmit.setText("Comfirm");
+					myBtnSubmit.setText("Confirm");
 					myBtnBack.setText("Cancel");
 					itemList.setEnabled(false);
 				} else {

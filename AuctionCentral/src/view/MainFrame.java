@@ -19,7 +19,12 @@ import controller.UIController;
 import model.Data;
 import model.Serializer;
 
-
+/**
+ * Main frame that will contain the panels.
+ * It has two menu items, which are logout and load state.
+ * @author Ming Hoi Lam
+ *
+ */
 public class MainFrame extends JFrame{
 
 	private static final long serialVersionUID = 1L;
