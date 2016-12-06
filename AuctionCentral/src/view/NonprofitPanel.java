@@ -33,6 +33,7 @@ import model.users.Nonprofit;
  * 
  * @author Ming Lam
  * @author Ian Richards
+ * @version Dec.5.2016
  *
  */
 public class NonprofitPanel extends JPanel {
