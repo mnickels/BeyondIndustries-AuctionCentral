@@ -109,16 +109,20 @@ public class AuctionTest {
 	@Test
 	public void testRemoveItem() {
 		myAuction.addItem(myItem);
+		myAuction.setDate(LocalDateTime.now().plusDays(3));
 
-		assertEquals(myAuction.removeItem(myItem), 2);
+		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
+				new BigDecimal(3.99), "Tasty snack that has never been opened.");
+		assertEquals(myAuction.SUCCESS, myAuction.removeItem(testItem));
 
 	}
 	
 	@Test
-	public void testRemoveItemOnNotExistItem() {		
+	public void testRemoveItemOnNotExistItem() {
+		myAuction.setDate(LocalDateTime.now().plusDays(3));
 		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
 				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		assertEquals(myAuction.removeItem(testItem), 1);
+		assertEquals(myAuction.FAILNOITEMEXIST, myAuction.removeItem(testItem));
 	}
 	
 	@Test
