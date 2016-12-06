@@ -188,7 +188,7 @@ public final class UIController implements Runnable {
 
 		Auction selectedAuction = new Auction(
 				(Nonprofit) Data.getInstance().getUser("anonprof"),
-				Data.getInstance().currentDateTime.plusDays(10),
+				Data.getInstance().currentDateTime.plusDays(1),
 				"ASPCA Annual Fundraiser",
 				"An auction to save the the puppies.");
 		selectedAuction.addItem(new Item("Football signed by Russell Wilson", "Pete Carroll", 1,
@@ -230,7 +230,7 @@ public final class UIController implements Runnable {
 			myUser = Data.getInstance().getUser(theUsername); 
 			
 			if (myUser == null) {
-			((LoginPanel) myScreen).showInvalidUsernameError();
+				JOptionPane.showMessageDialog(null, "Sorry, the username is invalid");
 			} else {
 				if (myUser instanceof Bidder) {
 					bidder();

@@ -20,6 +20,14 @@ import javax.swing.border.TitledBorder;
 import model.Data;
 import model.users.Staff;
 
+/**
+ * Represents the StaffPanel. A Staff user can login and see the calendar of upcoming auctions and also
+ * can change the number of maximum auctions allowed in the system.
+ * 
+ * @author Gjorgi Stojanov
+ * @version 12/3/2016
+ *
+ */
 public class StaffPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
@@ -37,6 +45,11 @@ public class StaffPanel extends JPanel {
 	
 	private Data myData;
 	
+	/**
+	 * Constructor for the StaffPanel.
+	 * 
+	 * @param theStaff is the staff user that is going to be using the staff panel.
+	 */
 	public StaffPanel(Staff theStaff) {
 		//super(new FlowLayout(FlowLayout.LEFT));
 		//super(new BorderLayout());
@@ -49,6 +62,9 @@ public class StaffPanel extends JPanel {
 		setVisible(true);
 	}
 	
+	/**
+	 * Main method for initializing the main screen.
+	 */
 	private void mainMenu() {
 		removeAll();
 		
@@ -83,6 +99,10 @@ public class StaffPanel extends JPanel {
 		repaint();
 	}
 	
+	
+	/**
+	 * Method for initializing the current user's login information and the current date.
+	 */
 	private void initHeader() {
 		removeAll();
 		
@@ -103,6 +123,9 @@ public class StaffPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Displays the view/modify screen so the user can view or modify the max number of auctions.
+	 */
 	private void viewModifyMaxAuctionsHeader() {
 		initHeader();
 		
@@ -125,8 +148,12 @@ public class StaffPanel extends JPanel {
 				mainMenu();
 			}
 		});
+		
 	}
 	
+	/**
+	 * Represents the change display of the view/
+	 */
 	private void changeMaxNumAuctions() {
 		viewModifyMaxAuctionsHeader();
 		
@@ -162,6 +189,9 @@ public class StaffPanel extends JPanel {
 		});
 	}
 	
+	/**
+	 * Represents the change confirmation screen.
+	 */
 	private void changeConfirmation() {
 		viewModifyMaxAuctionsHeader();
 		
@@ -201,6 +231,9 @@ public class StaffPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Displays the calendar of the upcoming auctions.
+	 */
 	private void displayCalendar() {
 		myViewUpcomingAuctionsBtn.setEnabled(false);
 		
@@ -221,14 +254,24 @@ public class StaffPanel extends JPanel {
 //		myCalendarLabel.setText(txt);
 //		add(myCalendarLabel);
 		
+		JLabel aLabel = new JLabel();
+		aLabel.setOpaque(true);
+		aLabel.setFont(new Font("Dialog.plain", Font.PLAIN, 18));
+		aLabel.setBounds(new Rectangle(20, 120, 760, 30));
+		aLabel.setText("Upcoming auctions: " + Data.getInstance().totalNumberOfUpcomingAuctions());
+		add(aLabel);
+		
 		Calendar c = new Calendar(Data.getInstance().getCurrentDateTime().plusDays(1).toLocalDate());
-		c.setBounds(new Rectangle(20, 120, 760, 330));
+		c.setBounds(new Rectangle(20, 150, 760, 330));
 		add(c);
 		
 		revalidate();
 		repaint();
 	}
 	
+	/**
+	 * Shows error message if the input is invalid.
+	 */
 	private void showErrorMessage() {
 		
 		myErrorMsg.setText("Invalid input. Please enter positive number (> 0)");
@@ -236,6 +279,13 @@ public class StaffPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Checks if a string can represent an positive integer
+	 * 
+	 * @param theInput the string to parse
+	 * 
+	 * @return true if the string can represent a positive integer, false otherwise.
+	 */
 	private boolean isValidInput(String theInput) {
 		boolean result = false;
 		try {
