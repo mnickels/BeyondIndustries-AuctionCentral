@@ -340,7 +340,6 @@ public class NonprofitPanel extends JPanel {
 					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
 				}
 				if (myBtnBack.getText().equals("Back")) {
-					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
 					mainMenu();
 				} else {
 					myBtnSubmit.setText("Submit");
