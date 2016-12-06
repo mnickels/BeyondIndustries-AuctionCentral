@@ -110,8 +110,6 @@ public class AuctionTest {
 	public void testRemoveItem() {
 		myAuction.addItem(myItem);
 
-		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
-				new BigDecimal(3.99), "Tasty snack that has never been opened.");
 		assertEquals(myAuction.removeItem(myItem), 2);
 
 	}

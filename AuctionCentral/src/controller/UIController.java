@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import model.Auction;
 import model.Data;
 import model.Item;
+import model.Serializer;
 import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
@@ -30,9 +31,9 @@ public final class UIController implements Runnable {
 	//private static final boolean DEBUG = true;
 
 	private MainFrame myFrame;
-	
+
 	private JPanel myScreen;
-	
+
 	private Account myUser;
 
 	UIController() {
@@ -43,7 +44,7 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 		//if (DEBUG)
-		//	loadState();
+			//loadState();
 		//else
 		setup();
 		login();
@@ -58,89 +59,28 @@ public final class UIController implements Runnable {
 		myFrame.revalidate();
 		myFrame.repaint();
 	}
-	
-	
+
+
 	private void nonprofit() {
-			myFrame.remove(myScreen);
-			myScreen = new NonprofitPanel((Nonprofit) myUser);
-			myFrame.add(myScreen);
-			myFrame.revalidate();
-			myFrame.repaint();
-			
-			/*
-			Auction currentAuction = Data.getInstance().getAuctionForThisNonprofit((Nonprofit) myUser);
-			if (currentAuction != null) {
-				((NonprofitPanel) myScreen).displayUpcomingAuction(currentAuction.getName(), 
-						currentAuction.getDate().getMonth(), 
-						currentAuction.getDate().getDayOfMonth(), 
-						currentAuction.getDate().getYear());
-				
-				((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNSUBMITAUCTIONREQUEST);
-				
-				if (currentAuction.getSize() == 0) {
-					((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNREMOVEITEM);
-				}
-			} else {
-				((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNCANCELAUCTIONREQUEST);
-				((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNADDITEM);
-				((NonprofitPanel) myScreen).disableButton(NonprofitPanel.BTNREMOVEITEM);
- 
-			}
-			*/
+		myFrame.remove(myScreen);
+		myScreen = new NonprofitPanel((Nonprofit) myUser);
+		myFrame.add(myScreen);
+		myFrame.revalidate();
+		myFrame.repaint();
 	}
 
 
-	
+
 	private void staff() {
 		myFrame.remove(myScreen);
 		myScreen = new StaffPanel((Staff) myUser);
 		myFrame.add(myScreen);
 		myFrame.revalidate();
 		myFrame.repaint();
-		
-		/*
-		boolean shouldLoop = true;
-
-		while (shouldLoop) {
-			LocalDateTime time = Data.getInstance().currentDateTime;
-			myScreen = new Screen(myScreen.getUser(), myScreen.getMenu(),
-					new Text(String.format("%s %d, %d. Total number of upcoming auctions: %d",
-							time.getMonth(),
-							time.getDayOfMonth(),
-							time.getYear(),
-							Data.getInstance().totalNumberOfUpcomingAuctions())));
-
-			Menu menu = new Menu(
-					"What would you like to do?",
-					new Input(),
-					new Option(1, "View calendar of upcoming auctions"),
-					new Option(2, "Administrative functions"),
-					new Option(3, "Exit AuctionCentral"));
-
-			myScreen.setMenu(menu);
-			myScreen.display();
-
-			switch (Integer.parseInt(myScreen.getMenu().getInput())) {
-			case 1:
-				Menu calendarView = new Menu(
-						"Specify a day to view (enter the two digit date), or -1 to go back",
-						new Input());
-				Calendar c = new Calendar(Data.getInstance().currentDateTime);
-
-				myScreen = new Screen(myScreen.getUser(), calendarView, c);
-				myScreen.display();
-				break;
-			case 2:
-				break;
-			case 3:
-				shouldLoop = false;
-				break;
-			}
-		}
-		*/
 	}
-
+	
 	private void loadState() {
+
 		/*
 		myScreen.setMenu(
 				new Menu(
@@ -171,7 +111,7 @@ public final class UIController implements Runnable {
 				"abidder", "bid@email.com", "(253)555-5556", "123 Somewhere St., Notown"));
 		Data.getInstance().addUser("astaff", new Staff("Staff Guy",
 				"astaff", "staffguy@auctioncentral.com", "(253)555-5557"));
-		
+
 		Data.getInstance().addUser("astaff2", new Staff("Robert Johnson",
 				"astaff2", "robertj@auctioncentral.com", "(253)556-5157"));
 
@@ -187,50 +127,30 @@ public final class UIController implements Runnable {
 	}
 
 	private void login() {
-		//myScreen.setMenu(new Menu("Login", new Input("Enter username: ")));
-		
 		myFrame.remove(myScreen);
-		
-		//revalidate();
-		//repaint();
-		
-		//while (myUser == null) {
-				myScreen = new LoginPanel(this);
-				myFrame.add(myScreen);
-				myFrame.revalidate();
-				myFrame.repaint();
 
-				/*
-				String text = JOptionPane.showInputDialog(this, "Please Enter Username: ");
-				
-				if (text == null) { // User hits cancel button on login.
-					System.exit(EXIT_ON_CLOSE);
-				}
-				if (myUser == null) {
-					throw new Exception("Invalid Username");
-				}
-				*/
-		//}
-		
-		
+		myScreen = new LoginPanel(this);
+		myFrame.add(myScreen);
+		myFrame.revalidate();
+		myFrame.repaint();	
 	}
-	
+
 	public void validateLoginInfo(String theUsername) {
-			myUser = Data.getInstance().getUser(theUsername); 
-			
-			if (myUser == null) {
-				JOptionPane.showMessageDialog(null, "Sorry, the username is invalid");
-			} else {
-				if (myUser instanceof Bidder) {
-					bidder();
-				} else if (myUser instanceof Nonprofit) {
-					nonprofit();
-				} else if (myUser instanceof Staff) {
-					staff();
-				}
+		myUser = Data.getInstance().getUser(theUsername); 
+
+		if (myUser == null) {
+			JOptionPane.showMessageDialog(null, "Sorry, the username is invalid");
+		} else {
+			if (myUser instanceof Bidder) {
+				bidder();
+			} else if (myUser instanceof Nonprofit) {
+				nonprofit();
+			} else if (myUser instanceof Staff) {
+				staff();
 			}
+		}
 	}
-	
+
 	public void clearProfile() {
 		myUser = null;
 		myScreen.removeAll();

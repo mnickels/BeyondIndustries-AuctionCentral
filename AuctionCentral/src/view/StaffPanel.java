@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -34,7 +35,6 @@ public class StaffPanel extends JPanel {
 	
 	private Staff myStaff;
 	private JLabel myLabel;
-	private JLabel myErrorMsg;
 	private JTextArea myCalendarLabel;
 	private JButton myViewUpcomingAuctionsBtn;
 	private JButton myModifyMaxAucitons;
@@ -165,9 +165,6 @@ public class StaffPanel extends JPanel {
 		aLabel2.setText("Change maximum auctions allowed:");
 		add(aLabel2);
 		
-		myErrorMsg = new JLabel();
-		myErrorMsg.setBounds(new Rectangle(20, 150, 760, 50));
-		
 		myChangeField = new JTextField();
 		myChangeField.setBounds(20, 140, 55, 20);
 		add(myChangeField);
@@ -183,7 +180,7 @@ public class StaffPanel extends JPanel {
 				if (isValidInput(myChangeField.getText())) {
 					changeConfirmation();
 				} else {
-					showErrorMessage();
+					JOptionPane.showMessageDialog(null, "Invalid input. Please enter positive number (> 0)");
 				}
 			}
 		});
@@ -266,16 +263,6 @@ public class StaffPanel extends JPanel {
 		add(c);
 		
 		revalidate();
-		repaint();
-	}
-	
-	/**
-	 * Shows error message if the input is invalid.
-	 */
-	private void showErrorMessage() {
-		
-		myErrorMsg.setText("Invalid input. Please enter positive number (> 0)");
-		add(myErrorMsg);
 		repaint();
 	}
 	

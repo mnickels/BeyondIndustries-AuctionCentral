@@ -38,9 +38,8 @@ public class NonprofitPanel extends JPanel {
 
 	public static final int BTNREMOVEITEM = 4;
 
-
 	/**
-	 * 
+	 * Serial ID.
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -61,6 +60,7 @@ public class NonprofitPanel extends JPanel {
 	private final Dimension fieldAuctionDim = new Dimension(300, 20);
 
 	private final Dimension btnAddAuctionDim = new Dimension(100, 60);
+	
 	/**
 	 * Cancel auction request components dimension.
 	 */
@@ -337,6 +337,7 @@ public class NonprofitPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnBack.getText().equals("Back")) {
+					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
 					mainMenu();
 				} else {
 					myBtnSubmit.setText("Submit");
