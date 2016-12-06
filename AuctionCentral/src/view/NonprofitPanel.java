@@ -353,6 +353,7 @@ public class NonprofitPanel extends JPanel {
 				if (myBtnBack.getText().equals("Back")) {
 					mainMenu();
 				} else {
+					myBtnSubmit.setForeground(Color.BLACK);
 					myBtnSubmit.setText("Submit");
 					myBtnBack.setText("Back");
 				}
