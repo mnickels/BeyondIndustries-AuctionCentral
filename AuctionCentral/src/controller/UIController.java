@@ -177,7 +177,7 @@ public final class UIController implements Runnable {
 
 		Auction selectedAuction = new Auction(
 				(Nonprofit) Data.getInstance().getUser("anonprof"),
-				Data.getInstance().currentDateTime.plusDays(10),
+				Data.getInstance().currentDateTime.plusDays(1),
 				"ASPCA Annual Fundraiser",
 				"An auction to save the the puppies.");
 		selectedAuction.addItem(new Item("Football signed by Russell Wilson", "Pete Carroll", 1,
