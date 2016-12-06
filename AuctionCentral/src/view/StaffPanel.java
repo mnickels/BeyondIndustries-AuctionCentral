@@ -37,17 +37,18 @@ public class StaffPanel extends JPanel {
 	private JLabel myCurrentAuctionsLbl;
 	private JTextField myChangeField;
 	
+	//private Data myData;
+	
 	/**
 	 * Constructor for the StaffPanel.
 	 * 
 	 * @param theStaff is the staff user that is going to be using the staff panel.
 	 */
 	public StaffPanel(Staff theStaff) {
-		//super(new FlowLayout(FlowLayout.LEFT));
-		//super(new BorderLayout());
 		super();
 		myStaff = theStaff;
 		myLabel = new JLabel();
+		//myData = Data.getInstance();
 		this.setLayout(null);
 		mainMenu();
 		setVisible(true);
@@ -224,23 +225,6 @@ public class StaffPanel extends JPanel {
 	 */
 	private void displayCalendar() {
 		myViewUpcomingAuctionsBtn.setEnabled(false);
-		
-//		myCalendarLabel = new JTextArea();
-//		myCalendarLabel.setFont(myCalendarLabel.getFont().deriveFont(20f));
-//		myCalendarLabel.setEditable(false);
-//		myCalendarLabel.setBounds(new Rectangle(20, 120, 760, 330));
-//		TitledBorder title;
-//		Border blackline = BorderFactory.createLineBorder(Color.black);
-//		title = BorderFactory.createTitledBorder(blackline, "Number of upcoming auctions: " + myData.totalNumberOfUpcomingAuctions());
-//		title.setTitleJustification(TitledBorder.CENTER);
-//		title.setTitleFont(title.getTitleFont().deriveFont(16f));
-//		title.setTitleFont(title.getTitleFont().deriveFont(Font.PLAIN));
-//		
-//		myCalendarLabel.setBorder(title);
-//		Calendar c = new Calendar(Data.getInstance().getCurrentDateTime());
-//		String txt = c.getCalendar();
-//		myCalendarLabel.setText(txt);
-//		add(myCalendarLabel);
 		
 		JLabel aLabel = new JLabel();
 		aLabel.setOpaque(true);

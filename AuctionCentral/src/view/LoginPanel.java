@@ -18,6 +18,11 @@ import javax.swing.KeyStroke;
 
 import controller.UIController;
 
+/**
+ * This class is the panel for logging in.
+ * @author Ming Hoi Lam
+ *
+ */
 public class LoginPanel extends JPanel{
 
 	/**

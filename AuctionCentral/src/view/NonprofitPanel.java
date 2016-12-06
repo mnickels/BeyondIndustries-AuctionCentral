@@ -28,6 +28,14 @@ import model.Data;
 import model.Item;
 import model.users.Nonprofit;
 
+/**
+ * Creates the nonprofit panel and all of its components.
+ * 
+ * @author Ming Lam
+ * @author Ian Richards
+ * @version Dec.5.2016
+ *
+ */
 public class NonprofitPanel extends JPanel {
 
 	public static final int BTNSUBMITAUCTIONREQUEST = 1;
@@ -313,9 +321,12 @@ public class NonprofitPanel extends JPanel {
 						myBtnSubmit.setForeground(Color.RED);;
 						myBtnSubmit.setText("Confirm");
 						myBtnBack.setText("Cancel");
+					} else if(myNonprofit.isAuctionWithinYear() == true) {
+						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as you "
+								+ "already have had an auction within the past year ");
 					} else if(myData.auctionMoreThan2Day(newAuction) == true) {
 						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as there "
-								+ "is already 2 auctions schedualed for the day you specified");
+								+ "is already 2 auctions scheduled for the day you specified");
 					} else if(myData.auctionExceedsMax(newAuction) == true) {
 						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction at this time as there "
 								+ "is already the max number of auctions allowed in the system at this time");
@@ -336,8 +347,10 @@ public class NonprofitPanel extends JPanel {
 		myBtnBack.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (myBtnBack.getText().equals("Back")) {
+				if (myBtnBack.getText().equals("Cancel")){
 					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
+				}
+				if (myBtnBack.getText().equals("Back")) {
 					mainMenu();
 				} else {
 					myBtnSubmit.setText("Submit");
@@ -518,7 +531,7 @@ public class NonprofitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnSubmit.getText().equals("Submit")) {
 					myBtnSubmit.setForeground(Color.RED);
-					myBtnSubmit.setText("Comfirm");
+					myBtnSubmit.setText("Confirm");
 					myBtnBack.setText("Cancel");
 				} else {
 					if (fieldItemName.getText().isEmpty()) {
@@ -610,7 +623,7 @@ public class NonprofitPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnSubmit.getText().equals("Submit")) {
 					myBtnSubmit.setForeground(Color.RED);
-					myBtnSubmit.setText("Comfirm");
+					myBtnSubmit.setText("Confirm");
 					myBtnBack.setText("Cancel");
 					itemList.setEnabled(false);
 				} else {

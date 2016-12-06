@@ -72,6 +72,14 @@ public final class Serializer {
 			d.addUser(np.getName(), np);
 		}
 		
+		Account nonp = new Nonprofit("nonprofitOneYear", "username", "email", "phonenumber", 
+				LocalDateTime.now().minusYears(1), "FreePuppies");
+		d.addUser(nonp.getName(), nonp);
+		
+		Account nonpr1 = new Nonprofit("nonprofitLessYear", "username", "email", "phonenumber", 
+				LocalDateTime.now().minusYears(1).plusDays(1).plusHours(2), "FreePuppies");
+		d.addUser(nonpr1.getName(), nonpr1);
+		
 		for(int i = 0; i < 4; i++) {
 			Account b = new Bidder("bidder" + i, "username", "email", "phonenumber", "address");
 			d.addUser(b.getName(), b);
@@ -135,6 +143,7 @@ public final class Serializer {
 		auctions.add(auc1);
 		
 		
+		
 //		for (Auction a: d.getAuctions()) {
 //			System.out.println(a.getName() + " " + a.getNonprofit().getName());
 //		}
@@ -142,19 +151,19 @@ public final class Serializer {
 		writeFile(d, "24Auctions.ser");
 		
 		Data.destroyInstance();
-		
-		d = Data.getInstance();
-		d.addUser("np364", new Nonprofit("Nonprofit", "Nonprofit", "nonprofit@email.com",
-				"##########", d.currentDateTime.minusDays(364), "Some Kind of Org"));
-		d.addUser("np365", new Nonprofit("Nonprofit2", "Nonprofit2", "nonprofit2@email.com",
-				"##########", d.currentDateTime.minusDays(365), "Some Kind of Org"));
-		d.addUser("np366", new Nonprofit("Nonprofit3", "Nonprofit3", "nonprofit3@email.com",
-				"##########", d.currentDateTime.minusDays(366), "Some Kind of Org"));
-		
-		writeFile(d, "prevAuctions.ser");
-	
-		Data.destroyInstance();
-		
+//		
+//		d = Data.getInstance();
+//		d.addUser("np364", new Nonprofit("Nonprofit", "Nonprofit", "nonprofit@email.com",
+//				"##########", d.currentDateTime.minusDays(364), "Some Kind of Org"));
+//		d.addUser("np365", new Nonprofit("Nonprofit2", "Nonprofit2", "nonprofit2@email.com",
+//				"##########", d.currentDateTime.minusDays(365), "Some Kind of Org"));
+//		d.addUser("np366", new Nonprofit("Nonprofit3", "Nonprofit3", "nonprofit3@email.com",
+//				"##########", d.currentDateTime.minusDays(366), "Some Kind of Org"));
+//		
+//		writeFile(d, "prevAuctions.ser");
+//	
+//		Data.destroyInstance();
+//		
 		System.out.println("DONE");
 		
 	}

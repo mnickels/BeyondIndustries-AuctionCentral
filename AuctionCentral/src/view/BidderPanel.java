@@ -28,6 +28,9 @@ import model.Item;
 import model.users.Bidder;
 
 /**
+ * The Bidder Panel for the Auction Central website. Handles user input and logic for Bidder based
+ * actions and reactions.
+ * 
  * @author Matthew Subido | subidomd@uw.edu
  * @version 27 November 2016
  */
@@ -189,7 +192,7 @@ public class BidderPanel extends JPanel {
 		JPanel buttons = new JPanel(new GridLayout(0, 3, 20, 20));
 		
 		for (final Auction a : auctions) {
-			if (a.getDate().isAfter(LocalDateTime.now())) {
+			if (a.getDate().isAfter(LocalDateTime.now().plusDays(1))) {
 				JButton button = new JButton();
 				StringBuilder items = new StringBuilder();
 				for (final Item i : a.getItems()) {
