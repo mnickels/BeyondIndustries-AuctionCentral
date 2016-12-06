@@ -28,6 +28,9 @@ import model.Item;
 import model.users.Bidder;
 
 /**
+ * The Bidder Panel for the Auction Central website. Handles user input and logic for Bidder based
+ * actions and reactions.
+ * 
  * @author Matthew Subido | subidomd@uw.edu
  * @version 27 November 2016
  */
