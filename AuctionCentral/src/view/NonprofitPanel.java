@@ -28,6 +28,13 @@ import model.Data;
 import model.Item;
 import model.users.Nonprofit;
 
+/**
+ * Creates the nonprofit panel and all of its components.
+ * 
+ * @author Ming Lam
+ * @author Ian Richards
+ *
+ */
 public class NonprofitPanel extends JPanel {
 
 	public static final int BTNSUBMITAUCTIONREQUEST = 1;
