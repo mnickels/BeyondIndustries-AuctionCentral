@@ -189,7 +189,7 @@ public class BidderPanel extends JPanel {
 		JPanel buttons = new JPanel(new GridLayout(0, 3, 20, 20));
 		
 		for (final Auction a : auctions) {
-			if (a.getDate().isAfter(LocalDateTime.now())) {
+			if (a.getDate().isAfter(LocalDateTime.now().plusDays(1))) {
 				JButton button = new JButton();
 				StringBuilder items = new StringBuilder();
 				for (final Item i : a.getItems()) {
