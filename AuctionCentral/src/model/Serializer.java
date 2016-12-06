@@ -132,7 +132,7 @@ public final class Serializer {
 		auc1.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
 				BigDecimal.valueOf(70), "description"));
 		
-		auctions.add(auc);
+		auctions.add(auc1);
 		
 		
 //		for (Auction a: d.getAuctions()) {
