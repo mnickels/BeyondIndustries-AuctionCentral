@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Auction;
 import model.Data;
 import model.Item;
+import model.Serializer;
 import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
@@ -42,7 +44,7 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 		//if (DEBUG)
-		//	loadState();
+			loadState();
 		//else
 		setup();
 		login();
@@ -140,6 +142,16 @@ public final class UIController implements Runnable {
 	}
 
 	private void loadState() {
+		String filename = JOptionPane.showInputDialog("Would you like to load a serializable Data file?\nfilename: ");
+		if(!filename.isEmpty()){
+			try {
+				 Data.setInstance((Data) Serializer.readFile(filename));
+			} catch (Exception e) {
+				System.err.println("Incorrect filename for a serialized Data object.");
+			}
+		}
+			
+
 		/*
 		myScreen.setMenu(
 				new Menu(
