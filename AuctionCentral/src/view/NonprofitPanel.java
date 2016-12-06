@@ -318,7 +318,7 @@ public class NonprofitPanel extends JPanel {
 								+ "Number of approximate Items: %s\n", orgName, auctionDateTime.getMonth(), 
 								auctionDateTime.getDayOfMonth(), auctionDateTime.getYear(),  auctionDesc, numberOfItems));
 
-						myBtnSubmit.setForeground(Color.RED);;
+						myBtnSubmit.setForeground(Color.RED);
 						myBtnSubmit.setText("Confirm");
 						myBtnBack.setText("Cancel");
 					} else if(myNonprofit.isAuctionWithinYear() == true) {
