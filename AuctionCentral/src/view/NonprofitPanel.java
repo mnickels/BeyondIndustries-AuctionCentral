@@ -315,7 +315,7 @@ public class NonprofitPanel extends JPanel {
 						myBtnBack.setText("Cancel");
 					} else if(myData.auctionMoreThan2Day(newAuction) == true) {
 						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as there "
-								+ "is already 2 auctions schedualed for the day you specified");
+								+ "is already 2 auctions scheduled for the day you specified");
 					} else if(myData.auctionExceedsMax(newAuction) == true) {
 						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction at this time as there "
 								+ "is already the max number of auctions allowed in the system at this time");
@@ -336,6 +336,9 @@ public class NonprofitPanel extends JPanel {
 		myBtnBack.addActionListener(new ActionListener () {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if (myBtnBack.getText().equals("Cancel")){
+					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
+				}
 				if (myBtnBack.getText().equals("Back")) {
 					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
 					mainMenu();
