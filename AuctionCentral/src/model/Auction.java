@@ -259,14 +259,4 @@ public class Auction implements Serializable{
 		return result;
 		
 	}
-	
-	public boolean isAuctionAvailable(LocalDateTime theDate) {
-		boolean result = true;
-		
-		if (theDate.isEqual(myDate) || theDate.isAfter(myDate)) {
-			result = false;
-		}
-		return result;
-		
-	}
 }

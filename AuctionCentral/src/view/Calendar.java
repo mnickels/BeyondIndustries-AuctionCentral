@@ -19,11 +19,19 @@ import model.Data;
  */
 public class Calendar extends JPanel {
 
+	/**
+	 * Makes a new Calendar.
+	 * @param theDate the starting date for this calendar.
+	 */
 	public Calendar(LocalDate theDate) {
 		super();
 		setup(theDate);
 	}
 	
+	/**
+	 * Set up this calendar view.
+	 * @param theDate the date to make the calendar from.
+	 */
 	private void setup(LocalDate theDate) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(month(theDate, LocalDate.of(theDate.getYear(), theDate.getMonth(),
@@ -32,6 +40,12 @@ public class Calendar extends JPanel {
 				theDate.plusMonths(1).minusDays(1)));
 	}
 	
+	/**
+	 * Creates a panel to display a month of a calendar.
+	 * @param start the starting date.
+	 * @param end the ending date.
+	 * @return A calendar view of the auctions between start and end.
+	 */
 	private JPanel month(LocalDate start, LocalDate end) {
 		JPanel month = new JPanel(new BorderLayout());
 		month.add(new JLabel(start.getMonth().toString(), JLabel.CENTER), BorderLayout.NORTH);

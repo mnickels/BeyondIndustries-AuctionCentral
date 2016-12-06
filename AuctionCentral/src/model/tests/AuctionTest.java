@@ -92,42 +92,4 @@ public class AuctionTest {
 	public void testGetSize() {
 		assertEquals(0, myAuction.getSize());
 	}
-
-	public void testAddItem() {
-		assertTrue(myAuction.addItem(myItem));
-	}
-	
-	@Test
-	public void testAddItemOnSameItemTwice() {
-		myAuction.addItem(myItem);
-		
-		Item testItem = new Item("Onion Ring", "Mickey Mouse", 5, "New", "Small", "111 Deadend Road",
-				new BigDecimal(3.99), "Tasty snack that has never been opened."); 
-		assertFalse(myAuction.addItem(testItem));
-	}
-
-	@Test
-	public void testRemoveItem() {
-		myAuction.addItem(myItem);
-		myAuction.setDate(LocalDateTime.now().plusDays(3));
-
-		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
-				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		assertEquals(myAuction.SUCCESS, myAuction.removeItem(testItem));
-
-	}
-	
-	@Test
-	public void testRemoveItemOnNotExistItem() {
-		myAuction.setDate(LocalDateTime.now().plusDays(3));
-		Item testItem = new Item("Onion Ring", "Mrs. Field", 10, "New", "Small", "999 Deadend Road",
-				new BigDecimal(3.99), "Tasty snack that has never been opened.");
-		assertEquals(myAuction.FAILNOITEMEXIST, myAuction.removeItem(testItem));
-	}
-	
-	@Test
-	public void testIsAuctionAvailable() {
-		LocalDateTime testDate = LocalDateTime.of(2016, 11, 9, 11, 00);
-		assertFalse(myAuction.isAuctionAvailable(testDate));
-	}
 }

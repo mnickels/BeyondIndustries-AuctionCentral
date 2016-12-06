@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -8,15 +7,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 import model.Data;
 import model.users.Staff;
@@ -35,15 +30,12 @@ public class StaffPanel extends JPanel {
 	
 	private Staff myStaff;
 	private JLabel myLabel;
-	private JTextArea myCalendarLabel;
 	private JButton myViewUpcomingAuctionsBtn;
 	private JButton myModifyMaxAucitons;
 	private JButton myBackBtn;
 	private JButton myChangeBtn;
 	private JLabel myCurrentAuctionsLbl;
 	private JTextField myChangeField;
-	
-	private Data myData;
 	
 	/**
 	 * Constructor for the StaffPanel.
@@ -56,7 +48,6 @@ public class StaffPanel extends JPanel {
 		super();
 		myStaff = theStaff;
 		myLabel = new JLabel();
-		myData = Data.getInstance();
 		this.setLayout(null);
 		mainMenu();
 		setVisible(true);

@@ -532,7 +532,7 @@ public class NonprofitPanel extends JPanel {
 								Integer.parseInt(fieldQuantity.getText()), (String) boxItemCondition.getSelectedItem(), 
 								(String) boxItemSize.getSelectedItem(), null, 
 								new BigDecimal(Integer.parseInt(fieldStartingBid.getText())), fieldItemDescription.getText());
-						Auction currentAuction = myData.getInstance().getAuctionForThisNonprofit(myNonprofit);
+						Auction currentAuction = myData.getAuctionForThisNonprofit(myNonprofit);
 						boolean result = currentAuction.addItem(tempItem);
 						if (result) {
 							JOptionPane.showMessageDialog(null, "You have successfully added an item");

@@ -11,12 +11,18 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	AccountTest.class,
-	BidderTest.class,
-	NonprofitTest.class,
 	AuctionTest.class,
 	DataTest.class,
-	ItemTest.class,
-	SerializerTest.class
+	NonprofitTest.class,
+	SerializerTest.class,
+
+	AddItemTest.class,
+	CancelAuctionTest.class,
+	ChangeMaxAuctionsTest.class,
+	PlaceBidTest.class,
+	RemoveItemTest.class,
+	RequestAuctionTest.class,
+	ViewUpcomingAuctionsTest.class
 })
 public class TestSuite {
 	// empty class body

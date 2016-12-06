@@ -1,9 +1,9 @@
 package model.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,17 +15,16 @@ import model.users.Bidder;
 
 /**
  * @author Matthew Subido
- * @version November 9 2016
+ * @author Mike Nickels | mnickels@uw.edu
+ * @version December 5 2016
  */
-public class ItemTest {
+public class PlaceBidTest {
 	
-	private Item myItem;
+private Item myItem;
 	
 	private Bidder myBidder;
 	
 	private Map<Bidder, BigDecimal> myCheck;
-	
-	private LocalDateTime myValidTime;
 	
 	@Before
 	public void setUp() {
@@ -35,7 +34,6 @@ public class ItemTest {
 				"Arcadia Bay");
 		myCheck = new HashMap<Bidder, BigDecimal>();
 		myCheck.put(myBidder, new BigDecimal(200));
-		myValidTime = LocalDateTime.now().plusDays(3);
 	}
 	
 	@Test
@@ -94,61 +92,6 @@ public class ItemTest {
 		myItem.addBid(myBidder, test);
 		Map<Bidder, BigDecimal> theCheck = myItem.getBids();
 		assertTrue(theCheck.keySet().equals(myCheck.keySet()));
-	}
-	
-	@Test
-	public void testRemoveBidOnNonExistantBid() {
-		assertEquals(null, myItem.removeBid(myBidder, myValidTime));
-		assertEquals(new HashMap<Bidder, BigDecimal>(), myItem.getBids());
-	}
-	
-	@Test
-	public void testRemoveBidOnExistingBid() {
-		BigDecimal bid = new BigDecimal(200);
-		myItem.addBid(myBidder, bid);
-		assertEquals(bid, myItem.removeBid(myBidder, myValidTime));
-		assertEquals(new HashMap<Bidder, BigDecimal>(), myItem.getBids());
-	}
-
-	@Test
-	public void testRemoveBidOnAuctionMoreThanTwoDaysOut() {
-		BigDecimal bid = new BigDecimal(200);
-		myItem.addBid(myBidder, bid);
-		assertEquals(bid, myItem.removeBid(myBidder, myValidTime));
-		assertEquals(new HashMap<Bidder, BigDecimal>(), myItem.getBids());
-	}
-
-	@Test
-	public void testRemoveBidOnAuctionExactlyTwoDaysOut() {
-		LocalDateTime twoDays = LocalDateTime.now().plusDays(2);
-		BigDecimal bid = new BigDecimal(200);
-		myItem.addBid(myBidder, bid);
-		assertNull(myItem.removeBid(myBidder, twoDays));
-		Map<Bidder, BigDecimal> check = new HashMap<Bidder, BigDecimal>();
-		check.put(myBidder, bid);
-		assertEquals(check, myItem.getBids());
-	}
-
-	@Test
-	public void testRemoveBidOnAuctionLessThanTwoDaysOut() {
-		LocalDateTime oneDay = LocalDateTime.now().plusDays(1);
-		BigDecimal bid = new BigDecimal(200);
-		myItem.addBid(myBidder, bid);
-		assertNull(myItem.removeBid(myBidder, oneDay));
-		Map<Bidder, BigDecimal> check = new HashMap<Bidder, BigDecimal>();
-		check.put(myBidder, bid);
-		assertEquals(check, myItem.getBids());
-	}
-
-	@Test
-	public void testRemoveBidOnAuctionToday() {
-		LocalDateTime today = LocalDateTime.now();
-		BigDecimal bid = new BigDecimal(200);
-		myItem.addBid(myBidder, bid);
-		assertNull(myItem.removeBid(myBidder, today));
-		Map<Bidder, BigDecimal> check = new HashMap<Bidder, BigDecimal>();
-		check.put(myBidder, bid);
-		assertEquals(check, myItem.getBids());
 	}
 
 }
