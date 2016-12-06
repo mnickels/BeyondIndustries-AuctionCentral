@@ -337,6 +337,7 @@ public class NonprofitPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (myBtnBack.getText().equals("Back")) {
+					myData.removeAuction(myData.getAuctionForThisNonprofit(myNonprofit));
 					mainMenu();
 				} else {
 					myBtnSubmit.setText("Submit");

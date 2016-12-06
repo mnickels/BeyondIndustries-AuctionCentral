@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import model.Auction;
 import model.Data;
 import model.Item;
+import model.Serializer;
 import model.users.Account;
 import model.users.Bidder;
 import model.users.Nonprofit;
@@ -43,7 +44,7 @@ public final class UIController implements Runnable {
 	@Override
 	public void run() {
 		//if (DEBUG)
-		//	loadState();
+			//loadState();
 		//else
 		setup();
 		login();
@@ -76,7 +77,24 @@ public final class UIController implements Runnable {
 		myFrame.add(myScreen);
 		myFrame.revalidate();
 		myFrame.repaint();
+	}
+	
+	private void loadState() {
 
+		/*
+		myScreen.setMenu(
+				new Menu(
+						"Would you like to load a serializable Data file?",
+						new Input("\tfilename: ")));
+		myScreen.display();
+		if (!myScreen.getMenu().getInput().isEmpty()) {
+			try {
+				 Data.setInstance((Data) Serializer.readFile(myScreen.getMenu().getInput()));
+			} catch (Exception e) {
+				System.err.println("Incorrect filename for a serialized Data object.");
+			}
+		}
+		*/
 	}
 
 	private void setup() {
