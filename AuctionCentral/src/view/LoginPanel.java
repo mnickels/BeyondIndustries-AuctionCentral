@@ -4,12 +4,17 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import controller.UIController;
 
@@ -105,5 +110,18 @@ public class LoginPanel extends JPanel{
 				}
 			}
 		});
+		
+		InputMap im = btnLogin.getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = btnLogin.getActionMap();
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "clickMe");
+        am.put("clickMe", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                JButton btn = (JButton) e.getSource();
+                btn.doClick();
+            }
+        });
 	}
 }
