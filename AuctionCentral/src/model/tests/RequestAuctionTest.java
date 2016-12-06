@@ -356,7 +356,7 @@ public class RequestAuctionTest {
 		
 		//Nonprofit past auction was 364 days ago (one year minus one day 365-1=364) - not allowed
 		Nonprofit np = new Nonprofit(names[0], "username", "email", "phonenumber", 
-				myLocalDateTime.minusYears(1).plusDays(1), 
+				myLocalDateTime.minusYears(1).plusDays(1).plusHours(1), 
 				"FreePuppies"); 
 		LocalDateTime ld = d.getCurrentDateTime().plusWeeks(1);
 		Auction auc = new Auction(np, ld, "AuctionName", "AuctionDescr");
