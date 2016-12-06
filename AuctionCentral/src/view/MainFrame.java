@@ -5,14 +5,19 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.UIController;
+import model.Data;
+import model.Serializer;
 
 
 public class MainFrame extends JFrame{
@@ -30,7 +35,8 @@ public class MainFrame extends JFrame{
 		
 		setName("AuctionCentral");
 
-        setMinimumSize(new Dimension(800, 700));
+        setPreferredSize(new Dimension(800, 700));
+        pack();
         this.setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -48,6 +54,28 @@ public class MainFrame extends JFrame{
 		menuItem.addActionListener(new loginActionListener());
 		
 		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		JMenuItem fileChooser = new JMenuItem("Load State", KeyEvent.VK_S);
+		fileChooser.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+		fileChooser.setVisible(true);
+		
+		fileChooser.addActionListener(new ActionListener() {
+		    public void actionPerformed(final ActionEvent e) {
+		        JFileChooser choose = new JFileChooser();
+		        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		                "Serializable files", "ser");
+		        choose.setFileFilter(filter);
+		        choose.setCurrentDirectory(new File("./"));
+		        int returnVal = choose.showOpenDialog(new JFrame("Please choose Serializable State File"));
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		           Data.setInstance((Data) Serializer.readFile(choose.getSelectedFile().getName()));
+		        }
+		    }
+		});
+		
+		menu.add(fileChooser);
 		
 		setJMenuBar(menuBar);
 		

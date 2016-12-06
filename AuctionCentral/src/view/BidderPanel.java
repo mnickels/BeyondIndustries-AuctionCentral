@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.ScrollPane;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
@@ -122,8 +123,8 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		ScrollPane pane = new ScrollPane();
-		JPanel buttons = new JPanel(myFlowLayout);
+		
+		JPanel buttons = new JPanel(new GridLayout(0, 3, 20, 20));
 		
 		for (final Auction a : bids.keySet()) {
 			for (final Item i : bids.get(a)) {
@@ -156,8 +157,19 @@ public class BidderPanel extends JPanel {
 		back.setVisible(true);
 		back.setEnabled(true);
 		
-		pane.add(buttons);
-		add(pane);
+		buttons.setOpaque(true);
+		buttons.setVisible(true);
+		//buttons.setPreferredSize(new Dimension(200, 200));
+		
+		JScrollPane pane = new JScrollPane(buttons, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVisible(true);
+		pane.setOpaque(true);
+		
+		JPanel panePanel = new JPanel(new BorderLayout());
+		panePanel.add(pane);
+		
+		add(panePanel);
 		
 		revalidate();
 		repaint();
@@ -174,9 +186,7 @@ public class BidderPanel extends JPanel {
 		add(myLabel, BorderLayout.NORTH);
 		List<Auction> auctions = myData.getAuctions();
 		
-		ScrollPane pane = new ScrollPane();
-		
-		JPanel buttons = new JPanel(myFlowLayout);
+		JPanel buttons = new JPanel(new GridLayout(0, 3, 20, 20));
 		
 		for (final Auction a : auctions) {
 			if (a.getDate().isAfter(LocalDateTime.now())) {
@@ -215,10 +225,20 @@ public class BidderPanel extends JPanel {
 		buttons.add(back, BorderLayout.SOUTH);
 		back.setVisible(true);
 		back.setEnabled(true);
+
+		buttons.setOpaque(true);
+		buttons.setVisible(true);
+		//buttons.setPreferredSize(new Dimension(200, 200));
 		
-		pane.add(buttons);
+		JScrollPane pane = new JScrollPane(buttons, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVisible(true);
+		pane.setOpaque(true);
 		
-		add(pane);
+		JPanel panePanel = new JPanel(new BorderLayout());
+		panePanel.add(pane);
+		
+		add(panePanel);
 		
 		revalidate();
 		repaint();
@@ -251,9 +271,7 @@ public class BidderPanel extends JPanel {
 		
 		add(myLabel, BorderLayout.NORTH);
 		
-		ScrollPane pane = new ScrollPane();
-		
-		JPanel buttons = new JPanel(myFlowLayout);
+		JPanel buttons = new JPanel(new GridLayout(0, 3, 20, 20));
 		
 		for (final Item i : theAuction.getItems()) {
 			JButton button = new JButton(itemDisplay(i));
@@ -284,9 +302,19 @@ public class BidderPanel extends JPanel {
 		back.setVisible(true);
 		back.setEnabled(true);
 		
-		pane.add(buttons);
+		buttons.setOpaque(true);
+		buttons.setVisible(true);
+		//buttons.setPreferredSize(new Dimension(200, 200));
 		
-		add(pane);
+		JScrollPane pane = new JScrollPane(buttons, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVisible(true);
+		pane.setOpaque(true);
+		
+		JPanel panePanel = new JPanel(new BorderLayout());
+		panePanel.add(pane);
+		
+		add(panePanel);
 		
 		revalidate();
 		repaint();
@@ -399,6 +427,8 @@ public class BidderPanel extends JPanel {
 		buttons.add(back, BorderLayout.SOUTH);
 		back.setVisible(true);
 		back.setEnabled(true);
+		
+		
 		
 		add(buttons);
 		
