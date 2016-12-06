@@ -142,35 +142,6 @@ public final class Serializer {
 		
 		auctions.add(auc1);
 		
-		Auction auc2 = new Auction((Nonprofit) d.getUser("nonprofitOneYear"), 
-				d.getCurrentDateTime().minusYears(1), 
-				"One Year Ago", "AuctionDescr");
-		
-		auc2.addItem(new Item("Item 1", "Donor 1", 1, "new", "medium", "address", 
-				BigDecimal.valueOf(50), "description"));
-		
-		auc2.addItem(new Item("Item 2", "Donor 2", 1, "like new", "large", "address", 
-				BigDecimal.valueOf(60), "description"));
-		
-		auc2.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
-				BigDecimal.valueOf(70), "description"));
-		
-		auctions.add(auc2);
-		
-		Auction auc3 = new Auction((Nonprofit) d.getUser("nonprofitLessYear"), 
-				d.getCurrentDateTime().minusYears(1).plusDays(1), 
-				"Just Under a Year Ago", "AuctionDescr");
-		
-		auc3.addItem(new Item("Item 1", "Donor 1", 1, "new", "medium", "address", 
-				BigDecimal.valueOf(50), "description"));
-		
-		auc3.addItem(new Item("Item 2", "Donor 2", 1, "like new", "large", "address", 
-				BigDecimal.valueOf(60), "description"));
-		
-		auc3.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
-				BigDecimal.valueOf(70), "description"));
-		
-		auctions.add(auc3);
 		
 		
 //		for (Auction a: d.getAuctions()) {
