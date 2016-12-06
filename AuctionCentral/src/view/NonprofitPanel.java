@@ -321,6 +321,9 @@ public class NonprofitPanel extends JPanel {
 						myBtnSubmit.setForeground(Color.RED);;
 						myBtnSubmit.setText("Confirm");
 						myBtnBack.setText("Cancel");
+					} else if(myNonprofit.isAuctionWithinYear() == true) {
+						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as you "
+								+ "already have had an auction within the past year ");
 					} else if(myData.auctionMoreThan2Day(newAuction) == true) {
 						JOptionPane.showMessageDialog(null, "I'm sorry, you cannot submit this auction as there "
 								+ "is already 2 auctions scheduled for the day you specified");
