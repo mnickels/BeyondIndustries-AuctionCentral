@@ -42,6 +42,11 @@ public class BidderPanel extends JPanel {
 	
 	private FlowLayout myFlowLayout;
 	
+	/**
+	 * Constructs the Panel, for use with bidding on items. Mostly takes care of formatting of myJLabel
+	 * and the Layout of most of the buttons.
+	 * @param theBidder
+	 */
 	public BidderPanel(final Bidder theBidder) {
 		super(new BorderLayout());
 		myBidder = theBidder;
@@ -57,6 +62,11 @@ public class BidderPanel extends JPanel {
 		mainMenu();
 	}
 	
+	/**
+	 * The Main Menu of the program, showing the options to, "View List of Auctions," or
+	 * to, "View Placed Bids." The Auction button calls choseListOfAuctions, and the
+	 * Bids button calls choseBids.
+	 */
 	private void mainMenu() {
 		removeAll();
 		myLabel.setText("<html>" + myBidder + 
@@ -97,6 +107,10 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called from mainMenu, when user chooses to view their placed bids. Displays placed bids, and
+	 * allows user to choose one the bids, or to return to the main menu.
+	 */
 	private void choseBids() {
 		Map<Auction, List<Item>> bids = myData.getItemsForBidder(myBidder);
 		
@@ -149,6 +163,10 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when user selects List of Auctions from the Main Menu. Displays a list of current
+	 * auctions, and allows the user to select one, or go back to the Main Menu.
+	 */
 	private void choseListOfAuctions() {
 		removeAll();
 		myLabel.setText("<html>" + myBidder + 
@@ -206,6 +224,11 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when an auction is chosen from the List of Auctions menu. Displays the list of items
+	 * within the auction and allows the user to choose one of the items or return to the
+	 * List of Auctions menu.
+	 */
 	private void choseAuction(final Auction theAuction) {
 		LocalDateTime time = theAuction.getDate();
 		int currentHour = time.getHour() % 12;
@@ -269,6 +292,13 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when an item is chosen from either the Chose Auction menu or the List of Bids menu.
+	 * Allows user to bid on an item if they have not yet bid, or cancel / edit a bid if the auction
+	 * is more than two days away.
+	 * @param theItem is the item that was chosen.
+	 * @param theAuction is the auction that theItem is being sold from.
+	 */
 	private void choseItem(final Item theItem, final Auction theAuction) {
 		LocalDateTime time = theAuction.getDate();
 		int currentHour = time.getHour() % 12;
@@ -376,6 +406,12 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when user chooses to edit their existing bid in an item. Asks for an amount to bid upon
+	 * said item.
+	 * @param theItem is the item for which the bid is being changed.
+	 * @param theAuction is the auction in which the item is being sold from.
+	 */
 	private void choseEditBid(final Item theItem, final Auction theAuction) {
 		removeAll();
 		
@@ -437,6 +473,14 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when user submits an updated bid for the given item. Asks if the user is sure they wish
+	 * to update the bid. If they are, then the bid is updated in the item. If not, then they are 
+	 * returned to the Chose Item window.
+	 * @param theItem is the item whose bid is being changed.
+	 * @param theAuction is the auction to which the item belongs.
+	 * @param theBid is the new bid to be placed upon the item.
+	 */
 	private void confirmEdit(final Item theItem, final Auction theAuction, final BigDecimal theBid) {
 		removeAll();
 		
@@ -484,6 +528,12 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when user chooses to add a bid in an item. Asks for an amount to bid upon
+	 * said item.
+	 * @param theItem is the item for which the bid is being added.
+	 * @param theAuction is the auction in which the item is being sold from.
+	 */
 	private void choseAddBid(final Item theItem, final Auction theAuction) {
 		removeAll();
 		
@@ -545,6 +595,14 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when user submits a bid for the given item. Asks if the user is sure they wish
+	 * to add the bid. If they are, then the bid is added in the item. If not, then they are 
+	 * returned to the Chose Item window.
+	 * @param theItem is the item whose bid is being added.
+	 * @param theAuction is the auction to which the item belongs.
+	 * @param theBid is the new bid to be placed upon the item.
+	 */
 	private void confirmBid(final Item theItem, final Auction theAuction, final BigDecimal theBid) {
 		removeAll();
 		
@@ -591,6 +649,13 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called if the user selects to remove their existing bid. Asks if the user is sure
+	 * they wish to remove their bid from the item. If yes, then the bid is removed, and the item
+	 * is updated. If not, the user is returned to the Chose Item window.
+	 * @param theItem is the item for which the user's bid is being removed.
+	 * @param theAuction is the auction to which the item belongs.
+	 */
 	private void choseRemoveBid(final Item theItem, final Auction theAuction) {
 		removeAll();
 		
@@ -644,6 +709,15 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Called when a change has been officially made to an item. Displays new item information,
+	 * as well as a confirmation message to assure user of a successful operation. Allows for
+	 * user to return to the main menu, the list of auctions, the list of items in the root
+	 * auction, or to the Chose Item window.
+	 * @param theItem is the item for which the information has been altered.
+	 * @param theAuction is the auction in which the item belongs.
+	 * @param theMessage is the confirmation message to be displayed.
+	 */
 	private void confirmationPage(final Item theItem, final Auction theAuction, final String theMessage) {
 		LocalDateTime time = theAuction.getDate();
 		int currentHour = time.getHour() % 12;
@@ -725,6 +799,9 @@ public class BidderPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * @return the string representation of a given Item for user display.
+	 */
 	private String itemDisplay (final Item theItem) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>Item ID: ");
