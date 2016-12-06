@@ -497,9 +497,17 @@ public class BidderPanel extends JPanel {
 		JButton addButton = new JButton("Yes");
 		addButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(final ActionEvent theEvent) {
-		    	theItem.removeBid(myBidder, theAuction.getDate());
-		    	theItem.addBid(myBidder, theBid);
-		    	confirmationPage(theItem, theAuction, "Your Bid Was Successfully Changed!");
+		    	try {
+			    	if (theItem.removeBid(myBidder, theAuction.getDate()) == null) {
+		    			 throw new Exception("Too Late to Cancel Your Bid!");
+		    		 }
+			    	theItem.addBid(myBidder, theBid);
+			    	confirmationPage(theItem, theAuction, "Your Bid Was Successfully Changed!");
+		    	} catch (final Exception e) {
+		    		JOptionPane.showMessageDialog(new JFrame(), 
+							"It Is Too Late To Cancel This Bid Now!", "Auction Within Two Days", 
+							JOptionPane.ERROR_MESSAGE);
+		    	}
 		    }
 		});
 //		addButton.setBorder(new LineBorder(Color.BLACK));
