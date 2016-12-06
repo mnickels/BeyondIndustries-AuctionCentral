@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import model.users.Account;
 import model.users.Bidder;
@@ -62,6 +63,8 @@ public final class Serializer {
 	
 	public static void main(String[] args) {
 		
+		Data.destroyInstance();
+		
 		Data d = Data.getInstance();
 		
 		for(int i = 0; i < 26; i++) {
@@ -79,7 +82,9 @@ public final class Serializer {
 			d.addUser(s.getName(), s);
 		}
 		
-		for(int i = 0; i < 24; i++) {
+		List<Auction> auctions = d.getAuctions();
+		
+		for (int i = 0; i < 22; i++) {
 			
 			Auction auc = new Auction((Nonprofit) d.getUser("Nonprofit " + i), 
 					d.getCurrentDateTime().plusWeeks(1).plusDays(i / 2), 
@@ -95,14 +100,44 @@ public final class Serializer {
 					BigDecimal.valueOf(70), "description"));
 			
 			
-			d.addAuction(auc);
-			
-			
+			auctions.add(auc);
 		}
 		
-		for(Auction a: d.getAuctions()) {
-			System.out.println(a.getName() + " " + a.getNonprofit().getName());
-		}
+		Auction auc = new Auction((Nonprofit) d.getUser("Nonprofit 22"), 
+				d.getCurrentDateTime().plusDays(2), 
+				"AuctionName 22", "AuctionDescr");
+		
+		auc.addItem(new Item("Item 1", "Donor 1", 1, "new", "medium", "address", 
+				BigDecimal.valueOf(50), "description"));
+		
+		auc.addItem(new Item("Item 2", "Donor 2", 1, "like new", "large", "address", 
+				BigDecimal.valueOf(60), "description"));
+		
+		auc.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
+				BigDecimal.valueOf(70), "description"));
+		
+		
+		auctions.add(auc);
+		
+		Auction auc1 = new Auction((Nonprofit) d.getUser("Nonprofit 23"), 
+				d.getCurrentDateTime().plusDays(2), 
+				"AuctionName 23", "AuctionDescr");
+		
+		auc1.addItem(new Item("Item 1", "Donor 1", 1, "new", "medium", "address", 
+				BigDecimal.valueOf(50), "description"));
+		
+		auc1.addItem(new Item("Item 2", "Donor 2", 1, "like new", "large", "address", 
+				BigDecimal.valueOf(60), "description"));
+		
+		auc1.addItem(new Item("Item 3", "Donor 3", 1, "used", "medium", "address", 
+				BigDecimal.valueOf(70), "description"));
+		
+		auctions.add(auc);
+		
+		
+//		for (Auction a: d.getAuctions()) {
+//			System.out.println(a.getName() + " " + a.getNonprofit().getName());
+//		}
 		
 		writeFile(d, "24Auctions.ser");
 		
@@ -117,8 +152,10 @@ public final class Serializer {
 				"##########", d.currentDateTime.minusDays(366), "Some Kind of Org"));
 		
 		writeFile(d, "prevAuctions.ser");
+	
+		Data.destroyInstance();
 		
-		System.out.println("Done!");
+		System.out.println("DONE");
 		
 	}
 	
